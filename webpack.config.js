@@ -9,7 +9,9 @@ module.exports = {
     output: {
         path: __dirname + "/dist",
         publicPath: "http://localhost:8080/",
-        filename: "VMenu.js"
+        filename: "VMenu.js",
+		libraryTarget: "umd",
+    	//library: "react-vmenu",
     },
 	resolve: {
 		//root: paths.client(),
