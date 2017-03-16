@@ -2,9 +2,10 @@
 	"name": "react-vmenu",
 	"version": "0.0.1",
 	"description": "ReactJS context-menus.",
-	"@main": "dist/VMenu.js",
+	"main": "dist/VMenu.js",
 	"@@main": "src/VMenu.tsx",
-	"main": "index.ts",
+	"@@@main": "index.ts",
+	"typings": "dist/VMenu.d.ts",
 	"scripts": {
 		"dev": "webpack --config webpack.config.js --inline --colors --progress",
 		"dist": "babel src/VMenu.tsx -u -o dist/VMenu.js --stage 1 --presets react"
