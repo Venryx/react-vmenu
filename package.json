@@ -7,7 +7,7 @@
 	"@@@main": "index.ts",
 	"typings": "dist/VMenu.d.ts",
 	"scripts": {
-		"dev": "webpack --config webpack.config.js --inline --colors --progress",
+		"dev": "webpack --config webpack.config.js --inline --colors --progress --watch",
 		"dist": "babel src/VMenu.tsx -u -o dist/VMenu.js --stage 1 --presets react"
 	},
 	"repository": {

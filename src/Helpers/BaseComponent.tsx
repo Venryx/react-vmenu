@@ -32,10 +32,11 @@ export class BaseComponent<P, S> extends Component<P, S> {
 		this.ComponentDidMountOrUpdate(true);
 		this.mounted = true;
 		if (this.PostRender != BaseComponent.prototype.PostRender) {
-			setTimeout(()=>window.requestAnimationFrame(()=> {
+			/*setTimeout(()=>window.requestAnimationFrame(()=> {
 				if (!this.mounted) return;
 				this.PostRender(true);
-			}));
+			}));*/
+			this.PostRender(true);
 		}
 	}
 	ComponentWillUnmount(): void {};
@@ -54,10 +55,11 @@ export class BaseComponent<P, S> extends Component<P, S> {
 	    this.ComponentDidUpdate(...args);
 		this.ComponentDidMountOrUpdate(false);
 		if (this.PostRender != BaseComponent.prototype.PostRender) {
-			setTimeout(()=>window.requestAnimationFrame(()=> {
+			/*setTimeout(()=>window.requestAnimationFrame(()=> {
 				if (!this.mounted) return;
 				this.PostRender(false);
-			}));
+			}));*/
+			this.PostRender(false);
 		}
 	}
 

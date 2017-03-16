@@ -15,6 +15,7 @@ export default class VMenu extends BaseComponent<{
     static onBodyMenus: any[];
     static justOpened: VMenu;
     static CloseAll(): void;
+    constructor(props: any);
     render(): JSX.Element;
     forDom: HTMLElement;
     Open(pagePos: Vector2i): void;
@@ -36,6 +37,7 @@ export declare class VMenuItem extends BaseComponent<{
     text: string;
     onClick: (e) => void;
 }, {}> {
+    constructor(props: any);
     static styles: {
         root: {
             zIndex: number;

@@ -4,6 +4,7 @@ import {Component} from "react";
 import {GetParents, GetSelfAndParents, GetOffset, Vector2i, GetContentOffset, GetScroll} from "./Helpers/General";
 import {BaseComponent} from "./Helpers/BaseComponent";
 import * as ReactDOM from "react-dom";
+import autoBind from "react-autobind";
 
 let styles = {
 	root: {
@@ -26,6 +27,11 @@ export default class VMenu extends BaseComponent
 	    for (let menu of VMenu.onBodyMenus)
 			menu.Close();
 		VMenu.onBodyMenus = [];
+	}
+
+	constructor(props) {
+		super(props);
+		autoBind(this);
 	}
 
 	render() {
@@ -127,7 +133,7 @@ export default class VMenu extends BaseComponent
 		
 		this.dom = ReactDOM.findDOMNode(this);
 		this.domParent = this.dom.parentElement;
-		this.dom.addEventListener("contextmenu", ()=>false); // cancel context-menu-opening events on menu itself
+		this.dom.addEventListener("contextmenu", e=>e.preventDefault()); // cancel context-menu-opening events on menu itself
 		document.body.appendChild(this.dom);
 
 		this.poppedOut = true;
@@ -145,6 +151,11 @@ export default class VMenu extends BaseComponent
 
 @Radium
 export class VMenuItem extends BaseComponent<{text: string, onClick: (e)=>void}, {}> {
+	constructor(props) {
+		super(props);
+		autoBind(this);
+	}
+
 	static styles = {
 	    root: {
 			zIndex: 21, padding: "2 5", backgroundColor: "rgb(35,35,35)", cursor: "pointer",
