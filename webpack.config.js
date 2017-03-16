@@ -1,40 +1,57 @@
 /* global __dirname */
-var webpack = require('webpack');
+var webpack = require("webpack");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     entry: [
-        './demo/entry.jsx'
+        "./src/VMenu.tsx"
     ],
     output: {
-        path: __dirname + '/dist',
-        publicPath: 'http://localhost:8080/',
-        filename: 'demo.js'
+        path: __dirname + "/dist",
+        publicPath: "http://localhost:8080/",
+        filename: "dist.js"
     },
+	resolve: {
+		//root: paths.client(),
+		root: "src",
+		extensions: ["", ".js", ".jsx", ".ts", ".tsx", ".json"],
+	},
+	externals: {
+        // use external version of React (ie, don't bundle react, since any app using this library will already have it available)
+        //"react": "React",
+		"react": "commonjs react",
+ 		"react-dom": "commonjs react-dom",
+    },
+    /*module: {
+        noParse: ["react"]
+    },*/
     module: {
-        loaders: [{
-            test: /\.jsx$/,
-            loader: 'babel',
-            exclude: /node_modules/,
-            query: {
-                presets: ['es2015', 'react']
-            }
-        }, {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loader: 'babel'
-        }, {
-            test: /\.less$/,
-            loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer!less-loader')
-        }, {
-            test: /\.(css)$/,
-            loader: ExtractTextPlugin.extract('style', 'css-loader!autoprefixer')
-        }, {
-            test: /\.(png|jpg|jpeg|svg)$/,
-            loader: 'file'
-        }]
+        loaders: [
+			{
+				test: /\.(jsx?|tsx?)$/,
+				loader: "babel",
+				exclude: /node_modules/,
+				query: {
+					presets: ["es2015", "react"]
+				}
+			},
+			{test: /\.tsx?$/, loader: "ts-loader"},
+			{
+				test: /\.less$/,
+				loader: ExtractTextPlugin.extract("style-loader", "css-loader!autoprefixer!less-loader")
+			},
+			{
+				test: /\.(css)$/,
+				loader: ExtractTextPlugin.extract("style", "css-loader!autoprefixer")
+			},
+			{
+				test: /\.(png|jpg|jpeg|svg)$/,
+				loader: "file"
+			}
+		]
     },
     plugins: [
-        new webpack.NoErrorsPlugin()
+        new webpack.NoErrorsPlugin(),
+		//new webpack.IgnorePlugin(/react/),
     ]
 };

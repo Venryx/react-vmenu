@@ -22,8 +22,8 @@
 	"files": ["src/VMenu.tsx"],
     "include": [
         "Typings/**/*.d.ts",
-        "**/*.ts",
-        "**/*.tsx"
+        "src/**/*.ts",
+        "src/**/*.tsx"
     ],
     "exclude": [
         "dist",
