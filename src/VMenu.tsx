@@ -2,7 +2,7 @@ import Radium from "radium";
 import * as React from "react";
 import {Component} from "react";
 import {GetParents, GetSelfAndParents, GetOffset, Vector2i, GetContentOffset, GetScroll} from "./Helpers/General";
-import {BaseComponent} from "Helpers/BaseComponent";
+import {BaseComponent} from "./Helpers/BaseComponent";
 import * as ReactDOM from "react-dom";
 
 let styles = {
@@ -17,7 +17,7 @@ let styles = {
 
 @Radium
 export default class VMenu extends BaseComponent
-		<{contextMenu?, for: ()=>React.Component<any, any>, onBody?: boolean, onOpen: (posInPosHoistElement: Vector2i, pagePos: Vector2i)=>void, onClose: ()=>void},
+		<{contextMenu?, for?: ()=>React.Component<any, any>, onBody?: boolean, onOpen?: (posInPosHoistElement: Vector2i, pagePos: Vector2i)=>void, onClose?: ()=>void},
 		{open?: boolean, pos?: Vector2i}> {
 	static onBodyMenus = [];
 	static justOpened: VMenu = null;
