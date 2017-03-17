@@ -35,6 +35,7 @@ export default class VMenu extends BaseComponent<{
 }
 export declare class VMenuItem extends BaseComponent<{
     text: string;
+    style?;
     onClick: (e) => void;
 }, {}> {
     constructor(props: any);

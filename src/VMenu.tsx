@@ -1,7 +1,7 @@
 import Radium from "radium";
 import * as React from "react";
 import {Component} from "react";
-import {GetParents, GetSelfAndParents, GetOffset, Vector2i, GetContentOffset, GetScroll} from "./Helpers/General";
+import {E, GetContentOffset, GetOffset, GetParents, GetScroll, GetSelfAndParents, Vector2i} from "./Helpers/General";
 import {BaseComponent} from "./Helpers/BaseComponent";
 import * as ReactDOM from "react-dom";
 import autoBind from "react-autobind";
@@ -150,7 +150,7 @@ export default class VMenu extends BaseComponent
 }
 
 @Radium
-export class VMenuItem extends BaseComponent<{text: string, onClick: (e)=>void}, {}> {
+export class VMenuItem extends BaseComponent<{text: string, style?, onClick: (e)=>void}, {}> {
 	constructor(props) {
 		super(props);
 		autoBind(this);
@@ -164,9 +164,9 @@ export class VMenuItem extends BaseComponent<{text: string, onClick: (e)=>void},
 	}
 
 	render() {
-		let {text} = this.props;
+		let {text, style} = this.props;
 	    return (
-			<div style={VMenuItem.styles.root} onMouseDown={this.OnMouseDown}>
+			<div style={E(VMenuItem.styles.root, style)} onMouseDown={this.OnMouseDown}>
 				{this.props.text}
 			</div>
 		);

@@ -12,3 +12,4 @@ export declare function GetSelfAndParents(dom: HTMLElement, topDown?: boolean): 
 export declare function GetOffset(dom: HTMLElement): Vector2i;
 export declare function GetContentOffset(dom: HTMLElement, includePadding?: boolean): Vector2i;
 export declare function GetScroll(dom: HTMLElement): Vector2i;
+export declare function E(...extenders: any[]): any;

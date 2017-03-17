@@ -312,9 +312,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(VMenuItem, [{
 	        key: "render",
 	        value: function render() {
-	            var text = this.props.text;
+	            var _props2 = this.props,
+	                text = _props2.text,
+	                style = _props2.style;
 
-	            return React.createElement("div", { style: VMenuItem_1.styles.root, onMouseDown: this.OnMouseDown }, this.props.text);
+	            return React.createElement("div", { style: (0, _General.E)(VMenuItem_1.styles.root, style), onMouseDown: this.OnMouseDown }, this.props.text);
 	        }
 	    }, {
 	        key: "OnMouseDown",
@@ -4702,6 +4704,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.GetOffset = GetOffset;
 	exports.GetContentOffset = GetContentOffset;
 	exports.GetScroll = GetScroll;
+	exports.E = E;
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -4779,6 +4782,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	function GetScroll(dom) {
 	    return new Vector2i(dom.scrollLeft, dom.scrollTop);
+	}
+	function E() {
+	    for (var _len3 = arguments.length, extenders = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+	        extenders[_key3] = arguments[_key3];
+	    }
+
+	    return Object.assign.apply(Object, [{}].concat(extenders));
 	}
 
 /***/ },

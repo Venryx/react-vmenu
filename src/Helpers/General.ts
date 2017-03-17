@@ -52,3 +52,7 @@ export function GetContentOffset(dom: HTMLElement, includePadding = false) {
 export function GetScroll(dom: HTMLElement) {
 	return new Vector2i(dom.scrollLeft, dom.scrollTop);
 }
+
+export function E(...extenders: any[]) {
+	return Object.assign({}, ...extenders);
+}
