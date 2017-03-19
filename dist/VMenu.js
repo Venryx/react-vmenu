@@ -138,6 +138,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _createClass(VMenu, [{
 	        key: "render",
+
+	        /*shouldComponentUpdate(lastProps, nextProps) {
+	            return false;
+	        }*/
 	        value: function render() {
 	            this.PreRender();
 	            var _state = this.state,

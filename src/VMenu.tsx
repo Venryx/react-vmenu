@@ -34,6 +34,10 @@ export default class VMenu extends BaseComponent
 		autoBind(this);
 	}
 
+	/*shouldComponentUpdate(lastProps, nextProps) {
+		return false;
+	}*/
+
 	render() {
 		this.PreRender();
 
