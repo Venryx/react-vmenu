@@ -1,37 +1,26 @@
 /// <reference types="react" />
-import * as React from "react";
 import { Vector2i } from "./Helpers/General";
 import { BaseComponent } from "./Helpers/BaseComponent";
-export default class VMenu extends BaseComponent<{
-    contextMenu?;
-    for?: () => React.Component<any, any>;
-    onBody?: boolean;
+import VMenuLayer, { VMenuState, VMenuReducer } from "./VMenuLayer";
+import { ACTOpenVMenuSet, voidy } from "./VMenuLayer";
+import VMenuStub from "./VMenuStub";
+export { VMenuStub, ACTOpenVMenuSet, VMenuState, VMenuReducer, VMenuLayer };
+export default class VMenu {
+    static lastID: number;
+    static menuChildren: {};
+}
+export declare type VMenuUIProps = {
+    pos: Vector2i;
+    overlayStyle?;
     onOpen?: (posInPosHoistElement: Vector2i, pagePos: Vector2i) => void;
     onClose?: () => void;
-}, {
-    open?: boolean;
-    pos?: Vector2i;
-}> {
-    static onBodyMenus: any[];
-    static justOpened: VMenu;
-    static CloseAll(): void;
+    onOK?: () => boolean | voidy;
+    onCancel?: () => boolean | voidy;
+    id: number;
+};
+export declare class VMenuUI extends BaseComponent<VMenuUIProps, {}> {
     constructor(props: any);
-    render(): JSX.Element;
-    forDom: HTMLElement;
-    Open(pagePos: Vector2i): void;
-    Close(): void;
-    ComponentDidMount(): void;
-    OnContextMenu(e: any): boolean;
-    OnMouseDown(e: any): void;
-    OnGlobalMouseDown(e: any): void;
-    PreRender(): void;
-    PostRender(): void;
-    ComponentWillUnmount(): void;
-    dom: HTMLElement;
-    domParent: HTMLElement;
-    poppedOut: boolean;
-    PopOut(): void;
-    PopBackIn(): void;
+    render(forReal?: boolean): JSX.Element;
 }
 export declare class VMenuItem extends BaseComponent<{
     text: string;

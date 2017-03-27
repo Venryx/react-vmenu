@@ -1,60 +1,53 @@
 {
-	"name": "react-vmenu",
-	"version": "0.0.1",
-	"description": "ReactJS context-menus.",
-	"main": "dist/VMenu.js",
-	"@@main": "src/VMenu.tsx",
-	"@@@main": "index.ts",
-	"typings": "dist/VMenu.d.ts",
-	"scripts": {
-		"dev": "webpack --config webpack.config.js --inline --colors --progress --watch",
-		"dist": "babel src/VMenu.tsx -u -o dist/VMenu.js --stage 1 --presets react"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/Venryx/react-vmenu.git"
-	},
-	"keywords": [
-		"react"
-	],
-	"author": {
-		"name": "Venryx",
-		"email": "venryx@gmail.com",
-		"url": "http://venryx.com"
-	},
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/Venryx/react-vmenu"
-	},
-	"homepage": "https://github.com/Venryx/react-vmenu",
-	"peerDependencies": {
-		"react": "^15.3.0",
-		"react-dom": "^15.3.0"
-	},
-	"dependencies": {
-		"radium": "^0.18.2",
-		"react-autobind": "^1.0.6"
-	},
-	"devDependencies": {
-		"@types/react": "^15.0.16",
-		"babel-cli": "^6.4.5",
-		"babel-core": "^6.4.5",
-		"babel-loader": "^6.2.1",
-		"babel-preset-es2015": "^6.3.13",
-		"babel-preset-react": "^6.3.13",
-		"react": "^15.3.0",
-		"react-dom": "^15.3.0",
-		"style-loader": "^0.13.0",
-		"ts-loader": "^2.0.1",
-		"typescript": "^2.2.1",
-		"webpack": "^1.12.12",
-		"webpack-dev-server": "^1.14.1"
-	},
-	"maintainers": [
-		{
-			"name": "Venryx",
-			"email": "venryx@gmail.com"
-		}
-	],
-	"directories": {}
+  "name": "react-vmenu",
+  "version": "0.0.1",
+  "description": "ReactJS context-menus.",
+  "main": "dist/VMenu.js",
+  "typings": "dist/VMenu.d.ts",
+  "scripts": {
+    "dev": "webpack --config webpack.config.js --inline --colors --progress --watch",
+    "dist": "babel src/VMenu.tsx -u -o dist/VMenu.js --stage 1 --presets react"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Venryx/react-vmenu.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": {
+    "name": "Venryx",
+    "email": "venryx@gmail.com",
+    "url": "http://venryx.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Venryx/react-vmenu"
+  },
+  "homepage": "https://github.com/Venryx/react-vmenu",
+  "peerDependencies": {
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0"
+  },
+  "dependencies": {
+    "radium": "^0.18.2",
+    "react-autobind": "^1.0.6",
+    "react-redux": "^5.0.3",
+    "redux": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "^15.0.16",
+    "babel-cli": "^6.4.5",
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0",
+    "style-loader": "^0.13.0",
+    "ts-loader": "^2.0.1",
+    "typescript": "^2.2.1",
+    "webpack": "^1.12.12",
+    "webpack-dev-server": "^1.14.1"
+  }
 }

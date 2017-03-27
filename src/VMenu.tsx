@@ -5,6 +5,11 @@ import {E, GetContentOffset, GetOffset, GetParents, GetScroll, GetSelfAndParents
 import {BaseComponent} from "./Helpers/BaseComponent";
 import * as ReactDOM from "react-dom";
 import autoBind from "react-autobind";
+import VMenuLayer, {VMenuState, VMenuReducer} from "./VMenuLayer";
+import {ACTOpenVMenuSet, voidy} from "./VMenuLayer";
+import VMenuStub from "./VMenuStub";
+
+export {VMenuStub, ACTOpenVMenuSet, VMenuState, VMenuReducer, VMenuLayer};
 
 let styles = {
 	root: {
@@ -16,140 +21,30 @@ let styles = {
 	}
 };
 
-@Radium
-export default class VMenu extends BaseComponent
-		<{contextMenu?, for?: ()=>React.Component<any, any>, onBody?: boolean, onOpen?: (posInPosHoistElement: Vector2i, pagePos: Vector2i)=>void, onClose?: ()=>void},
-		{open?: boolean, pos?: Vector2i}> {
-	static onBodyMenus = [];
-	static justOpened: VMenu = null;
-	// close all on-body menus
-	static CloseAll() {
-	    for (let menu of VMenu.onBodyMenus)
-			menu.Close();
-		VMenu.onBodyMenus = [];
-	}
+export default class VMenu {
+	static lastID = -1;
+	static menuChildren = {};
+}
 
+export type VMenuUIProps = {pos: Vector2i, overlayStyle?,
+	onOpen?: (posInPosHoistElement: Vector2i, pagePos: Vector2i)=>void, onClose?: ()=>void, onOK?: ()=>boolean | voidy, onCancel?: ()=>boolean | voidy
+	id: number};
+@Radium
+export class VMenuUI extends BaseComponent<VMenuUIProps, {}> {
 	constructor(props) {
 		super(props);
 		autoBind(this);
 	}
 
-	/*shouldComponentUpdate(lastProps, nextProps) {
-		return false;
-	}*/
+	render(forReal = false) {
+		var {pos, children} = this.props;
+		if (children == null) return <div className="VMenu" style={{display: "none"}}/>;
 
-	render() {
-		this.PreRender();
-
-		var {open, pos} = this.state;
-
-	    return open && this.props.children
-			? <div className="VMenu" style={[styles.root, {left: pos.x, top: pos.y}]}>
+	    return (
+			<div className="VMenu" style={[styles.root, {left: pos.x, top: pos.y}]}>
 				{this.props.children}
 			</div>
-			: <div className="VMenu" style={{display: "none"}}/>;
-	}
-
-	forDom: HTMLElement;
-	Open(pagePos: Vector2i) {
-		var {onOpen} = this.props;
-		
-		var posHoistElement = GetSelfAndParents(this.forDom).find(a=>a.style.position != "static");
-		//var posFromPosHoistElement = pos.Minus(posHoistElement.position_Vector2i()).Plus(posHoistElement.contentOffset());
-	    var posInPosHoistElement = pagePos.Minus(GetOffset(posHoistElement))
-			.Minus(GetContentOffset(posHoistElement, true)).Plus(GetScroll(posHoistElement));
-	    /*if (this.props.posOffset)
-	        posFromPosHoistElement = posFromPosHoistElement.Plus(this.props.posOffset);*/
-
-	    //this.setState({open: true, pos: posFromPosHoistElement});
-		this.setState({open: true, pos: pagePos});
-	    if (onOpen) onOpen(posInPosHoistElement, pagePos);
-	}
-	Close() {
-	    let {onClose} = this.props;
-	    this.setState({open: false});
-	    if (onClose) onClose();
-	}
-
-	ComponentDidMount() {
-		if (!this.props.contextMenu) return;
-
-	    var {for: forFunc} = this.props;
-	    this.forDom = forFunc ? ReactDOM.findDOMNode(forFunc()) : ReactDOM.findDOMNode(this).parentElement;
-		
-		this.forDom.addEventListener("contextmenu", this.OnContextMenu);
-		// early handler, so parent's hover isn't considered to be lost from mouse-down
-		this.forDom.addEventListener("mousedown", this.OnMouseDown);
-
-	    document.addEventListener("mousedown", this.OnGlobalMouseDown);
-
-		this.PostRender();
-	}
-	OnContextMenu(e) {
-		//if (e.button != 2) return;
-		//this.Open(new Vector2i(e.pageX, e.pageY));
-		//e.preventDefault();
-	    //e.stopPropagation();
-		return false;
-	}
-	OnMouseDown(e) {
-		if (e.button != 2) return;
-	    if (VMenu.justOpened) return; // if higher-z-index control opened menu, don't open another one
-
-		this.Open(new Vector2i(e.pageX, e.pageY));
-
-	    VMenu.justOpened = this;
-	    setTimeout(()=>VMenu.justOpened = null);
-	}
-	OnGlobalMouseDown(e) {
-	    //if (s.justOpened == this) { s.justOpened = null; return; }
-		if (VMenu.justOpened == this) return;
-		if (this.state.open)
-			this.Close();
-	}
-
-	PreRender() {
-		this.PopBackIn();
-	}
-	PostRender() {
-		if (this.props.onBody)
-			this.PopOut();
-	}
-	ComponentWillUnmount() {
-		var {contextMenu, onBody} = this.props;
-	    if (!contextMenu) return;
-		
-	    this.forDom.removeEventListener("contextmenu", this.OnContextMenu);
-		this.forDom.removeEventListener("mousedown", this.OnMouseDown);
-	    document.removeEventListener("mousedown", this.OnGlobalMouseDown);
-
-		//this.domCopy[0].remove();
-		// add it back, so react destroys the dom itself (fixes that error sometimes happens with the simple-remove approach above)
-		this.PopBackIn();
-	}
-
-	dom: HTMLElement = null;
-	domParent: HTMLElement = null;
-	poppedOut = false;
-	PopOut() {
-		//if (!this.Mounted) return;
-		if (this.poppedOut) return;
-		
-		this.dom = ReactDOM.findDOMNode(this);
-		this.domParent = this.dom.parentElement;
-		this.dom.addEventListener("contextmenu", e=>e.preventDefault()); // cancel context-menu-opening events on menu itself
-		document.body.appendChild(this.dom);
-
-		this.poppedOut = true;
-		VMenu.onBodyMenus.push(this);
-	}
-	PopBackIn() {
-		if (!this.poppedOut) return;
-		//this.dom.removeEventListener("contextmenu");
-		this.domParent.appendChild(this.dom);
-
-		this.poppedOut = false;
-		VMenu.onBodyMenus.splice(VMenu.onBodyMenus.indexOf(this), 1);
+		);
 	}
 }
 
