@@ -1,6 +1,9 @@
 import {Component} from "react";
 
-export class BaseComponent<P, S> extends Component<P, S> {
+export type BaseProps = {
+	ref?, // needed so TypeScript doesn't complain about ref func not matching, because <VMenuUI> doesn't have "align" property of <div>
+};
+export class BaseComponent<P, S> extends Component<P & BaseProps, S> {
 	constructor(props) {
 		super(props);
 		//autoBind(this);

@@ -9,7 +9,9 @@ import {VMenuUI} from "./VMenu";
 
 declare var store;
 
-export default class VMenuStub extends BaseComponent<{onBody?: boolean, for?: ()=>React.Component<any, any>, uiProps?: Partial<VMenuUIProps>}, {localOpenUIProps?: VMenuUIProps}> {
+export default class VMenuStub extends BaseComponent
+		<{onBody?: boolean, for?: ()=>React.Component<any, any>, uiProps?: VMenuUIProps},
+		{localOpenUIProps?: VMenuUIProps}> {
 	static defaultProps = {onBody: true};
 
 	constructor(props) {
@@ -45,7 +47,7 @@ export default class VMenuStub extends BaseComponent<{onBody?: boolean, for?: ()
 	OnContextMenu(e) {
 		var pagePos = new Vector2i(e.pageX, e.pageY);
 
-		var {onBody, children} = this.props;
+		var {onBody, uiProps, children} = this.props;
 		
 		var posHoistElement = GetSelfAndParents(this.forDom).find(a=>a.style.position != "static");
 		//var posFromPosHoistElement = pos.Minus(posHoistElement.position_Vector2i()).Plus(posHoistElement.contentOffset());
@@ -55,15 +57,18 @@ export default class VMenuStub extends BaseComponent<{onBody?: boolean, for?: ()
 	        posFromPosHoistElement = posFromPosHoistElement.Plus(this.props.posOffset);*/
 
 	    //this.setState({open: true, pos: posFromPosHoistElement});
-		let uiProps = {...this.props, pos: pagePos} as VMenuUIProps;
-		delete uiProps["children"];
-		uiProps.id = this.menuID; // add menu id to ui-props
+		//let uiProps = {...this.props, pos: pagePos} as VMenuUIProps;
+		let uiProps_final: VMenuUIProps = {
+			...uiProps,
+			pos: pagePos,
+			menuID: this.menuID, // add menu id to ui-props (in case user wants to access from react-comp instance)
+		};
 		VMenu.menuChildren[this.menuID] = children; // store ui/children on static, since breaks in store
 		if (onBody) {
-			//store.dispatch(new ACTOpenVMenuSet(uiProps));
-			setTimeout(()=>store.dispatch(new ACTOpenVMenuSet(uiProps))); // wait a tiny bit, so OnGlobalMouseDown runs first
+			//store.dispatch(new ACTOpenVMenuSet(uiProps_final));
+			setTimeout(()=>store.dispatch(new ACTOpenVMenuSet(uiProps_final))); // wait a tiny bit, so OnGlobalMouseDown runs first
 		} else
-			this.setState({localOpenUIProps: uiProps});
+			this.setState({localOpenUIProps: uiProps_final});
 
 		return false;
 	}

@@ -1,6 +1,9 @@
 /// <reference types="react" />
 import { Component } from "react";
-export declare class BaseComponent<P, S> extends Component<P, S> {
+export declare type BaseProps = {
+    ref?;
+};
+export declare class BaseComponent<P, S> extends Component<P & BaseProps, S> {
     constructor(props: any);
     refs: any;
     ComponentWillMount(): void;

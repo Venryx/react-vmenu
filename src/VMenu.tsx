@@ -26,10 +26,11 @@ export default class VMenu {
 	static menuChildren = {};
 }
 
-export type VMenuUIProps = {pos: Vector2i, overlayStyle?,
-	onOpen?: (posInPosHoistElement: Vector2i, pagePos: Vector2i)=>void, onClose?: ()=>void, onOK?: ()=>boolean | voidy, onCancel?: ()=>boolean | voidy
-	id: number};
-@Radium
+//onOpen?: (posInPosHoistElement: Vector2i, pagePos: Vector2i)=>void, onClose?: ()=>void, onOK?: ()=>boolean | voidy, onCancel?: ()=>boolean | voidy
+export type VMenuUIProps = {pos: Vector2i, style?, menuID: number} & React.HTMLProps<HTMLDivElement>;
+/*export interface VMenuUIProps extends React.HTMLProps<HTMLDivElement> {
+	pos: Vector2i, style?, menuID: number;
+}*/
 export class VMenuUI extends BaseComponent<VMenuUIProps, {}> {
 	constructor(props) {
 		super(props);
@@ -37,19 +38,23 @@ export class VMenuUI extends BaseComponent<VMenuUIProps, {}> {
 	}
 
 	render(forReal = false) {
-		var {pos, children} = this.props;
-		if (children == null) return <div className="VMenu" style={{display: "none"}}/>;
+		var {pos, style, menuID, children, ...rest} = this.props;
+		if (children == null) return <div className="VMenu" style={E({display: "none"}, style)}/>;
 
 	    return (
-			<div className="VMenu" style={[styles.root, {left: pos.x, top: pos.y}]}>
-				{this.props.children}
+			<div {...rest} className="VMenu" style={E(styles.root, {left: pos.x, top: pos.y}, style)}>
+				{children}
 			</div>
 		);
 	}
 }
 
+/*export interface VMenuItemProps extends React.HTMLProps<HTMLDivElement> {
+	text: string, style?;
+}*/
 @Radium
-export class VMenuItem extends BaseComponent<{text: string, style?, onClick: (e)=>void}, {}> {
+export class VMenuItem extends BaseComponent<{text: string, style?} & React.HTMLProps<HTMLDivElement>, {}> {
+//export class VMenuItem extends BaseComponent<VMenuItemProps, {}> {
 	constructor(props) {
 		super(props);
 		autoBind(this);
@@ -63,9 +68,9 @@ export class VMenuItem extends BaseComponent<{text: string, style?, onClick: (e)
 	}
 
 	render() {
-		let {text, style} = this.props;
+		let {text, style, ...rest} = this.props;
 	    return (
-			<div style={E(VMenuItem.styles.root, style)} onMouseDown={this.OnMouseDown}>
+			<div {...rest} style={E(VMenuItem.styles.root, style)} onMouseDown={this.OnMouseDown}>
 				{this.props.text}
 			</div>
 		);

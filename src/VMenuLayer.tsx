@@ -80,8 +80,8 @@ export default class VMenuLayer extends Component<{} & Partial<{openMenuProps: V
 		let {openMenuProps} = this.props;
 		if (openMenuProps == null) return <div/>;
 
-		let {overlayStyle, onOK, onCancel} = openMenuProps;
-		let children = VMenu.menuChildren[openMenuProps.id];
+		//let {overlayStyle, onOK, onCancel} = openMenuProps;
+		let children = VMenu.menuChildren[openMenuProps.menuID];
 		return (
 			<div>
 				{/*<div style={Object.assign({}, styles.overlay, overlayStyle)}

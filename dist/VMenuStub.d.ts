@@ -5,7 +5,7 @@ import { VMenuUIProps } from "./VMenu";
 export default class VMenuStub extends BaseComponent<{
     onBody?: boolean;
     for?: () => React.Component<any, any>;
-    uiProps?: Partial<VMenuUIProps>;
+    uiProps?: VMenuUIProps;
 }, {
     localOpenUIProps?: VMenuUIProps;
 }> {
