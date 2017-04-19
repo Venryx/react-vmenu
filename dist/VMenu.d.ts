@@ -30,9 +30,6 @@ export declare class VMenuItem extends BaseComponent<{
             padding: string;
             backgroundColor: string;
             cursor: string;
-            ":hover": {
-                backgroundColor: string;
-            };
         };
     };
     render(): JSX.Element;

@@ -56,3 +56,31 @@ export function GetScroll(dom: HTMLElement) {
 export function E(...extenders: any[]) {
 	return Object.assign({}, ...extenders);
 }
+
+let loaded = false;
+export function AddGlobalElement(html) {
+	/*$(()=> {
+        $(html).appendTo("#hidden_early");
+    });*/
+	let proceed = ()=> {
+		loaded = true;
+		let nodeType = html.trim().substring(1, html.trim().IndexOfAny(" ", ">"));
+		let element = document.createElement(nodeType);
+		if (document.querySelector("#hidden_early"))
+			document.querySelector("#hidden_early").appendChild(element);
+		else
+			document.body.appendChild(element);
+		element.outerHTML = html;
+	};
+	if (loaded)
+		proceed();
+	else
+		window.addEventListener("load", proceed);
+};
+export function AddGlobalStyle(str) {
+    AddGlobalElement(`
+<style>
+${str}
+</style>
+	`);
+};

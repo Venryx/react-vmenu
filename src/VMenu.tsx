@@ -1,7 +1,7 @@
-import Radium from "radium";
+//import Radium from "radium";
 import * as React from "react";
 import {Component} from "react";
-import {E, GetContentOffset, GetOffset, GetParents, GetScroll, GetSelfAndParents, Vector2i} from "./Helpers/General";
+import {E, GetContentOffset, GetOffset, GetParents, GetScroll, GetSelfAndParents, Vector2i, AddGlobalStyle} from "./Helpers/General";
 import {BaseComponent} from "./Helpers/BaseComponent";
 import * as ReactDOM from "react-dom";
 import autoBind from "react-autobind";
@@ -49,10 +49,16 @@ export class VMenuUI extends BaseComponent<VMenuUIProps, {}> {
 	}
 }
 
+AddGlobalStyle(`
+.VMenuItem:hover {
+	background-color: rgb(25,25,25) !important;
+}
+`);
+
 /*export interface VMenuItemProps extends React.HTMLProps<HTMLDivElement> {
 	text: string, style?;
 }*/
-@Radium
+//@Radium
 export class VMenuItem extends BaseComponent<{text: string, style?} & React.HTMLProps<HTMLDivElement>, {}> {
 //export class VMenuItem extends BaseComponent<VMenuItemProps, {}> {
 	constructor(props) {
@@ -63,14 +69,14 @@ export class VMenuItem extends BaseComponent<{text: string, style?} & React.HTML
 	static styles = {
 	    root: {
 			zIndex: 21, padding: "2 5", backgroundColor: "rgb(35,35,35)", cursor: "pointer",
-	        ":hover": {backgroundColor: "rgb(25,25,25)"}
+	        //":hover": {backgroundColor: "rgb(25,25,25)"}
 	    }
 	}
 
 	render() {
-		let {text, style, ...rest} = this.props;
+		let {text, className, style, ...rest} = this.props;
 	    return (
-			<div {...rest} style={E(VMenuItem.styles.root, style)} onMouseDown={this.OnMouseDown}>
+			<div {...rest} className={"VMenuItem " + (className||"")} style={E(VMenuItem.styles.root, style)} onMouseDown={this.OnMouseDown}>
 				{this.props.text}
 			</div>
 		);
