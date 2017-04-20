@@ -13,5 +13,5 @@ export declare function GetOffset(dom: HTMLElement): Vector2i;
 export declare function GetContentOffset(dom: HTMLElement, includePadding?: boolean): Vector2i;
 export declare function GetScroll(dom: HTMLElement): Vector2i;
 export declare function E(...extenders: any[]): any;
-export declare function AddGlobalElement(html: any): void;
+export declare function AddGlobalElement(html: string): void;
 export declare function AddGlobalStyle(str: any): void;

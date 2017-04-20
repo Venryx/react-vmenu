@@ -327,6 +327,41 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    return Object.assign.apply(Object, [{}].concat(extenders));
 	}
+	function IndexOfAny() {
+	    var lowestIndex = -1;
+
+	    for (var _len4 = arguments.length, strings = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+	        strings[_key4] = arguments[_key4];
+	    }
+
+	    var _iteratorNormalCompletion = true;
+	    var _didIteratorError = false;
+	    var _iteratorError = undefined;
+
+	    try {
+	        for (var _iterator = strings[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	            var str = _step.value;
+
+	            var indexOfChar = this.indexOf(str);
+	            if (indexOfChar != -1 && (indexOfChar < lowestIndex || lowestIndex == -1)) lowestIndex = indexOfChar;
+	        }
+	    } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion && _iterator.return) {
+	                _iterator.return();
+	            }
+	        } finally {
+	            if (_didIteratorError) {
+	                throw _iteratorError;
+	            }
+	        }
+	    }
+
+	    return lowestIndex;
+	}
 	var loaded = false;
 	function AddGlobalElement(html) {
 	    /*$(()=> {
@@ -334,7 +369,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });*/
 	    var proceed = function proceed() {
 	        loaded = true;
-	        var nodeType = html.trim().substring(1, html.trim().IndexOfAny(" ", ">"));
+	        var nodeType = html.trim().substring(1, IndexOfAny.call(html.trim(), " ", ">"));
 	        var element = document.createElement(nodeType);
 	        if (document.querySelector("#hidden_early")) document.querySelector("#hidden_early").appendChild(element);else document.body.appendChild(element);
 	        element.outerHTML = html;

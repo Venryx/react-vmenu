@@ -57,14 +57,24 @@ export function E(...extenders: any[]) {
 	return Object.assign({}, ...extenders);
 }
 
+function IndexOfAny(...strings) {
+    var lowestIndex = -1;
+    for (let str of strings) {
+        var indexOfChar = this.indexOf(str);
+        if (indexOfChar != -1 && (indexOfChar < lowestIndex || lowestIndex == -1))
+            lowestIndex = indexOfChar;
+    }
+    return lowestIndex;
+}
+
 let loaded = false;
-export function AddGlobalElement(html) {
+export function AddGlobalElement(html: string) {
 	/*$(()=> {
         $(html).appendTo("#hidden_early");
     });*/
 	let proceed = ()=> {
 		loaded = true;
-		let nodeType = html.trim().substring(1, html.trim().IndexOfAny(" ", ">"));
+		let nodeType = html.trim().substring(1, IndexOfAny.call(html.trim(), " ", ">"));
 		let element = document.createElement(nodeType);
 		if (document.querySelector("#hidden_early"))
 			document.querySelector("#hidden_early").appendChild(element);
