@@ -3261,6 +3261,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var setImmediate = window.setImmediate || window.setTimeout;
+
 	var VMenuStub = function (_BaseComponent) {
 	    _inherits(VMenuStub, _BaseComponent);
 
@@ -3277,10 +3279,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(VMenuStub, [{
 	        key: "ComponentDidMount",
 	        value: function ComponentDidMount() {
+	            var _this2 = this;
+
 	            var forFunc = this.props.for;
 
 	            this.forDom = forFunc ? ReactDOM.findDOMNode(forFunc()) : ReactDOM.findDOMNode(this).parentElement;
-	            this.forDom.addEventListener("contextmenu", this.OnContextMenu);
+	            this.forDom.addEventListener("contextmenu", function (e) {
+	                return setImmediate(function () {
+	                    return _this2.OnContextMenu(e);
+	                });
+	            }); // wait a tiny bit, so user's onContextMenu can set "e.ignore = true;"
 	            // early handler, so parent's hover isn't considered to be lost from mouse-down
 	            //this.forDom.addEventListener("mousedown", this.OnMouseDown);
 	            document.addEventListener("mousedown", this.OnGlobalMouseDown);
@@ -3304,8 +3312,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _props = this.props,
 	                onBody = _props.onBody,
 	                uiProps = _props.uiProps,
+	                preOpen = _props.preOpen,
 	                children = _props.children;
+	            //e.persist();
 
+	            if (preOpen && preOpen(e) == false) return true;
 	            var posHoistElement = (0, _General.GetSelfAndParents)(this.forDom).find(function (a) {
 	                return a.style.position != "static";
 	            });

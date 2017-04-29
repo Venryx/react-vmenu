@@ -8,9 +8,10 @@ import {ACTOpenVMenuSet} from "./VMenuLayer";
 import {VMenuUI} from "./VMenu";
 
 declare var store;
+let setImmediate = window.setImmediate || window.setTimeout;
 
 export default class VMenuStub extends BaseComponent
-		<{onBody?: boolean, for?: ()=>React.Component<any, any>, uiProps?: VMenuUIProps},
+		<{onBody?: boolean, for?: ()=>React.Component<any, any>, preOpen?: (e)=>boolean, uiProps?: VMenuUIProps},
 		{localOpenUIProps?: VMenuUIProps}> {
 	static defaultProps = {onBody: true};
 
@@ -26,7 +27,7 @@ export default class VMenuStub extends BaseComponent
 	    var {for: forFunc} = this.props;
 	    this.forDom = forFunc ? ReactDOM.findDOMNode(forFunc()) : ReactDOM.findDOMNode(this).parentElement;
 		
-		this.forDom.addEventListener("contextmenu", this.OnContextMenu);
+		this.forDom.addEventListener("contextmenu", e=>setImmediate(()=>this.OnContextMenu(e))); // wait a tiny bit, so user's onContextMenu can set "e.ignore = true;"
 		// early handler, so parent's hover isn't considered to be lost from mouse-down
 		//this.forDom.addEventListener("mousedown", this.OnMouseDown);
 
@@ -47,7 +48,10 @@ export default class VMenuStub extends BaseComponent
 	OnContextMenu(e) {
 		var pagePos = new Vector2i(e.pageX, e.pageY);
 
-		var {onBody, uiProps, children} = this.props;
+		var {onBody, uiProps, preOpen, children} = this.props;
+		//e.persist();
+		if (preOpen && preOpen(e) == false) // if user's preOpen returns "false" for "do not continue", return true (pass event on without action)
+			return true;
 		
 		var posHoistElement = GetSelfAndParents(this.forDom).find(a=>a.style.position != "static");
 		//var posFromPosHoistElement = pos.Minus(posHoistElement.position_Vector2i()).Plus(posHoistElement.contentOffset());
