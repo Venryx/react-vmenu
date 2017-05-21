@@ -21,9 +21,9 @@ export declare class VMenuUI extends BaseComponent<VMenuUIProps, {}> {
 }
 export declare class VMenuItem extends BaseComponent<{
     text: string;
+    enabled?: boolean;
     style?;
 } & React.HTMLProps<HTMLDivElement>, {}> {
-    constructor(props: any);
     static styles: {
         root: {
             zIndex: number;
@@ -31,7 +31,15 @@ export declare class VMenuItem extends BaseComponent<{
             backgroundColor: string;
             cursor: string;
         };
+        disabled: {
+            opacity: number;
+            cursor: string;
+        };
     };
+    static defaultProps: {
+        enabled: boolean;
+    };
+    constructor(props: any);
     render(): JSX.Element;
     OnMouseDown(e: any): void;
 }

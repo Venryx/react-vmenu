@@ -8,6 +8,7 @@ import autoBind from "react-autobind";
 import VMenuLayer, {VMenuState, VMenuReducer} from "./VMenuLayer";
 import {ACTOpenVMenuSet, voidy} from "./VMenuLayer";
 import VMenuStub from "./VMenuStub";
+import classNames from "classnames";
 
 export {VMenuStub, ACTOpenVMenuSet, VMenuState, VMenuReducer, VMenuLayer};
 
@@ -18,7 +19,7 @@ let styles = {
 		zIndex: 20, backgroundColor: "rgb(35,35,35)", border: "1px outset #555",
 		fontStyle: "initial", whiteSpace: "nowrap",
 		//":hover": {backgroundColor: "rgb(25,25,25)"},
-	}
+	},
 };
 
 export default class VMenu {
@@ -38,11 +39,11 @@ export class VMenuUI extends BaseComponent<VMenuUIProps, {}> {
 	}
 
 	render(forReal = false) {
-		var {pos, style, menuID, children, ...rest} = this.props;
+		var {pos, className, style, menuID, children, ...rest} = this.props;
 		if (children == null) return <div className="VMenu" style={E({display: "none"}, style)}/>;
 
 	    return (
-			<div {...rest} className="VMenu" style={E(styles.root, {left: pos.x, top: pos.y}, style)}>
+			<div {...rest} className={classNames("VMenu", className)} style={E(styles.root, {left: pos.x, top: pos.y}, style)}>
 				{children}
 			</div>
 		);
@@ -50,33 +51,39 @@ export class VMenuUI extends BaseComponent<VMenuUIProps, {}> {
 }
 
 AddGlobalStyle(`
-.VMenuItem:hover {
+/*.VMenuItem.disabled {
+	opacity: .5;
+	/#*pointer-events: none;*#/
+	cursor: default;
+}*/
+.VMenuItem:not(.disabled):hover {
 	background-color: rgb(25,25,25) !important;
 }
 `);
 
-/*export interface VMenuItemProps extends React.HTMLProps<HTMLDivElement> {
-	text: string, style?;
-}*/
-//@Radium
-export class VMenuItem extends BaseComponent<{text: string, style?} & React.HTMLProps<HTMLDivElement>, {}> {
-//export class VMenuItem extends BaseComponent<VMenuItemProps, {}> {
+export class VMenuItem extends BaseComponent<{text: string, enabled?: boolean, style?} & React.HTMLProps<HTMLDivElement>, {}> {
+	static styles = {
+	    root: {
+			zIndex: 21, padding: "2 5", backgroundColor: "rgb(35,35,35)", cursor: "pointer",
+	        //":hover": {backgroundColor: "rgb(25,25,25)"}
+	    },
+		 disabled: {
+			opacity: .5,
+			cursor: "default",
+		},
+	}
+	static defaultProps = {enabled: true};
+
 	constructor(props) {
 		super(props);
 		autoBind(this);
 	}
 
-	static styles = {
-	    root: {
-			zIndex: 21, padding: "2 5", backgroundColor: "rgb(35,35,35)", cursor: "pointer",
-	        //":hover": {backgroundColor: "rgb(25,25,25)"}
-	    }
-	}
-
 	render() {
-		let {text, className, style, ...rest} = this.props;
-	    return (
-			<div {...rest} className={"VMenuItem " + (className||"")} style={E(VMenuItem.styles.root, style)} onMouseDown={this.OnMouseDown}>
+		let {text, enabled, className, style, onClick, ...rest} = this.props;
+		return (
+			<div {...rest} className={classNames("VMenuItem", className, !enabled && "disabled")}
+					style={E(VMenuItem.styles.root, !enabled && VMenuItem.styles.disabled, style)} onMouseDown={this.OnMouseDown}>
 				{this.props.text}
 			</div>
 		);
@@ -84,7 +91,11 @@ export class VMenuItem extends BaseComponent<{text: string, style?} & React.HTML
 
 	OnMouseDown(e) {
 		let {onClick} = this.props;
-	    e.stopPropagation();
-	    onClick(e);
+		e.stopPropagation();
+		if (this.props.enabled) {
+			onClick(e);
+		} else {
+			e.nativeEvent.ignore = true;
+		}
 	}
 }

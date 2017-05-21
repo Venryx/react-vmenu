@@ -90,6 +90,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _VMenuStub2 = _interopRequireDefault(_VMenuStub);
 
+	var _classnames = __webpack_require__(50);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -154,28 +158,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var forReal = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 	            var _a = this.props,
 	                pos = _a.pos,
+	                className = _a.className,
 	                style = _a.style,
 	                menuID = _a.menuID,
 	                children = _a.children,
-	                rest = __rest(_a, ["pos", "style", "menuID", "children"]);
+	                rest = __rest(_a, ["pos", "className", "style", "menuID", "children"]);
 	            if (children == null) return React.createElement("div", { className: "VMenu", style: (0, _General.E)({ display: "none" }, style) });
-	            return React.createElement("div", Object.assign({}, rest, { className: "VMenu", style: (0, _General.E)(styles.root, { left: pos.x, top: pos.y }, style) }), children);
+	            return React.createElement("div", Object.assign({}, rest, { className: (0, _classnames2.default)("VMenu", className), style: (0, _General.E)(styles.root, { left: pos.x, top: pos.y }, style) }), children);
 	        }
 	    }]);
 
 	    return VMenuUI;
 	}(_BaseComponent3.BaseComponent);
 
-	(0, _General.AddGlobalStyle)("\n.VMenuItem:hover {\n\tbackground-color: rgb(25,25,25) !important;\n}\n");
-	/*export interface VMenuItemProps extends React.HTMLProps<HTMLDivElement> {
-	    text: string, style?;
-	}*/
-	//@Radium
+	(0, _General.AddGlobalStyle)("\n/*.VMenuItem.disabled {\n\topacity: .5;\n\t/#*pointer-events: none;*#/\n\tcursor: default;\n}*/\n.VMenuItem:not(.disabled):hover {\n\tbackground-color: rgb(25,25,25) !important;\n}\n");
 
 	var VMenuItem = exports.VMenuItem = function (_BaseComponent2) {
 	    _inherits(VMenuItem, _BaseComponent2);
 
-	    //export class VMenuItem extends BaseComponent<VMenuItemProps, {}> {
 	    function VMenuItem(props) {
 	        _classCallCheck(this, VMenuItem);
 
@@ -190,10 +190,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function render() {
 	            var _a = this.props,
 	                text = _a.text,
+	                enabled = _a.enabled,
 	                className = _a.className,
 	                style = _a.style,
-	                rest = __rest(_a, ["text", "className", "style"]);
-	            return React.createElement("div", Object.assign({}, rest, { className: "VMenuItem " + (className || ""), style: (0, _General.E)(VMenuItem.styles.root, style), onMouseDown: this.OnMouseDown }), this.props.text);
+	                onClick = _a.onClick,
+	                rest = __rest(_a, ["text", "enabled", "className", "style", "onClick"]);
+	            return React.createElement("div", Object.assign({}, rest, { className: (0, _classnames2.default)("VMenuItem", className, !enabled && "disabled"), style: (0, _General.E)(VMenuItem.styles.root, !enabled && VMenuItem.styles.disabled, style), onMouseDown: this.OnMouseDown }), this.props.text);
 	        }
 	    }, {
 	        key: "OnMouseDown",
@@ -201,7 +203,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var onClick = this.props.onClick;
 
 	            e.stopPropagation();
-	            onClick(e);
+	            if (this.props.enabled) {
+	                onClick(e);
+	            } else {
+	                e.nativeEvent.ignore = true;
+	            }
 	        }
 	    }]);
 
@@ -211,8 +217,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	VMenuItem.styles = {
 	    root: {
 	        zIndex: 21, padding: "2 5", backgroundColor: "rgb(35,35,35)", cursor: "pointer"
+	    },
+	    disabled: {
+	        opacity: .5,
+	        cursor: "default"
 	    }
 	};
+	VMenuItem.defaultProps = { enabled: true };
 
 /***/ },
 /* 2 */
@@ -3333,12 +3344,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	                setTimeout(function () {
 	                    return store.dispatch(new _VMenuLayer.ACTOpenVMenuSet(uiProps_final));
 	                }); // wait a tiny bit, so OnGlobalMouseDown runs first
-	            } else this.setState({ localOpenUIProps: uiProps_final });
+	            } else {
+	                this.setState({ localOpenUIProps: uiProps_final });
+	            }
 	            return false;
 	        }
 	    }, {
 	        key: "OnGlobalMouseDown",
 	        value: function OnGlobalMouseDown(e) {
+	            if (e.ignore) return;
 	            var onBody = this.props.onBody;
 
 	            if (onBody) {
@@ -3376,6 +3390,60 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	module.exports = require("react-dom");
+
+/***/ },
+/* 50 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+
+	(function () {
+		'use strict';
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function classNames () {
+			var classes = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+
+			return classes.join(' ');
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
 
 /***/ }
 /******/ ])

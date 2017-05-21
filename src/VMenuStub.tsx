@@ -31,7 +31,7 @@ export default class VMenuStub extends BaseComponent
 		// early handler, so parent's hover isn't considered to be lost from mouse-down
 		//this.forDom.addEventListener("mousedown", this.OnMouseDown);
 
-	    document.addEventListener("mousedown", this.OnGlobalMouseDown);
+		document.addEventListener("mousedown", this.OnGlobalMouseDown);
 
 		//this.PostRender();
 	}
@@ -71,12 +71,14 @@ export default class VMenuStub extends BaseComponent
 		if (onBody) {
 			//store.dispatch(new ACTOpenVMenuSet(uiProps_final));
 			setTimeout(()=>store.dispatch(new ACTOpenVMenuSet(uiProps_final))); // wait a tiny bit, so OnGlobalMouseDown runs first
-		} else
+		} else {
 			this.setState({localOpenUIProps: uiProps_final});
+		}
 
 		return false;
 	}
 	OnGlobalMouseDown(e) {
+		if (e.ignore) return;
 		let {onBody} = this.props;
 		if (onBody) {
 			if (store.getState().vMenu.openMenuProps)
