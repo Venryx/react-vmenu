@@ -93,7 +93,7 @@ export class VMenuItem extends BaseComponent<{text: string, enabled?: boolean, s
 		let {onClick} = this.props;
 		e.stopPropagation();
 		if (this.props.enabled) {
-			onClick(e);
+			if (onClick) onClick(e);
 		} else {
 			e.nativeEvent.ignore = true;
 		}

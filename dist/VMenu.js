@@ -204,7 +204,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            e.stopPropagation();
 	            if (this.props.enabled) {
-	                onClick(e);
+	                if (onClick) onClick(e);
 	            } else {
 	                e.nativeEvent.ignore = true;
 	            }
@@ -3295,6 +3295,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var forFunc = this.props.for;
 
 	            this.forDom = forFunc ? ReactDOM.findDOMNode(forFunc()) : ReactDOM.findDOMNode(this).parentElement;
+	            //this.forDom.addEventListener("contextmenu", e=>this.OnContextMenu(e));
 	            this.forDom.addEventListener("contextmenu", function (e) {
 	                return setImmediate(function () {
 	                    return _this2.OnContextMenu(e);
@@ -3320,6 +3321,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "OnContextMenu",
 	        value: function OnContextMenu(e) {
 	            var pagePos = new _General.Vector2i(e.pageX, e.pageY);
+	            /*let depth = GetDepth(ReactDOM.findDOMNode(this));
+	            console.log("Depth:" + depth);*/
 	            var _props = this.props,
 	                onBody = _props.onBody,
 	                uiProps = _props.uiProps,
@@ -3327,7 +3330,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                children = _props.children;
 	            //e.persist();
 
-	            if (preOpen && preOpen(e) == false) return true;
+	            if (e.handledByVMenu) return; // already handled by deeper menu-stub
+	            // if user's preOpen returns "false" for "do not continue", return true (pass event on without action)
+	            if (preOpen && preOpen(e) == false) return; //true;
 	            var posHoistElement = (0, _General.GetSelfAndParents)(this.forDom).find(function (a) {
 	                return a.style.position != "static";
 	            });
@@ -3347,7 +3352,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            } else {
 	                this.setState({ localOpenUIProps: uiProps_final });
 	            }
-	            return false;
+	            //e.preventDefault();
+	            e.handledByVMenu = true;
+	            return; //false;
 	        }
 	    }, {
 	        key: "OnGlobalMouseDown",
@@ -3384,6 +3391,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = VMenuStub;
 
 	VMenuStub.defaultProps = { onBody: true };
+	/*function GetDepth(element: HTMLElement) {
+	    let currentParent = element.parentElement;
+	    let currentDepth = 1;
+	    while (currentParent != document.documentElement) {
+	        currentParent = currentParent.parentElement;
+	        currentDepth++;
+	    }
+	    return currentDepth;
+	}*/
 
 /***/ },
 /* 49 */

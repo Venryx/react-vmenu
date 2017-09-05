@@ -27,6 +27,7 @@ export default class VMenuStub extends BaseComponent
 	    var {for: forFunc} = this.props;
 	    this.forDom = forFunc ? ReactDOM.findDOMNode(forFunc()) : ReactDOM.findDOMNode(this).parentElement;
 		
+		//this.forDom.addEventListener("contextmenu", e=>this.OnContextMenu(e));
 		this.forDom.addEventListener("contextmenu", e=>setImmediate(()=>this.OnContextMenu(e))); // wait a tiny bit, so user's onContextMenu can set "e.ignore = true;"
 		// early handler, so parent's hover isn't considered to be lost from mouse-down
 		//this.forDom.addEventListener("mousedown", this.OnMouseDown);
@@ -48,19 +49,23 @@ export default class VMenuStub extends BaseComponent
 	OnContextMenu(e) {
 		var pagePos = new Vector2i(e.pageX, e.pageY);
 
+		/*let depth = GetDepth(ReactDOM.findDOMNode(this));
+		console.log("Depth:" + depth);*/
+
 		var {onBody, uiProps, preOpen, children} = this.props;
 		//e.persist();
-		if (preOpen && preOpen(e) == false) // if user's preOpen returns "false" for "do not continue", return true (pass event on without action)
-			return true;
+		if (e.handledByVMenu) return; // already handled by deeper menu-stub
+		// if user's preOpen returns "false" for "do not continue", return true (pass event on without action)
+		if (preOpen && preOpen(e) == false) return; //true;
 		
 		var posHoistElement = GetSelfAndParents(this.forDom).find(a=>a.style.position != "static");
 		//var posFromPosHoistElement = pos.Minus(posHoistElement.position_Vector2i()).Plus(posHoistElement.contentOffset());
-	    var posInPosHoistElement = pagePos.Minus(GetOffset(posHoistElement))
+		var posInPosHoistElement = pagePos.Minus(GetOffset(posHoistElement))
 			.Minus(GetContentOffset(posHoistElement, true)).Plus(GetScroll(posHoistElement));
-	    /*if (this.props.posOffset)
-	        posFromPosHoistElement = posFromPosHoistElement.Plus(this.props.posOffset);*/
+		/*if (this.props.posOffset)
+			posFromPosHoistElement = posFromPosHoistElement.Plus(this.props.posOffset);*/
 
-	    //this.setState({open: true, pos: posFromPosHoistElement});
+		//this.setState({open: true, pos: posFromPosHoistElement});
 		//let uiProps = {...this.props, pos: pagePos} as VMenuUIProps;
 		let uiProps_final: VMenuUIProps = {
 			...uiProps,
@@ -75,7 +80,9 @@ export default class VMenuStub extends BaseComponent
 			this.setState({localOpenUIProps: uiProps_final});
 		}
 
-		return false;
+		//e.preventDefault();
+		e.handledByVMenu = true;
+		return; //false;
 	}
 	OnGlobalMouseDown(e) {
 		if (e.ignore) return;
@@ -102,3 +109,13 @@ export default class VMenuStub extends BaseComponent
 		return <VMenuUI {...localOpenUIProps}/>;
 	}
 }
+
+/*function GetDepth(element: HTMLElement) {
+	let currentParent = element.parentElement;
+	let currentDepth = 1;
+	while (currentParent != document.documentElement) {
+		currentParent = currentParent.parentElement;
+		currentDepth++;
+	}
+	return currentDepth;
+}*/
