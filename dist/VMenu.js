@@ -3321,8 +3321,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "OnContextMenu",
 	        value: function OnContextMenu(e) {
 	            var pagePos = new _General.Vector2i(e.pageX, e.pageY);
-	            /*let depth = GetDepth(ReactDOM.findDOMNode(this));
-	            console.log("Depth:" + depth);*/
 	            var _props = this.props,
 	                onBody = _props.onBody,
 	                uiProps = _props.uiProps,
@@ -3391,15 +3389,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = VMenuStub;
 
 	VMenuStub.defaultProps = { onBody: true };
-	/*function GetDepth(element: HTMLElement) {
-	    let currentParent = element.parentElement;
-	    let currentDepth = 1;
-	    while (currentParent != document.documentElement) {
-	        currentParent = currentParent.parentElement;
-	        currentDepth++;
-	    }
-	    return currentDepth;
-	}*/
 
 /***/ },
 /* 49 */

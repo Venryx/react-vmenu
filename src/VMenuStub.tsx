@@ -48,10 +48,7 @@ export default class VMenuStub extends BaseComponent
 		if (e.button != 2) return;*/
 	OnContextMenu(e) {
 		var pagePos = new Vector2i(e.pageX, e.pageY);
-
-		/*let depth = GetDepth(ReactDOM.findDOMNode(this));
-		console.log("Depth:" + depth);*/
-
+		
 		var {onBody, uiProps, preOpen, children} = this.props;
 		//e.persist();
 		if (e.handledByVMenu) return; // already handled by deeper menu-stub
@@ -109,13 +106,3 @@ export default class VMenuStub extends BaseComponent
 		return <VMenuUI {...localOpenUIProps}/>;
 	}
 }
-
-/*function GetDepth(element: HTMLElement) {
-	let currentParent = element.parentElement;
-	let currentDepth = 1;
-	while (currentParent != document.documentElement) {
-		currentParent = currentParent.parentElement;
-		currentDepth++;
-	}
-	return currentDepth;
-}*/
