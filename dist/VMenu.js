@@ -406,6 +406,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	var _react = __webpack_require__(2);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -414,7 +416,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var BaseComponent = exports.BaseComponent = function (_Component) {
+	var __decorate = undefined && undefined.__decorate || function (decorators, target, key, desc) {
+	    var c = arguments.length,
+	        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+	        d;
+	    if ((typeof Reflect === "undefined" ? "undefined" : _typeof(Reflect)) === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) {
+	        if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    }return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+
+	var BaseComponent = BaseComponent_1 = function (_Component) {
 	    _inherits(BaseComponent, _Component);
 
 	    function BaseComponent(props) {
@@ -426,7 +437,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        //autoBind(this);
 	        _this.state = _this.state || {};
 	        // if using PreRender, wrap render func
-	        if (_this.PreRender != BaseComponent.prototype.render) {
+	        if (_this.PreRender != BaseComponent_1.prototype.render) {
 	            var oldRender = _this.render;
 	            _this.render = function () {
 	                this.PreRender();
@@ -460,7 +471,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.ComponentDidMount.apply(this, arguments);
 	            this.ComponentDidMountOrUpdate(true);
 	            this.mounted = true;
-	            if (this.PostRender != BaseComponent.prototype.PostRender) {
+	            if (this.PostRender != BaseComponent_1.prototype.PostRender) {
 	                /*setTimeout(()=>window.requestAnimationFrame(()=> {
 	                    if (!this.mounted) return;
 	                    this.PostRender(true);
@@ -494,7 +505,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function componentDidUpdate() {
 	            this.ComponentDidUpdate.apply(this, arguments);
 	            this.ComponentDidMountOrUpdate(false);
-	            if (this.PostRender != BaseComponent.prototype.PostRender) {
+	            if (this.PostRender != BaseComponent_1.prototype.PostRender) {
 	                /*setTimeout(()=>window.requestAnimationFrame(()=> {
 	                    if (!this.mounted) return;
 	                    this.PostRender(false);
@@ -512,6 +523,30 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    return BaseComponent;
 	}(_react.Component);
+	__decorate([Sealed], BaseComponent.prototype, "componentWillMount", null);
+	__decorate([Sealed], BaseComponent.prototype, "componentDidMount", null);
+	__decorate([Sealed], BaseComponent.prototype, "componentWillUnmount", null);
+	__decorate([Sealed], BaseComponent.prototype, "componentWillReceiveProps", null);
+	__decorate([Sealed], BaseComponent.prototype, "componentDidUpdate", null);
+	exports.BaseComponent = BaseComponent = BaseComponent_1 = __decorate([HasSealedProps], BaseComponent);
+	exports.BaseComponent = BaseComponent;
+
+	function HasSealedProps(target) {
+	    var oldConstructor = target.constructor;
+	    target.constructor = function () {
+	        for (var key in target["prototype"]) {
+	            var method = target["prototype"][key];
+	            if (method.sealed) {
+	                console.assert(this[key] == method, "Cannot override sealed method \"" + key + "\".");
+	            }
+	        }
+	        return oldConstructor.apply(this, arguments);
+	    };
+	}
+	function Sealed(target, key) {
+	    target[key].sealed = true;
+	}
+	var BaseComponent_1;
 
 /***/ },
 /* 5 */

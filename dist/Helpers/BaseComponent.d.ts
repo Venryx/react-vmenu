@@ -8,17 +8,17 @@ export declare class BaseComponent<P, S> extends Component<P & BaseProps, S> {
     refs: any;
     ComponentWillMount(): void;
     ComponentWillMountOrReceiveProps(props: any, forMount?: boolean): void;
-    private componentWillMount();
+    componentWillMount(): void;
     ComponentDidMount(...args: any[]): void;
     ComponentDidMountOrUpdate(forMount: boolean): void;
     mounted: boolean;
-    private componentDidMount(...args);
+    componentDidMount(...args: any[]): void;
     ComponentWillUnmount(): void;
-    private componentWillUnmount();
+    componentWillUnmount(): void;
     ComponentWillReceiveProps(newProps: any[]): void;
-    private componentWillReceiveProps(newProps);
+    componentWillReceiveProps(newProps: any): void;
     ComponentDidUpdate(...args: any[]): void;
-    private componentDidUpdate(...args);
+    componentDidUpdate(...args: any[]): void;
     PreRender(): void;
     PostRender(initialMount: boolean): void;
 }

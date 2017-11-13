@@ -103,6 +103,6 @@ export default class VMenuStub extends BaseComponent
 		let {localOpenUIProps} = this.state;
 		if (localOpenUIProps == null) return <div/>;
 
-		return <VMenuUI {...localOpenUIProps}/>;
+		return <VMenuUI {...localOpenUIProps as any}/>;
 	}
 }

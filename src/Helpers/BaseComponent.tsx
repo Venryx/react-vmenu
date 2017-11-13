@@ -3,6 +3,7 @@ import {Component} from "react";
 export type BaseProps = {
 	ref?, // needed so TypeScript doesn't complain about ref func not matching, because <VMenuUI> doesn't have "align" property of <div>
 };
+@HasSealedProps
 export class BaseComponent<P, S> extends Component<P & BaseProps, S> {
 	constructor(props) {
 		super(props);
@@ -23,14 +24,14 @@ export class BaseComponent<P, S> extends Component<P & BaseProps, S> {
 
 	ComponentWillMount(): void {};
 	ComponentWillMountOrReceiveProps(props: any, forMount?: boolean): void {};
-	private componentWillMount() {
+	@Sealed componentWillMount() {
 		this.ComponentWillMount(); 
 	    this.ComponentWillMountOrReceiveProps(this.props, true); 
 	}
 	ComponentDidMount(...args: any[]): void {};
 	ComponentDidMountOrUpdate(forMount: boolean): void {};
 	mounted = false;
-	private componentDidMount(...args) {
+	@Sealed componentDidMount(...args) {
 		this.ComponentDidMount(...args);
 		this.ComponentDidMountOrUpdate(true);
 		this.mounted = true;
@@ -43,18 +44,18 @@ export class BaseComponent<P, S> extends Component<P & BaseProps, S> {
 		}
 	}
 	ComponentWillUnmount(): void {};
-	private componentWillUnmount() {
+	@Sealed componentWillUnmount() {
 		this.ComponentWillUnmount();
 		this.mounted = false;
 	}
 	
 	ComponentWillReceiveProps(newProps: any[]): void {};
-	private componentWillReceiveProps(newProps) {
+	@Sealed componentWillReceiveProps(newProps) {
 		this.ComponentWillReceiveProps(newProps);
 	    this.ComponentWillMountOrReceiveProps(newProps, false);
 	}
 	ComponentDidUpdate(...args: any[]): void {};
-	private componentDidUpdate(...args) {
+	@Sealed componentDidUpdate(...args) {
 	    this.ComponentDidUpdate(...args);
 		this.ComponentDidMountOrUpdate(false);
 		if (this.PostRender != BaseComponent.prototype.PostRender) {
@@ -68,4 +69,20 @@ export class BaseComponent<P, S> extends Component<P & BaseProps, S> {
 
 	PreRender(): void {};
 	PostRender(initialMount: boolean): void {};
+}
+
+function HasSealedProps(target: Object) {
+	let oldConstructor = target.constructor;
+	target.constructor = function() {
+		for (let key in target["prototype"]) {
+			let method = target["prototype"][key];
+			if (method.sealed) {
+				console.assert(this[key] == method, `Cannot override sealed method "${key}".`);
+			}
+		}
+		return oldConstructor.apply(this, arguments);
+	};
+}
+function Sealed(target: Object, key: string) {
+	target[key].sealed = true;
 }

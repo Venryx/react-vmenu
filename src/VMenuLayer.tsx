@@ -89,7 +89,7 @@ export default class VMenuLayer extends Component<{} & Partial<{openMenuProps: V
 						if (onCancel && onCancel() === false) return;
 						store.dispatch(new ACTOpenVMenuSet(null));
 					}}/>*/}
-				<VMenuUI {...openMenuProps} children={children}/>
+				<VMenuUI {...openMenuProps as any} children={children}/>
 			</div>
 		);
 	}

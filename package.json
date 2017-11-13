@@ -36,7 +36,7 @@
     "redux": "^3.6.0"
   },
   "devDependencies": {
-    "@types/react": "^15.0.16",
+    "@types/react": "^16.0.22",
     "babel-cli": "^6.4.5",
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
@@ -46,7 +46,7 @@
     "react-dom": "^15.3.0",
     "style-loader": "^0.13.0",
     "ts-loader": "^2.0.1",
-    "typescript": "^2.2.1",
+    "typescript": "^2.6.1",
     "webpack": "^1.12.12",
     "webpack-dev-server": "^1.14.1"
   }
