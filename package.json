@@ -1,6 +1,6 @@
 {
   "name": "react-vmenu",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ReactJS context-menus.",
   "main": "dist/VMenu.js",
   "typings": "dist/VMenu.d.ts",
@@ -45,8 +45,8 @@
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "style-loader": "^0.13.0",
-    "ts-loader": "^2.0.1",
-    "typescript": "^2.6.1",
+    "ts-loader": "^3.2.0",
+    "typescript": "^2.6.2",
     "webpack": "^1.12.12",
     "webpack-dev-server": "^1.14.1"
   }
