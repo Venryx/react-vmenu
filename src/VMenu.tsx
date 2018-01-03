@@ -5,9 +5,9 @@ import {E, GetContentOffset, GetOffset, GetParents, GetScroll, GetSelfAndParents
 import {BaseComponent} from "./Helpers/BaseComponent";
 import * as ReactDOM from "react-dom";
 import autoBind from "react-autobind";
-import VMenuLayer, {VMenuState, VMenuReducer} from "./VMenuLayer";
+import {VMenuLayer, VMenuState, VMenuReducer} from "./VMenuLayer";
 import {ACTOpenVMenuSet, voidy} from "./VMenuLayer";
-import VMenuStub from "./VMenuStub";
+import {VMenuStub} from "./VMenuStub";
 import classNames from "classnames";
 
 export {VMenuStub, ACTOpenVMenuSet, VMenuState, VMenuReducer, VMenuLayer};
@@ -22,7 +22,7 @@ let styles = {
 	},
 };
 
-export default class VMenu {
+export class VMenu {
 	static lastID = -1;
 	static menuChildren = {};
 }

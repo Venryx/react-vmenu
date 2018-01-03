@@ -66,7 +66,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.VMenuItem = exports.VMenuUI = exports.VMenuLayer = exports.VMenuReducer = exports.VMenuState = exports.ACTOpenVMenuSet = exports.VMenuStub = undefined;
+	exports.VMenuItem = exports.VMenuUI = exports.VMenu = exports.VMenuLayer = exports.VMenuReducer = exports.VMenuState = exports.ACTOpenVMenuSet = exports.VMenuStub = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -84,11 +84,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _VMenuLayer = __webpack_require__(7);
 
-	var _VMenuLayer2 = _interopRequireDefault(_VMenuLayer);
-
 	var _VMenuStub = __webpack_require__(48);
-
-	var _VMenuStub2 = _interopRequireDefault(_VMenuStub);
 
 	var _classnames = __webpack_require__(50);
 
@@ -113,11 +109,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }return t;
 	};
 	//import Radium from "radium";
-	exports.VMenuStub = _VMenuStub2.default;
+	exports.VMenuStub = _VMenuStub.VMenuStub;
 	exports.ACTOpenVMenuSet = _VMenuLayer.ACTOpenVMenuSet;
 	exports.VMenuState = _VMenuLayer.VMenuState;
 	exports.VMenuReducer = _VMenuLayer.VMenuReducer;
-	exports.VMenuLayer = _VMenuLayer2.default;
+	exports.VMenuLayer = _VMenuLayer.VMenuLayer;
 
 	var styles = {
 	    root: {
@@ -128,11 +124,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	};
 
-	var VMenu = function VMenu() {
+	var VMenu = exports.VMenu = function VMenu() {
 	    _classCallCheck(this, VMenu);
 	};
-
-	exports.default = VMenu;
 
 	VMenu.lastID = -1;
 	VMenu.menuChildren = {};
@@ -640,7 +634,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.VMenuState = exports.ACTOpenVMenuSet = undefined;
+	exports.VMenuLayer = exports.VMenuState = exports.ACTOpenVMenuSet = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -654,15 +648,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Action2 = __webpack_require__(8);
 
-	var _Action3 = _interopRequireDefault(_Action2);
-
 	var _reactRedux = __webpack_require__(9);
 
 	var _VMenu = __webpack_require__(1);
-
-	var _VMenu2 = _interopRequireDefault(_VMenu);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -691,7 +679,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    return ACTOpenVMenuSet;
-	}(_Action3.default);
+	}(_Action2.Action);
 	/*export class VMenuController {
 	    constructor(options: VMenuOptions, menuID: number) {
 	        this.options = options;
@@ -766,19 +754,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            if (openMenuProps == null) return React.createElement("div", null);
 	            //let {overlayStyle, onOK, onCancel} = openMenuProps;
-	            var children = _VMenu2.default.menuChildren[openMenuProps.menuID];
+	            var children = _VMenu.VMenu.menuChildren[openMenuProps.menuID];
 	            return React.createElement("div", null, React.createElement(_VMenu.VMenuUI, Object.assign({}, openMenuProps, { children: children })));
 	        }
 	    }]);
 
 	    return VMenuLayer;
 	}(_react.Component);
-	VMenuLayer = __decorate([(0, _reactRedux.connect)(function (state) {
+	exports.VMenuLayer = VMenuLayer = __decorate([(0, _reactRedux.connect)(function (state) {
 	    return {
 	        openMenuProps: state.vMenu.openMenuProps
 	    };
 	})], VMenuLayer);
-	exports.default = VMenuLayer;
+	exports.VMenuLayer = VMenuLayer;
 
 /***/ },
 /* 8 */
@@ -794,7 +782,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Action = function () {
+	var Action = exports.Action = function () {
 	    function Action(payload) {
 	        _classCallCheck(this, Action);
 
@@ -818,7 +806,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	//Object.prototype._AddFunction("Is", Action.prototype.Is);
 
 
-	exports.default = Action;
 	Object.defineProperty(Object.prototype, "Is", { configurable: true, value: Action.prototype.Is });
 
 /***/ },
@@ -3272,6 +3259,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.VMenuStub = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -3282,8 +3270,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _BaseComponent2 = __webpack_require__(4);
 
 	var _VMenu = __webpack_require__(1);
-
-	var _VMenu2 = _interopRequireDefault(_VMenu);
 
 	var _reactAutobind = __webpack_require__(5);
 
@@ -3309,7 +3295,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var setImmediate = window.setImmediate || window.setTimeout;
 
-	var VMenuStub = function (_BaseComponent) {
+	var VMenuStub = exports.VMenuStub = function (_BaseComponent) {
 	    _inherits(VMenuStub, _BaseComponent);
 
 	    function VMenuStub(props) {
@@ -3318,7 +3304,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var _this = _possibleConstructorReturn(this, (VMenuStub.__proto__ || Object.getPrototypeOf(VMenuStub)).call(this, props));
 
 	        (0, _reactAutobind2.default)(_this);
-	        _this.menuID = ++_VMenu2.default.lastID;
+	        _this.menuID = ++_VMenu.VMenu.lastID;
 	        return _this;
 	    }
 
@@ -3376,7 +3362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            //this.setState({open: true, pos: posFromPosHoistElement});
 	            //let uiProps = {...this.props, pos: pagePos} as VMenuUIProps;
 	            var uiProps_final = Object.assign({}, uiProps, { pos: pagePos, menuID: this.menuID });
-	            _VMenu2.default.menuChildren[this.menuID] = children; // store ui/children on static, since breaks in store
+	            _VMenu.VMenu.menuChildren[this.menuID] = children; // store ui/children on static, since breaks in store
 	            if (onBody) {
 	                //store.dispatch(new ACTOpenVMenuSet(uiProps_final));
 	                setTimeout(function () {
@@ -3420,8 +3406,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    return VMenuStub;
 	}(_BaseComponent2.BaseComponent);
-
-	exports.default = VMenuStub;
 
 	VMenuStub.defaultProps = { onBody: true };
 

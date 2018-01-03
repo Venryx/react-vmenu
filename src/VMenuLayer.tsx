@@ -1,9 +1,9 @@
 import * as React from "react";
-import Action from "./Helpers/Action";
+import {Action} from "./Helpers/Action";
 import {Component} from "react";
 import {connect} from "react-redux";
 import {Vector2i} from "./Helpers/General";
-import {default as VMenu, VMenuUIProps} from "./VMenu";
+import {VMenu, VMenuUIProps} from "./VMenu";
 import {VMenuUI} from "./VMenu";
 import VMenuStub from "./VMenuStub";
 
@@ -75,7 +75,7 @@ let styles = {
 @(connect(state=>({
 	openMenuProps: state.vMenu.openMenuProps,
 })) as any)
-export default class VMenuLayer extends Component<{} & Partial<{openMenuProps: VMenuUIProps}>, {}> {
+export class VMenuLayer extends Component<{} & Partial<{openMenuProps: VMenuUIProps}>, {}> {
 	render() {
 		let {openMenuProps} = this.props;
 		if (openMenuProps == null) return <div/>;

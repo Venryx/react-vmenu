@@ -2,11 +2,11 @@
 import * as React from "react";
 import { Vector2i } from "./Helpers/General";
 import { BaseComponent } from "./Helpers/BaseComponent";
-import VMenuLayer, { VMenuState, VMenuReducer } from "./VMenuLayer";
+import { VMenuLayer, VMenuState, VMenuReducer } from "./VMenuLayer";
 import { ACTOpenVMenuSet } from "./VMenuLayer";
-import VMenuStub from "./VMenuStub";
+import { VMenuStub } from "./VMenuStub";
 export { VMenuStub, ACTOpenVMenuSet, VMenuState, VMenuReducer, VMenuLayer };
-export default class VMenu {
+export declare class VMenu {
     static lastID: number;
     static menuChildren: {};
 }

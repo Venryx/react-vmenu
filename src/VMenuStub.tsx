@@ -1,6 +1,6 @@
 import * as React from "react";
 import {BaseComponent} from "./Helpers/BaseComponent";
-import {default as VMenu, VMenuUIProps} from "./VMenu";
+import {VMenu, VMenuUIProps} from "./VMenu";
 import autoBind from "react-autobind";
 import * as ReactDOM from "react-dom";
 import {Vector2i, GetSelfAndParents, GetOffset, GetScroll, GetContentOffset} from "./Helpers/General";
@@ -10,7 +10,7 @@ import {VMenuUI} from "./VMenu";
 declare var store;
 let setImmediate = window.setImmediate || window.setTimeout;
 
-export default class VMenuStub extends BaseComponent
+export class VMenuStub extends BaseComponent
 		<{onBody?: boolean, for?: ()=>React.Component<any, any>, preOpen?: (e)=>boolean, uiProps?: VMenuUIProps},
 		{localOpenUIProps?: VMenuUIProps}> {
 	static defaultProps = {onBody: true};
