@@ -1,10 +1,10 @@
 /// <reference types="react" />
-import * as React from "react";
+import { Component } from "react";
 import { BaseComponent } from "./Helpers/BaseComponent";
 import { VMenuUIProps } from "./VMenu";
 export declare class VMenuStub extends BaseComponent<{
     onBody?: boolean;
-    for?: () => React.Component<any, any>;
+    for?: () => Component<any, any>;
     preOpen?: (e) => boolean;
     uiProps?: VMenuUIProps;
 }, {

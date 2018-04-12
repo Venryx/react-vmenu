@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import { Action } from "./Helpers/Action";
 import { Component } from "react";
+import { Action } from "./Helpers/Action";
 import { VMenuUIProps } from "./VMenu";
 export declare type voidy = void | Promise<void>;
 export declare class ACTOpenVMenuSet extends Action<VMenuUIProps> {

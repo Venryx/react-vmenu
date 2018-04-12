@@ -1,4 +1,4 @@
-import * as React from "react";
+import {Component} from "react";
 import {BaseComponent} from "./Helpers/BaseComponent";
 import {VMenu, VMenuUIProps} from "./VMenu";
 import autoBind from "react-autobind";
@@ -7,11 +7,14 @@ import {Vector2i, GetSelfAndParents, GetOffset, GetScroll, GetContentOffset} fro
 import {ACTOpenVMenuSet} from "./VMenuLayer";
 import {VMenuUI} from "./VMenu";
 
+declare var require;
+var React = require("react");
+
 declare var store;
 let setImmediate = window.setImmediate || window.setTimeout;
 
 export class VMenuStub extends BaseComponent
-		<{onBody?: boolean, for?: ()=>React.Component<any, any>, preOpen?: (e)=>boolean, uiProps?: VMenuUIProps},
+		<{onBody?: boolean, for?: ()=>Component<any, any>, preOpen?: (e)=>boolean, uiProps?: VMenuUIProps},
 		{localOpenUIProps?: VMenuUIProps}> {
 	static defaultProps = {onBody: true};
 

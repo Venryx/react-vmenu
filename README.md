@@ -1,12 +1,23 @@
 # React VMenu
 
-### Install
+### Setup
 
+Prerequisites:
+* A project with react, react-dom, and redux integrated.
+
+Instructions:
 ```
 npm install --save react-vmenu
 ```
 
-### Install (for editing)
+### Usage
+
+Example code:
+```
+TODO
+```
+
+### Setup (for editing)
 
 1) Clone this repo to your computer using git. (I use TortoiseGit)  
 2) Open console in "Main" folder, and run "npm install".  

@@ -1,11 +1,12 @@
-import * as React from "react";
-import {Action} from "./Helpers/Action";
 import {Component} from "react";
+import {Action} from "./Helpers/Action";
 import {connect} from "react-redux";
 import {Vector2i} from "./Helpers/General";
 import {VMenu, VMenuUIProps} from "./VMenu";
 import {VMenuUI} from "./VMenu";
-import VMenuStub from "./VMenuStub";
+
+declare var require;
+var React = require("react");
 
 /*declare global {
 	var store;

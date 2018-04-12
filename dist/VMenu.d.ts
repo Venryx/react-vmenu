@@ -1,5 +1,4 @@
 /// <reference types="react" />
-import * as React from "react";
 import { Vector2i } from "./Helpers/General";
 import { BaseComponent } from "./Helpers/BaseComponent";
 import { VMenuLayer, VMenuState, VMenuReducer } from "./VMenuLayer";
