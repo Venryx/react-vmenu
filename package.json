@@ -1,6 +1,6 @@
 {
   "name": "react-vmenu",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "ReactJS context-menus.",
   "main": "dist/VMenu.js",
   "typings": "dist/VMenu.d.ts",
