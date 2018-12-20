@@ -1,7 +1,6 @@
 import {Component} from "react";
 import {BaseComponent} from "./Helpers/BaseComponent";
 import {VMenu, VMenuUIProps} from "./VMenu";
-import autoBind from "react-autobind";
 import * as ReactDOM from "react-dom";
 import {Vector2i, GetSelfAndParents, GetOffset, GetScroll, GetContentOffset} from "./Helpers/General";
 import {ACTOpenVMenuSet} from "./VMenuLayer";
@@ -11,7 +10,7 @@ declare var require;
 var React = require("react");
 
 declare var store;
-let setImmediate = window.setImmediate || window.setTimeout;
+let setImmediate = window["setImmediate"] || window.setTimeout;
 
 export class VMenuStub extends BaseComponent
 		<{onBody?: boolean, for?: ()=>Component<any, any>, preOpen?: (e)=>boolean, uiProps?: VMenuUIProps},
@@ -20,7 +19,6 @@ export class VMenuStub extends BaseComponent
 
 	constructor(props) {
 		super(props);
-		autoBind(this);
 		this.menuID = ++VMenu.lastID;
 	}
 	menuID: number;
@@ -33,9 +31,9 @@ export class VMenuStub extends BaseComponent
 		//this.forDom.addEventListener("contextmenu", e=>this.OnContextMenu(e));
 		this.forDom.addEventListener("contextmenu", e=>setImmediate(()=>this.OnContextMenu(e))); // wait a tiny bit, so user's onContextMenu can set "e.ignore = true;"
 		// early handler, so parent's hover isn't considered to be lost from mouse-down
-		//this.forDom.addEventListener("mousedown", this.OnMouseDown);
+		//this.forDom.addEventListener("mousedown", this.OnMouseDown.bind(this));
 
-		document.addEventListener("mousedown", this.OnGlobalMouseDown);
+		document.addEventListener("mousedown", this.OnGlobalMouseDown.bind(this));
 
 		//this.PostRender();
 	}
@@ -97,9 +95,9 @@ export class VMenuStub extends BaseComponent
 	}
 
 	ComponentWillUnmount() {
-	    this.forDom.removeEventListener("contextmenu", this.OnContextMenu);
-		//this.forDom.removeEventListener("mousedown", this.OnMouseDown);
-	    document.removeEventListener("mousedown", this.OnGlobalMouseDown);
+	    this.forDom.removeEventListener("contextmenu", this.OnContextMenu.bind(this));
+		//this.forDom.removeEventListener("mousedown", this.OnMouseDown.bind(this));
+	    document.removeEventListener("mousedown", this.OnGlobalMouseDown.bind(this));
 	}
 
 	render() {

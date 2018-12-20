@@ -4,7 +4,6 @@ import {Component} from "react";
 import {E, GetContentOffset, GetOffset, GetParents, GetScroll, GetSelfAndParents, Vector2i, AddGlobalStyle} from "./Helpers/General";
 import {BaseComponent} from "./Helpers/BaseComponent";
 import * as ReactDOM from "react-dom";
-import autoBind from "react-autobind";
 import {VMenuLayer, VMenuState, VMenuReducer} from "./VMenuLayer";
 import {ACTOpenVMenuSet, voidy} from "./VMenuLayer";
 import {VMenuStub} from "./VMenuStub";
@@ -37,12 +36,7 @@ export type VMenuUIProps = {pos: Vector2i, style?, menuID: number} & React.HTMLP
 	pos: Vector2i, style?, menuID: number;
 }*/
 export class VMenuUI extends BaseComponent<VMenuUIProps, {}> {
-	constructor(props) {
-		super(props);
-		autoBind(this);
-	}
-
-	render(forReal = false) {
+	render() {
 		var {pos, className, style, menuID, children, ...rest} = this.props;
 		if (children == null) return <div className="VMenu" style={E({display: "none"}, style)}/>;
 
@@ -77,12 +71,7 @@ export class VMenuItem extends BaseComponent<{text: string, enabled?: boolean, s
 		},
 	}
 	static defaultProps = {enabled: true};
-
-	constructor(props) {
-		super(props);
-		autoBind(this);
-	}
-
+	
 	render() {
 		let {text, enabled, className, style, onClick, ...rest} = this.props;
 		return (
