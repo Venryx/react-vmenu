@@ -104,8 +104,10 @@ export class VMenuStub extends BaseComponent
 
 	render() {
 		let {localOpenUIProps} = this.state;
-		if (localOpenUIProps == null) return <div/>;
-
-		return <VMenuUI {...localOpenUIProps as any}/>;
+		// if opening locally (usually not the case)
+		if (localOpenUIProps != null) {
+			return <VMenuUI {...localOpenUIProps as any}/>;
+		}
+		return <div/>;
 	}
 }
