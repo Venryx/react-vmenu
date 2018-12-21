@@ -112,7 +112,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VMenuItem", function() { return VMenuItem; });
 /* harmony import */ var _Helpers_General__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 /* harmony import */ var _Helpers_BaseComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
-/* harmony import */ var _VMenuLayer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7);
+/* harmony import */ var _VMenuLayer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "VMenuState", function() { return _VMenuLayer__WEBPACK_IMPORTED_MODULE_2__["VMenuState"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "VMenuReducer", function() { return _VMenuLayer__WEBPACK_IMPORTED_MODULE_2__["VMenuReducer"]; });
@@ -121,10 +121,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ACTOpenVMenuSet", function() { return _VMenuLayer__WEBPACK_IMPORTED_MODULE_2__["ACTOpenVMenuSet"]; });
 
-/* harmony import */ var _VMenuStub__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(10);
+/* harmony import */ var _VMenuStub__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "VMenuStub", function() { return _VMenuStub__WEBPACK_IMPORTED_MODULE_3__["VMenuStub"]; });
 
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(12);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(10);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_4__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -234,9 +234,24 @@ function (_BaseComponent2) {
   _inherits(VMenuItem, _BaseComponent2);
 
   function VMenuItem() {
+    var _this;
+
     _classCallCheck(this, VMenuItem);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(VMenuItem).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(VMenuItem).apply(this, arguments));
+
+    _this.OnMouseDown = function (e) {
+      var onClick = _this.props.onClick;
+      e.stopPropagation();
+
+      if (_this.props.enabled) {
+        if (onClick) onClick(e);
+      } else {
+        e.nativeEvent.ignore = true;
+      }
+    };
+
+    return _this;
   }
 
   _createClass(VMenuItem, [{
@@ -255,18 +270,6 @@ function (_BaseComponent2) {
         style: Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_0__["E"])(VMenuItem.styles.root, !enabled && VMenuItem.styles.disabled, style),
         onMouseDown: this.OnMouseDown
       }), this.props.text);
-    }
-  }, {
-    key: "OnMouseDown",
-    value: function OnMouseDown(e) {
-      var onClick = this.props.onClick;
-      e.stopPropagation();
-
-      if (this.props.enabled) {
-        if (onClick) onClick(e);
-      } else {
-        e.nativeEvent.ignore = true;
-      }
     }
   }]);
 
@@ -623,9 +626,7 @@ function Sealed(target, key) {
 module.exports = require("react");
 
 /***/ }),
-/* 5 */,
-/* 6 */,
-/* 7 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -636,8 +637,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VMenuLayer", function() { return VMenuLayer; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Helpers_Action__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9);
+/* harmony import */ var _Helpers_Action__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _VMenu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -800,7 +801,7 @@ VMenuLayer = __decorate([Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connec
 
 
 /***/ }),
-/* 8 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -842,13 +843,13 @@ Object.defineProperty(Object.prototype, "Is", {
 });
 
 /***/ }),
-/* 9 */
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-redux");
 
 /***/ }),
-/* 10 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -856,10 +857,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VMenuStub", function() { return VMenuStub; });
 /* harmony import */ var _Helpers_BaseComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
 /* harmony import */ var _VMenu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(11);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Helpers_General__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
-/* harmony import */ var _VMenuLayer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7);
+/* harmony import */ var _VMenuLayer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -899,6 +900,79 @@ function (_BaseComponent) {
     _classCallCheck(this, VMenuStub);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(VMenuStub).call(this, props));
+    /*OnContextMenu(e) {
+        //if (e.button != 2) return;
+        //this.Open(new Vector2i(e.pageX, e.pageY));
+        //e.preventDefault();
+        //e.stopPropagation();
+        debugger;
+        return false;
+    }
+    OnMouseDown(e) {
+        if (e.button != 2) return;*/
+
+    _this.OnContextMenu = function (e) {
+      var pagePos = new _Helpers_General__WEBPACK_IMPORTED_MODULE_3__["Vector2i"](e.pageX, e.pageY);
+      var _this$props = _this.props,
+          onBody = _this$props.onBody,
+          uiProps = _this$props.uiProps,
+          preOpen = _this$props.preOpen,
+          children = _this$props.children; //e.persist();
+
+      if (e.handledByVMenu) return; // already handled by deeper menu-stub
+      // if user's preOpen returns "false" for "do not continue", return true (pass event on without action)
+
+      if (preOpen && preOpen(e) == false) return; //true;
+
+      var posHoistElement = Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_3__["GetSelfAndParents"])(_this.forDom).find(function (a) {
+        return a.style.position != "static";
+      }); //var posFromPosHoistElement = pos.Minus(posHoistElement.position_Vector2i()).Plus(posHoistElement.contentOffset());
+
+      var posInPosHoistElement = pagePos.Minus(Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_3__["GetOffset"])(posHoistElement)).Minus(Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_3__["GetContentOffset"])(posHoistElement, true)).Plus(Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_3__["GetScroll"])(posHoistElement));
+      /*if (this.props.posOffset)
+          posFromPosHoistElement = posFromPosHoistElement.Plus(this.props.posOffset);*/
+      //this.setState({open: true, pos: posFromPosHoistElement});
+      //let uiProps = {...this.props, pos: pagePos} as VMenuUIProps;
+
+      var uiProps_final = Object.assign({}, uiProps, {
+        pos: pagePos,
+        menuID: _this.menuID
+      });
+      _VMenu__WEBPACK_IMPORTED_MODULE_1__["VMenu"].menuChildren[_this.menuID] = children; // store ui/children on static, since breaks in store
+
+      if (onBody) {
+        //store.dispatch(new ACTOpenVMenuSet(uiProps_final));
+        setTimeout(function () {
+          return store.dispatch(new _VMenuLayer__WEBPACK_IMPORTED_MODULE_4__["ACTOpenVMenuSet"](uiProps_final));
+        }); // wait a tiny bit, so OnGlobalMouseDown runs first
+      } else {
+        _this.setState({
+          localOpenUIProps: uiProps_final
+        });
+      } //e.preventDefault();
+
+
+      e.handledByVMenu = true;
+      return; //false;
+    };
+
+    _this.OnGlobalMouseDown = function (e) {
+      if (e.ignore) return;
+      var onBody = _this.props.onBody;
+
+      if (onBody) {
+        if (store.getState().vMenu.openMenuProps) {
+          store.dispatch(new _VMenuLayer__WEBPACK_IMPORTED_MODULE_4__["ACTOpenVMenuSet"](null));
+        }
+      } else {
+        if (_this.state.localOpenUIProps) {
+          _this.setState({
+            localOpenUIProps: null
+          });
+        }
+      }
+    };
+
     _this.menuID = ++_VMenu__WEBPACK_IMPORTED_MODULE_1__["VMenu"].lastID;
     return _this;
   }
@@ -917,87 +991,16 @@ function (_BaseComponent) {
         });
       }); // wait a tiny bit, so user's onContextMenu can set "e.ignore = true;"
       // early handler, so parent's hover isn't considered to be lost from mouse-down
-      //this.forDom.addEventListener("mousedown", this.OnMouseDown.bind(this));
+      //this.forDom.addEventListener("mousedown", this.OnMouseDown);
 
-      document.addEventListener("mousedown", this.OnGlobalMouseDown.bind(this)); //this.PostRender();
-    }
-    /*OnContextMenu(e) {
-        //if (e.button != 2) return;
-        //this.Open(new Vector2i(e.pageX, e.pageY));
-        //e.preventDefault();
-        //e.stopPropagation();
-        debugger;
-        return false;
-    }
-    OnMouseDown(e) {
-        if (e.button != 2) return;*/
-
-  }, {
-    key: "OnContextMenu",
-    value: function OnContextMenu(e) {
-      var pagePos = new _Helpers_General__WEBPACK_IMPORTED_MODULE_3__["Vector2i"](e.pageX, e.pageY);
-      var _this$props = this.props,
-          onBody = _this$props.onBody,
-          uiProps = _this$props.uiProps,
-          preOpen = _this$props.preOpen,
-          children = _this$props.children; //e.persist();
-
-      if (e.handledByVMenu) return; // already handled by deeper menu-stub
-      // if user's preOpen returns "false" for "do not continue", return true (pass event on without action)
-
-      if (preOpen && preOpen(e) == false) return; //true;
-
-      var posHoistElement = Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_3__["GetSelfAndParents"])(this.forDom).find(function (a) {
-        return a.style.position != "static";
-      }); //var posFromPosHoistElement = pos.Minus(posHoistElement.position_Vector2i()).Plus(posHoistElement.contentOffset());
-
-      var posInPosHoistElement = pagePos.Minus(Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_3__["GetOffset"])(posHoistElement)).Minus(Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_3__["GetContentOffset"])(posHoistElement, true)).Plus(Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_3__["GetScroll"])(posHoistElement));
-      /*if (this.props.posOffset)
-          posFromPosHoistElement = posFromPosHoistElement.Plus(this.props.posOffset);*/
-      //this.setState({open: true, pos: posFromPosHoistElement});
-      //let uiProps = {...this.props, pos: pagePos} as VMenuUIProps;
-
-      var uiProps_final = Object.assign({}, uiProps, {
-        pos: pagePos,
-        menuID: this.menuID
-      });
-      _VMenu__WEBPACK_IMPORTED_MODULE_1__["VMenu"].menuChildren[this.menuID] = children; // store ui/children on static, since breaks in store
-
-      if (onBody) {
-        //store.dispatch(new ACTOpenVMenuSet(uiProps_final));
-        setTimeout(function () {
-          return store.dispatch(new _VMenuLayer__WEBPACK_IMPORTED_MODULE_4__["ACTOpenVMenuSet"](uiProps_final));
-        }); // wait a tiny bit, so OnGlobalMouseDown runs first
-      } else {
-        this.setState({
-          localOpenUIProps: uiProps_final
-        });
-      } //e.preventDefault();
-
-
-      e.handledByVMenu = true;
-      return; //false;
-    }
-  }, {
-    key: "OnGlobalMouseDown",
-    value: function OnGlobalMouseDown(e) {
-      if (e.ignore) return;
-      var onBody = this.props.onBody;
-
-      if (onBody) {
-        if (store.getState().vMenu.openMenuProps) store.dispatch(new _VMenuLayer__WEBPACK_IMPORTED_MODULE_4__["ACTOpenVMenuSet"](null));
-      } else {
-        if (this.state.localOpenUIProps) this.setState({
-          localOpenUIProps: null
-        });
-      }
+      document.addEventListener("mousedown", this.OnGlobalMouseDown); //this.PostRender();
     }
   }, {
     key: "ComponentWillUnmount",
     value: function ComponentWillUnmount() {
-      this.forDom.removeEventListener("contextmenu", this.OnContextMenu.bind(this)); //this.forDom.removeEventListener("mousedown", this.OnMouseDown.bind(this));
+      this.forDom.removeEventListener("contextmenu", this.OnContextMenu); //this.forDom.removeEventListener("mousedown", this.OnMouseDown);
 
-      document.removeEventListener("mousedown", this.OnGlobalMouseDown.bind(this));
+      document.removeEventListener("mousedown", this.OnGlobalMouseDown);
     }
   }, {
     key: "render",
@@ -1019,13 +1022,13 @@ VMenuStub.defaultProps = {
 };
 
 /***/ }),
-/* 11 */
+/* 9 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-dom");
 
 /***/ }),
-/* 12 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!

@@ -31,9 +31,9 @@ export class VMenuStub extends BaseComponent
 		//this.forDom.addEventListener("contextmenu", e=>this.OnContextMenu(e));
 		this.forDom.addEventListener("contextmenu", e=>setImmediate(()=>this.OnContextMenu(e))); // wait a tiny bit, so user's onContextMenu can set "e.ignore = true;"
 		// early handler, so parent's hover isn't considered to be lost from mouse-down
-		//this.forDom.addEventListener("mousedown", this.OnMouseDown.bind(this));
+		//this.forDom.addEventListener("mousedown", this.OnMouseDown);
 
-		document.addEventListener("mousedown", this.OnGlobalMouseDown.bind(this));
+		document.addEventListener("mousedown", this.OnGlobalMouseDown);
 
 		//this.PostRender();
 	}
@@ -47,7 +47,7 @@ export class VMenuStub extends BaseComponent
 	}
 	OnMouseDown(e) {
 		if (e.button != 2) return;*/
-	OnContextMenu(e) {
+	OnContextMenu = e=> {
 		var pagePos = new Vector2i(e.pageX, e.pageY);
 		
 		var {onBody, uiProps, preOpen, children} = this.props;
@@ -81,23 +81,25 @@ export class VMenuStub extends BaseComponent
 		//e.preventDefault();
 		e.handledByVMenu = true;
 		return; //false;
-	}
-	OnGlobalMouseDown(e) {
+	};
+	OnGlobalMouseDown = e=> {
 		if (e.ignore) return;
 		let {onBody} = this.props;
 		if (onBody) {
-			if (store.getState().vMenu.openMenuProps)
+			if (store.getState().vMenu.openMenuProps) {
 				store.dispatch(new ACTOpenVMenuSet(null));
+			}
 		} else {
-			if (this.state.localOpenUIProps)
+			if (this.state.localOpenUIProps) {
 				this.setState({localOpenUIProps: null});
+			}
 		}
-	}
+	};
 
 	ComponentWillUnmount() {
-	    this.forDom.removeEventListener("contextmenu", this.OnContextMenu.bind(this));
-		//this.forDom.removeEventListener("mousedown", this.OnMouseDown.bind(this));
-	    document.removeEventListener("mousedown", this.OnGlobalMouseDown.bind(this));
+		this.forDom.removeEventListener("contextmenu", this.OnContextMenu);
+		//this.forDom.removeEventListener("mousedown", this.OnMouseDown);
+		document.removeEventListener("mousedown", this.OnGlobalMouseDown);
 	}
 
 	render() {

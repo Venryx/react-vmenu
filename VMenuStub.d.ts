@@ -16,8 +16,8 @@ export declare class VMenuStub extends BaseComponent<{
     menuID: number;
     forDom: HTMLElement;
     ComponentDidMount(): void;
-    OnContextMenu(e: any): void;
-    OnGlobalMouseDown(e: any): void;
+    OnContextMenu: (e: any) => void;
+    OnGlobalMouseDown: (e: any) => void;
     ComponentWillUnmount(): void;
     render(): JSX.Element;
 }

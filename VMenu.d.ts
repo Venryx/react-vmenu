@@ -38,5 +38,5 @@ export declare class VMenuItem extends BaseComponent<{
         enabled: boolean;
     };
     render(): JSX.Element;
-    OnMouseDown(e: any): void;
+    OnMouseDown: (e: any) => void;
 }

@@ -82,7 +82,7 @@ export class VMenuItem extends BaseComponent<{text: string, enabled?: boolean, s
 		);
 	}
 
-	OnMouseDown(e) {
+	OnMouseDown = e=> {
 		let {onClick} = this.props;
 		e.stopPropagation();
 		if (this.props.enabled) {
@@ -90,5 +90,5 @@ export class VMenuItem extends BaseComponent<{text: string, enabled?: boolean, s
 		} else {
 			e.nativeEvent.ignore = true;
 		}
-	}
+	};
 }
