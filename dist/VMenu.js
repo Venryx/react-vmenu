@@ -110,22 +110,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VMenu", function() { return VMenu; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VMenuUI", function() { return VMenuUI; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VMenuItem", function() { return VMenuItem; });
-/* harmony import */ var _Helpers_General__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Helpers_BaseComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
-/* harmony import */ var _VMenuLayer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "VMenuState", function() { return _VMenuLayer__WEBPACK_IMPORTED_MODULE_2__["VMenuState"]; });
+/* harmony import */ var _Helpers_General__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2);
+/* harmony import */ var _VMenuLayer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ACTOpenVMenuSet", function() { return _VMenuLayer__WEBPACK_IMPORTED_MODULE_3__["ACTOpenVMenuSet"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "VMenuReducer", function() { return _VMenuLayer__WEBPACK_IMPORTED_MODULE_2__["VMenuReducer"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "VMenuState", function() { return _VMenuLayer__WEBPACK_IMPORTED_MODULE_3__["VMenuState"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "VMenuLayer", function() { return _VMenuLayer__WEBPACK_IMPORTED_MODULE_2__["VMenuLayer"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "VMenuReducer", function() { return _VMenuLayer__WEBPACK_IMPORTED_MODULE_3__["VMenuReducer"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ACTOpenVMenuSet", function() { return _VMenuLayer__WEBPACK_IMPORTED_MODULE_2__["ACTOpenVMenuSet"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "VMenuLayer", function() { return _VMenuLayer__WEBPACK_IMPORTED_MODULE_3__["VMenuLayer"]; });
 
-/* harmony import */ var _VMenuStub__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "VMenuStub", function() { return _VMenuStub__WEBPACK_IMPORTED_MODULE_3__["VMenuStub"]; });
+/* harmony import */ var _VMenuStub__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "VMenuStub", function() { return _VMenuStub__WEBPACK_IMPORTED_MODULE_4__["VMenuStub"]; });
 
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(10);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_4__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -155,7 +155,8 @@ var __rest = undefined && undefined.__rest || function (s, e) {
     if (e.indexOf(p[i]) < 0) t[p[i]] = s[p[i]];
   }
   return t;
-};
+}; //import Radium from "radium";
+//import * as React from "react";
 
 
 
@@ -211,13 +212,13 @@ function (_BaseComponent) {
 
       if (children == null) return React.createElement("div", {
         className: "VMenu",
-        style: Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_0__["E"])({
+        style: Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_2__["E"])({
           display: "none"
         }, style)
       });
       return React.createElement("div", Object.assign({}, rest, {
-        className: classnames__WEBPACK_IMPORTED_MODULE_4___default()("VMenu", className),
-        style: Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_0__["E"])(styles.root, {
+        className: classnames__WEBPACK_IMPORTED_MODULE_0___default()("VMenu", className),
+        style: Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_2__["E"])(styles.root, {
           left: pos.x,
           top: pos.y
         }, style)
@@ -227,7 +228,7 @@ function (_BaseComponent) {
 
   return VMenuUI;
 }(_Helpers_BaseComponent__WEBPACK_IMPORTED_MODULE_1__["BaseComponent"]);
-Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_0__["AddGlobalStyle"])("\n/*.VMenuItem.disabled {\n\topacity: .5;\n\t/#*pointer-events: none;*#/\n\tcursor: default;\n}*/\n.VMenuItem:not(.disabled):hover {\n\tbackground-color: rgb(25,25,25) !important;\n}\n");
+Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_2__["AddGlobalStyle"])("\n/*.VMenuItem.disabled {\n\topacity: .5;\n\t/#*pointer-events: none;*#/\n\tcursor: default;\n}*/\n.VMenuItem:not(.disabled):hover {\n\tbackground-color: rgb(25,25,25) !important;\n}\n");
 var VMenuItem =
 /*#__PURE__*/
 function (_BaseComponent2) {
@@ -266,8 +267,8 @@ function (_BaseComponent2) {
           rest = __rest(_a, ["text", "enabled", "className", "style", "onClick"]);
 
       return React.createElement("div", Object.assign({}, rest, {
-        className: classnames__WEBPACK_IMPORTED_MODULE_4___default()("VMenuItem", className, !enabled && "disabled"),
-        style: Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_0__["E"])(VMenuItem.styles.root, !enabled && VMenuItem.styles.disabled, style),
+        className: classnames__WEBPACK_IMPORTED_MODULE_0___default()("VMenuItem", className, !enabled && "disabled"),
+        style: Object(_Helpers_General__WEBPACK_IMPORTED_MODULE_2__["E"])(VMenuItem.styles.root, !enabled && VMenuItem.styles.disabled, style),
         onMouseDown: this.OnMouseDown
       }), this.props.text);
     }
@@ -514,8 +515,8 @@ function (_Component) {
     key: "ComponentWillMountOrReceiveProps",
     value: function ComponentWillMountOrReceiveProps(props, forMount) {}
   }, {
-    key: "componentWillMount",
-    value: function componentWillMount() {
+    key: "UNSAFE_componentWillMount",
+    value: function UNSAFE_componentWillMount() {
       this.ComponentWillMount();
       this.ComponentWillMountOrReceiveProps(this.props, true);
     }
@@ -553,8 +554,8 @@ function (_Component) {
     key: "ComponentWillReceiveProps",
     value: function ComponentWillReceiveProps(newProps) {}
   }, {
-    key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(newProps) {
+    key: "UNSAFE_componentWillReceiveProps",
+    value: function UNSAFE_componentWillReceiveProps(newProps) {
       this.ComponentWillReceiveProps(newProps);
       this.ComponentWillMountOrReceiveProps(newProps, false);
     }
@@ -586,13 +587,13 @@ function (_Component) {
   return BaseComponent;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-__decorate([Sealed], BaseComponent.prototype, "componentWillMount", null);
+__decorate([Sealed], BaseComponent.prototype, "UNSAFE_componentWillMount", null);
 
 __decorate([Sealed], BaseComponent.prototype, "componentDidMount", null);
 
 __decorate([Sealed], BaseComponent.prototype, "componentWillUnmount", null);
 
-__decorate([Sealed], BaseComponent.prototype, "componentWillReceiveProps", null);
+__decorate([Sealed], BaseComponent.prototype, "UNSAFE_componentWillReceiveProps", null);
 
 __decorate([Sealed], BaseComponent.prototype, "componentDidUpdate", null);
 

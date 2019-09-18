@@ -24,7 +24,7 @@ export class BaseComponent<P, S> extends Component<P & BaseProps, S> {
 
 	ComponentWillMount(): void {};
 	ComponentWillMountOrReceiveProps(props: any, forMount?: boolean): void {};
-	@Sealed componentWillMount() {
+	@Sealed UNSAFE_componentWillMount() {
 		this.ComponentWillMount(); 
 	    this.ComponentWillMountOrReceiveProps(this.props, true); 
 	}
@@ -50,7 +50,7 @@ export class BaseComponent<P, S> extends Component<P & BaseProps, S> {
 	}
 	
 	ComponentWillReceiveProps(newProps: any[]): void {};
-	@Sealed componentWillReceiveProps(newProps) {
+	@Sealed UNSAFE_componentWillReceiveProps(newProps) {
 		this.ComponentWillReceiveProps(newProps);
 	    this.ComponentWillMountOrReceiveProps(newProps, false);
 	}

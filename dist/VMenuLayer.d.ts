@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { Component } from "react";
 import { Action } from "./Helpers/Action";
 import { VMenuUIProps } from "./VMenu";

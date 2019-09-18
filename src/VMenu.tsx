@@ -1,13 +1,10 @@
 //import Radium from "radium";
 //import * as React from "react";
-import {Component} from "react";
-import {E, GetContentOffset, GetOffset, GetParents, GetScroll, GetSelfAndParents, Vector2i, AddGlobalStyle} from "./Helpers/General";
-import {BaseComponent} from "./Helpers/BaseComponent";
-import * as ReactDOM from "react-dom";
-import {VMenuLayer, VMenuState, VMenuReducer} from "./VMenuLayer";
-import {ACTOpenVMenuSet, voidy} from "./VMenuLayer";
-import {VMenuStub} from "./VMenuStub";
 import classNames from "classnames";
+import {BaseComponent} from "./Helpers/BaseComponent";
+import {AddGlobalStyle, E, Vector2i} from "./Helpers/General";
+import {ACTOpenVMenuSet, VMenuLayer, VMenuReducer, VMenuState} from "./VMenuLayer";
+import {VMenuStub} from "./VMenuStub";
 
 // we have to use Require for React, otherwise the interop call iterates React.PropTypes, causing warning
 declare var require;

@@ -21,7 +21,7 @@
 		"experimentalDecorators": true,
 		"allowSyntheticDefaultImports": true,
 		"declaration": true,
-		"declarationDir": "."
+		"declarationDir": "dist"
 	},
 	"files": ["src/VMenu.tsx"],
 	"include": [

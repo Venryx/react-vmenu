@@ -1,8 +1,7 @@
 /// <reference types="react" />
-import { Vector2i } from "./Helpers/General";
 import { BaseComponent } from "./Helpers/BaseComponent";
-import { VMenuLayer, VMenuState, VMenuReducer } from "./VMenuLayer";
-import { ACTOpenVMenuSet } from "./VMenuLayer";
+import { Vector2i } from "./Helpers/General";
+import { ACTOpenVMenuSet, VMenuLayer, VMenuReducer, VMenuState } from "./VMenuLayer";
 import { VMenuStub } from "./VMenuStub";
 export { VMenuStub, ACTOpenVMenuSet, VMenuState, VMenuReducer, VMenuLayer };
 export declare class VMenu {
@@ -11,17 +10,16 @@ export declare class VMenu {
 }
 export declare type VMenuUIProps = {
     pos: Vector2i;
-    style?;
+    style?: any;
     menuID: number;
 } & React.HTMLProps<HTMLDivElement>;
 export declare class VMenuUI extends BaseComponent<VMenuUIProps, {}> {
-    constructor(props: any);
-    render(forReal?: boolean): JSX.Element;
+    render(): JSX.Element;
 }
 export declare class VMenuItem extends BaseComponent<{
     text: string;
     enabled?: boolean;
-    style?;
+    style?: any;
 } & React.HTMLProps<HTMLDivElement>, {}> {
     static styles: {
         root: {
@@ -38,7 +36,6 @@ export declare class VMenuItem extends BaseComponent<{
     static defaultProps: {
         enabled: boolean;
     };
-    constructor(props: any);
     render(): JSX.Element;
-    OnMouseDown(e: any): void;
+    OnMouseDown: (e: any) => void;
 }
