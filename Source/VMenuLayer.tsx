@@ -1,19 +1,11 @@
 import {Component} from "react";
-import {Action} from "./Helpers/Action";
-import {connect} from "react-redux";
-import {Vector2i} from "./Helpers/General";
+import {Action} from "./Utils/Action";
 import {VMenu, VMenuUIProps} from "./VMenu";
 import {VMenuUI} from "./VMenu";
+import {observer} from "mobx-react";
 
 declare var require;
 var React = require("react");
-
-/*declare global {
-	var store;
-	type voidy = void | Promise<void>;
-}*/
-declare var store;
-export type voidy = void | Promise<void>;
 
 export class ACTOpenVMenuSet extends Action<VMenuUIProps> {}
 
@@ -54,15 +46,6 @@ export function ShowMenu(o: VMenuOptions) {
 	return controller;
 }*/
 
-export class VMenuState {
-	openMenuProps: VMenuUIProps;
-}
-export function VMenuReducer(state = new VMenuState(), action: Action<any>): VMenuState {
-	if (action.Is(ACTOpenVMenuSet))
-		return {...state, openMenuProps: action.payload};
-	return state;
-}
-
 let styles = {
 	overlay: {position: "fixed", left: 0, right: 0, top: 0, bottom: 0, backgroundColor: "rgba(0,0,0,.5)", zIndex: 1},
 	container: {
@@ -73,9 +56,7 @@ let styles = {
 	}
 };
 
-@(connect(state=>({
-	openMenuProps: state.vMenu.openMenuProps,
-})) as any)
+@observer
 export class VMenuLayer extends Component<{} & Partial<{openMenuProps: VMenuUIProps}>, {}> {
 	render() {
 		let {openMenuProps} = this.props;

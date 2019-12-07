@@ -1,9 +1,6 @@
 /// <reference types="react" />
-import { BaseComponent } from "./Helpers/BaseComponent";
-import { Vector2i } from "./Helpers/General";
-import { ACTOpenVMenuSet, VMenuLayer, VMenuReducer, VMenuState } from "./VMenuLayer";
-import { VMenuStub } from "./VMenuStub";
-export { VMenuStub, ACTOpenVMenuSet, VMenuState, VMenuReducer, VMenuLayer };
+import { BaseComponent } from "./Utils/BaseComponent";
+import { Vector2i } from "./Utils/General";
 export declare class VMenu {
     static lastID: number;
     static menuChildren: {};

@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { BaseComponent } from "./Helpers/BaseComponent";
+import { BaseComponent } from "./Utils/BaseComponent";
 import { VMenuUIProps } from "./VMenu";
 export declare class VMenuStub extends BaseComponent<{
     onBody?: boolean;

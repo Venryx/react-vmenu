@@ -4,18 +4,18 @@ var webpack = require("webpack");
 module.exports = {
 	mode: "none",
 	entry: [
-		"./src/VMenu.tsx"
+		"./Source/index.ts"
 	],
 	output: {
-		path: __dirname + "/dist",
+		path: __dirname + "/Dist",
 		publicPath: "http://localhost:8080/",
-		filename: "VMenu.js",
+		filename: "index.js",
 		libraryTarget: "umd",
 		//library: "react-vmenu",
 	},
 	resolve: {
 		//root: paths.client(),
-		//root: "src",
+		//root: "Source",
 		extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
 	},
 	externals: {
@@ -23,8 +23,6 @@ module.exports = {
 		//"react": "React",
 		"react": "commonjs react",
  		"react-dom": "commonjs react-dom",
-		"redux": "commonjs redux",
-		"react-redux": "commonjs react-redux",
 	},
 	/*module: {
 		noParse: ["react"]

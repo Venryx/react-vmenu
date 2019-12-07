@@ -1,20 +1,20 @@
 import {Component} from "react";
-import {BaseComponent} from "./Helpers/BaseComponent";
+import {BaseComponent} from "./Utils/BaseComponent";
 import {VMenu, VMenuUIProps} from "./VMenu";
 import * as ReactDOM from "react-dom";
-import {Vector2i, GetSelfAndParents, GetOffset, GetScroll, GetContentOffset} from "./Helpers/General";
-import {ACTOpenVMenuSet} from "./VMenuLayer";
+import {Vector2i, GetSelfAndParents, GetOffset, GetScroll, GetContentOffset} from "./Utils/General";
 import {VMenuUI} from "./VMenu";
+import {store} from "./Store";
 
 declare var require;
 var React = require("react");
 
-declare var store;
-let setImmediate = window["setImmediate"] || window.setTimeout;
+//let setImmediate = window["setImmediate"] || window.setTimeout;
 
-export class VMenuStub extends BaseComponent
-		<{onBody?: boolean, for?: ()=>Component<any, any>, preOpen?: (e)=>boolean, uiProps?: VMenuUIProps},
-		{localOpenUIProps?: VMenuUIProps}> {
+export class VMenuStub extends BaseComponent<
+	{onBody?: boolean, for?: ()=>Component<any, any>, preOpen?: (e)=>boolean, uiProps?: VMenuUIProps},
+	{localOpenUIProps?: VMenuUIProps}
+> {
 	static defaultProps = {onBody: true};
 
 	constructor(props) {
@@ -75,7 +75,7 @@ export class VMenuStub extends BaseComponent
 		VMenu.menuChildren[this.menuID] = children; // store ui/children on static, since breaks in store
 		if (onBody) {
 			//store.dispatch(new ACTOpenVMenuSet(uiProps_final));
-			setTimeout(()=>store.dispatch(new ACTOpenVMenuSet(uiProps_final))); // wait a tiny bit, so OnGlobalMouseDown runs first
+			setTimeout(()=>store.openMenuProps = uiProps_final); // wait a tiny bit, so OnGlobalMouseDown runs first
 		} else {
 			this.setState({localOpenUIProps: uiProps_final});
 		}
@@ -88,8 +88,8 @@ export class VMenuStub extends BaseComponent
 		if (e.ignore) return;
 		let {onBody} = this.props;
 		if (onBody) {
-			if (store.getState().vMenu.openMenuProps) {
-				store.dispatch(new ACTOpenVMenuSet(null));
+			if (store.openMenuProps) {
+				store.openMenuProps = null;
 			}
 		} else {
 			if (this.state.localOpenUIProps) {

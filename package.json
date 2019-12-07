@@ -1,12 +1,12 @@
 {
   "name": "react-vmenu",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "ReactJS context-menus.",
-  "main": "dist/VMenu.js",
-  "typings": "dist/VMenu.d.ts",
+  "main": "Dist/index.js",
+  "typings": "Dist/index.d.ts",
   "scripts": {
     "dev": "webpack-cli --config webpack.config.js --colors --progress --watch",
-    "dist": "babel src/VMenu.tsx -u -o dist/VMenu.js --stage 1 --presets react"
+    "dist": "babel Source/index.ts -u -o Dist/index.js --stage 1 --presets react"
   },
   "repository": {
     "type": "git",
@@ -27,12 +27,12 @@
   "homepage": "https://github.com/Venryx/react-vmenu",
   "peerDependencies": {
     "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "redux": "^3.6.0",
-    "react-redux": "^6.0.0"
+    "react-dom": "^15.5.4"
   },
   "dependencies": {
-    "classnames": "^2.2.5"
+    "classnames": "^2.2.5",
+    "mobx": "^5.15.0",
+    "mobx-react": "^6.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -43,8 +43,6 @@
     "babel-loader": "^8.0.6",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-redux": "^7.1.3",
-    "redux": "^4.0.4",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.2",
     "webpack": "^4.41.2",

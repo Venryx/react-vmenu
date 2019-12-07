@@ -3,7 +3,7 @@
 ### Setup
 
 Prerequisites:
-* A project with react, react-dom, and redux integrated.
+* A project with react and react-dom integrated.
 
 Instructions:
 ```
