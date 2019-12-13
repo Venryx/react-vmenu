@@ -9,6 +9,7 @@ import { Action } from "./Utils/Action";
 import { VMenu } from "./VMenu";
 import { VMenuUI } from "./VMenu";
 import { observer } from "mobx-react";
+import { store } from "./Store";
 var React = require("react");
 export class ACTOpenVMenuSet extends Action {
 }
@@ -59,7 +60,7 @@ let styles = {
 };
 let VMenuLayer = class VMenuLayer extends Component {
     render() {
-        let { openMenuProps } = this.props;
+        const openMenuProps = store.openMenuProps;
         if (openMenuProps == null)
             return React.createElement("div", null);
         //let {overlayStyle, onOK, onCancel} = openMenuProps;

@@ -3,6 +3,7 @@ import {Action} from "./Utils/Action";
 import {VMenu, VMenuUIProps} from "./VMenu";
 import {VMenuUI} from "./VMenu";
 import {observer} from "mobx-react";
+import {store} from "./Store";
 
 declare var require;
 var React = require("react");
@@ -57,9 +58,9 @@ let styles = {
 };
 
 @observer
-export class VMenuLayer extends Component<{} & Partial<{openMenuProps: VMenuUIProps}>, {}> {
+export class VMenuLayer extends Component<{}, {}> {
 	render() {
-		let {openMenuProps} = this.props;
+		const openMenuProps = store.openMenuProps;
 		if (openMenuProps == null) return <div/>;
 
 		//let {overlayStyle, onOK, onCancel} = openMenuProps;

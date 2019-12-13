@@ -5,6 +5,7 @@ import * as ReactDOM from "react-dom";
 import {Vector2i, GetSelfAndParents, GetOffset, GetScroll, GetContentOffset} from "./Utils/General";
 import {VMenuUI} from "./VMenu";
 import {store} from "./Store";
+import {runInAction} from "mobx";
 
 declare var require;
 var React = require("react");
@@ -75,7 +76,10 @@ export class VMenuStub extends BaseComponent<
 		VMenu.menuChildren[this.menuID] = children; // store ui/children on static, since breaks in store
 		if (onBody) {
 			//store.dispatch(new ACTOpenVMenuSet(uiProps_final));
-			setTimeout(()=>store.openMenuProps = uiProps_final); // wait a tiny bit, so OnGlobalMouseDown runs first
+			// wait a tiny bit, so OnGlobalMouseDown runs first
+			setTimeout(()=> {
+				runInAction("VMenuStub.OnContextMenu", ()=>store.openMenuProps = uiProps_final);
+			});
 		} else {
 			this.setState({localOpenUIProps: uiProps_final});
 		}
@@ -89,7 +93,7 @@ export class VMenuStub extends BaseComponent<
 		let {onBody} = this.props;
 		if (onBody) {
 			if (store.openMenuProps) {
-				store.openMenuProps = null;
+				runInAction("VMenuStub.OnGlobalMouseDown", ()=>store.openMenuProps = null);
 			}
 		} else {
 			if (this.state.localOpenUIProps) {
