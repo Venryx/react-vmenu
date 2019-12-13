@@ -30,7 +30,7 @@ export class VMenuStub extends BaseComponent<
 		
 		//this.forDom.addEventListener("contextmenu", e=>this.OnContextMenu(e));
 		this.forDom.addEventListener("contextmenu", e=>{
-			(window.setImmediate || setTimeout)(()=>this.OnContextMenu(e), 0); // wait a tiny bit, so user's onContextMenu can set "e.ignore = true;"
+			(window["setImmediate"] || setTimeout)(()=>this.OnContextMenu(e), 0); // wait a tiny bit, so user's onContextMenu can set "e.ignore = true;"
 		});
 		// early handler, so parent's hover isn't considered to be lost from mouse-down
 		//this.forDom.addEventListener("mousedown", this.OnMouseDown);

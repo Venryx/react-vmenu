@@ -1,12 +1,15 @@
 {
   "name": "react-vmenu",
+  "description": "ReactJS context-menu solution built using ReactJS and MobX.",
   "version": "0.0.6",
-  "description": "ReactJS context-menus.",
   "main": "Dist/index.js",
+  "type": "module",
   "typings": "Dist/index.d.ts",
-  "scripts": {
-    "dev": "webpack-cli --config webpack.config.js --colors --progress --watch",
-    "dist": "babel Source/index.ts -u -o Dist/index.js --stage 1 --presets react"
+  "license": "MIT",
+  "author": {
+    "name": "Venryx",
+    "email": "venryx@gmail.com",
+    "url": "https://venryx.com"
   },
   "repository": {
     "type": "git",
@@ -15,24 +18,13 @@
   "keywords": [
     "react"
   ],
-  "author": {
-    "name": "Venryx",
-    "email": "venryx@gmail.com",
-    "url": "http://venryx.com"
+  "scripts": {
+    "dev": "tsc --watch",
+    "dist": "tsc"
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Venryx/react-vmenu"
-  },
-  "homepage": "https://github.com/Venryx/react-vmenu",
   "peerDependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
-  },
-  "dependencies": {
-    "classnames": "^2.2.5",
-    "mobx": "^5.15.0",
-    "mobx-react": "^6.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -44,9 +36,11 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "ts-loader": "^6.2.1",
-    "typescript": "^3.7.2",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0"
+    "typescript": "^3.7.2"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "mobx": "^5.15.0",
+    "mobx-react": "^6.1.4"
   }
 }
