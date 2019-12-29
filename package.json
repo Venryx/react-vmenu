@@ -1,7 +1,7 @@
 {
   "name": "react-vmenu",
   "description": "ReactJS context-menu solution built using ReactJS and MobX.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "Dist/index.js",
   "type": "module",
   "typings": "Dist/index.d.ts",
