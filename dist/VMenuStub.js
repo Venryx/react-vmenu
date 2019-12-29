@@ -22,13 +22,16 @@ export class VMenuStub extends BaseComponent {
             if (e.button != 2) return;*/
         this.OnContextMenu = e => {
             var pagePos = new Vector2i(e.pageX, e.pageY);
-            var { onBody, uiProps, preOpen, children } = this.props;
+            var { onBody, uiProps, preOpen, preventDefault, children } = this.props;
             //e.persist();
             if (e.handledByVMenu)
                 return; // already handled by deeper menu-stub
             // if user's preOpen returns "false" for "do not continue", return true (pass event on without action)
             if (preOpen && preOpen(e) == false)
                 return; //true;
+            if (preventDefault) {
+                e.preventDefault();
+            }
             var posHoistElement = GetSelfAndParents(this.forDom).find(a => a.style.position != "static");
             //var posFromPosHoistElement = pos.Minus(posHoistElement.position_Vector2i()).Plus(posHoistElement.contentOffset());
             var posInPosHoistElement = pagePos.Minus(GetOffset(posHoistElement))
@@ -71,11 +74,17 @@ export class VMenuStub extends BaseComponent {
         this.menuID = ++VMenu.lastID;
     }
     ComponentDidMount() {
-        var { for: forFunc } = this.props;
+        var { for: forFunc, delayEventHandler } = this.props;
         this.forDom = forFunc ? ReactDOM.findDOMNode(forFunc()) : ReactDOM.findDOMNode(this).parentElement;
         //this.forDom.addEventListener("contextmenu", e=>this.OnContextMenu(e));
         this.forDom.addEventListener("contextmenu", e => {
-            (window["setImmediate"] || setTimeout)(() => this.OnContextMenu(e), 0); // wait a tiny bit, so user's onContextMenu can set "e.ignore = true;"
+            if (delayEventHandler) {
+                // wait a tiny bit, so user's onContextMenu can set "e.ignore = true;"
+                (window["setImmediate"] || setTimeout)(() => this.OnContextMenu(e), 0);
+            }
+            else {
+                this.OnContextMenu(e);
+            }
         });
         // early handler, so parent's hover isn't considered to be lost from mouse-down
         //this.forDom.addEventListener("mousedown", this.OnMouseDown);
@@ -96,5 +105,5 @@ export class VMenuStub extends BaseComponent {
         return React.createElement("div", null);
     }
 }
-VMenuStub.defaultProps = { onBody: true };
+VMenuStub.defaultProps = { onBody: true, preventDefault: true };
 //# sourceMappingURL=VMenuStub.js.map
