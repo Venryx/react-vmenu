@@ -1,8 +1,12 @@
 //import Radium from "radium";
 //import * as React from "react";
 import classNames from "classnames";
+import {runInAction} from "mobx";
+import {MouseEventHandler} from "react";
+import {store} from "./Store";
 import {BaseComponent} from "./Utils/BaseComponent";
-import {AddGlobalStyle, E, Vector2i} from "./Utils/General";
+import {Vector2, E} from "./Utils/FromJSVE";
+import {AddGlobalStyle} from "./Utils/General";
 
 // we have to use Require for React, otherwise the interop call iterates React.PropTypes, causing warning
 declare var require;
@@ -24,7 +28,7 @@ export class VMenu {
 }
 
 //onOpen?: (posInPosHoistElement: Vector2i, pagePos: Vector2i)=>void, onClose?: ()=>void, onOK?: ()=>boolean | voidy, onCancel?: ()=>boolean | voidy
-export type VMenuUIProps = {pos: Vector2i, style?, menuID: number} & React.HTMLProps<HTMLDivElement>;
+export type VMenuUIProps = {pos: Vector2, style?, menuID: number} & React.HTMLProps<HTMLDivElement>;
 /*export interface VMenuUIProps extends React.HTMLProps<HTMLDivElement> {
 	pos: Vector2i, style?, menuID: number;
 }*/
@@ -39,6 +43,19 @@ export class VMenuUI extends BaseComponent<VMenuUIProps, {}> {
 			</div>
 		);
 	}
+}
+
+// add this menu-closing behavior globally (and persistently), since user may display vmenu manually with ShowVMenu()
+let globalListener_onMouseDown: (event: MouseEvent)=>any;
+function EnsureGlobalListenersAdded() {
+	if (globalListener_onMouseDown != null) return;
+	globalListener_onMouseDown = e=> {
+		if (e["ignore"]) return;
+		if (store.openMenuProps) {
+			runInAction("VMenu.globalListener_onMouseDown", ()=>store.openMenuProps = null);
+		}
+	};
+	document.addEventListener("mousedown", globalListener_onMouseDown);
 }
 
 AddGlobalStyle(`
@@ -64,6 +81,10 @@ export class VMenuItem extends BaseComponent<{text: string, enabled?: boolean, s
 		},
 	}
 	static defaultProps = {enabled: true};
+	constructor(props) {
+		super(props);
+		EnsureGlobalListenersAdded();
+	}
 	
 	render() {
 		let {text, enabled, className, style, onClick, ...rest} = this.props;

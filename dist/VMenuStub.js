@@ -1,12 +1,23 @@
 import { BaseComponent } from "./Utils/BaseComponent";
 import { VMenu } from "./VMenu";
 import * as ReactDOM from "react-dom";
-import { Vector2i, GetSelfAndParents, GetOffset, GetScroll, GetContentOffset } from "./Utils/General";
+import { GetSelfAndParents, GetOffset, GetScroll, GetContentOffset } from "./Utils/General";
 import { VMenuUI } from "./VMenu";
 import { store } from "./Store";
 import { runInAction } from "mobx";
+import { E, Vector2 } from "./Utils/FromJSVE";
 var React = require("react");
 //let setImmediate = window["setImmediate"] || window.setTimeout;
+export function ShowVMenu(menuProps, children, menuID) {
+    var _a;
+    const menuProps_final = E(menuProps, { menuID: (_a = menuProps.menuID, (_a !== null && _a !== void 0 ? _a : ++VMenu.lastID)) });
+    VMenu.menuChildren[menuProps_final.menuID] = children; // store ui/children on static, since breaks in store
+    //store.dispatch(new ACTOpenVMenuSet(uiProps_final));
+    // wait a tiny bit, so OnGlobalMouseDown runs first
+    setTimeout(() => {
+        runInAction("ShowVMenu", () => store.openMenuProps = menuProps_final);
+    });
+}
 export class VMenuStub extends BaseComponent {
     constructor(props) {
         super(props);
@@ -21,7 +32,7 @@ export class VMenuStub extends BaseComponent {
         OnMouseDown(e) {
             if (e.button != 2) return;*/
         this.OnContextMenu = e => {
-            var pagePos = new Vector2i(e.pageX, e.pageY);
+            var pagePos = new Vector2(e.pageX, e.pageY);
             var { onBody, uiProps, preOpen, preventDefault, children } = this.props;
             //e.persist();
             if (e.handledByVMenu)
@@ -60,12 +71,7 @@ export class VMenuStub extends BaseComponent {
             if (e.ignore)
                 return;
             let { onBody } = this.props;
-            if (onBody) {
-                if (store.openMenuProps) {
-                    runInAction("VMenuStub.OnGlobalMouseDown", () => store.openMenuProps = null);
-                }
-            }
-            else {
+            if (!onBody) {
                 if (this.state.localOpenUIProps) {
                     this.setState({ localOpenUIProps: null });
                 }

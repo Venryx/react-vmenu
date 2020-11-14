@@ -12,8 +12,11 @@ var __rest = (this && this.__rest) || function (s, e) {
 //import Radium from "radium";
 //import * as React from "react";
 import classNames from "classnames";
+import { runInAction } from "mobx";
+import { store } from "./Store";
 import { BaseComponent } from "./Utils/BaseComponent";
-import { AddGlobalStyle, E } from "./Utils/General";
+import { E } from "./Utils/FromJSVE";
+import { AddGlobalStyle } from "./Utils/General";
 var React = require("react");
 let styles = {
     root: {
@@ -38,6 +41,20 @@ export class VMenuUI extends BaseComponent {
         return (React.createElement("div", Object.assign({}, rest, { className: classNames("VMenu", className), style: E(styles.root, { left: pos.x, top: pos.y }, style) }), children));
     }
 }
+// add this menu-closing behavior globally (and persistently), since user may display vmenu manually with ShowVMenu()
+let globalListener_onMouseDown;
+function EnsureGlobalListenersAdded() {
+    if (globalListener_onMouseDown != null)
+        return;
+    globalListener_onMouseDown = e => {
+        if (e["ignore"])
+            return;
+        if (store.openMenuProps) {
+            runInAction("VMenu.globalListener_onMouseDown", () => store.openMenuProps = null);
+        }
+    };
+    document.addEventListener("mousedown", globalListener_onMouseDown);
+}
 AddGlobalStyle(`
 /*.VMenuItem.disabled {
 	opacity: .5;
@@ -49,8 +66,8 @@ AddGlobalStyle(`
 }
 `);
 export class VMenuItem extends BaseComponent {
-    constructor() {
-        super(...arguments);
+    constructor(props) {
+        super(props);
         this.OnMouseDown = e => {
             let { onClick } = this.props;
             e.stopPropagation();
@@ -62,6 +79,7 @@ export class VMenuItem extends BaseComponent {
                 e.nativeEvent.ignore = true;
             }
         };
+        EnsureGlobalListenersAdded();
     }
     render() {
         let _a = this.props, { text, enabled, className, style, onClick } = _a, rest = __rest(_a, ["text", "enabled", "className", "style", "onClick"]);

@@ -1,24 +1,4 @@
-export class Vector2i {
-	constructor(x: number, y: number) {
-		this.x = x;
-		this.y = y;
-	}
-	x: number;
-	y: number;
-
-	Minus(other: Vector2i): Vector2i;
-	Minus(otherX: number, otherY: number): Vector2i;
-	Minus(...args) {
-		var [x, y] = args[0] instanceof Vector2i ? [args[0].x, args[0].y] : args;
-		return new Vector2i(this.x - x, this.y - y);
-	}
-	Plus(other: Vector2i): Vector2i;
-	Plus(otherX: number, otherY: number): Vector2i;
-	Plus(...args) {
-		var [x, y] = args[0] instanceof Vector2i ? [args[0].x, args[0].y] : args;
-		return new Vector2i(this.x + x, this.y + y);
-	}
-}
+import {Vector2} from "./FromJSVE";
 
 export function GetParents(dom: HTMLElement, topDown = false) {
 	let result = [] as HTMLElement[];
@@ -37,10 +17,10 @@ export function GetSelfAndParents(dom: HTMLElement, topDown = false) {
 }
 
 export function GetOffset(dom: HTMLElement) {
-	return new Vector2i(dom.offsetLeft, dom.offsetTop);
+	return new Vector2(dom.offsetLeft, dom.offsetTop);
 }
 export function GetContentOffset(dom: HTMLElement, includePadding = false) {
-	var result = new Vector2i(0, 0);
+	var result = new Vector2(0, 0);
 	if (dom.style.position == "absolute")
 		result = result.Plus(parseInt(dom.style.marginLeft)|0, parseInt(dom.style.marginTop)|0);
 	result = result.Minus(parseInt(dom.style.borderLeftWidth) | 0, parseInt(dom.style.borderTopWidth) | 0);
@@ -50,11 +30,7 @@ export function GetContentOffset(dom: HTMLElement, includePadding = false) {
 	return result;
 }
 export function GetScroll(dom: HTMLElement) {
-	return new Vector2i(dom.scrollLeft, dom.scrollTop);
-}
-
-export function E(...extenders: any[]) {
-	return Object.assign({}, ...extenders);
+	return new Vector2(dom.scrollLeft, dom.scrollTop);
 }
 
 function IndexOfAny(...strings) {

@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { BaseComponent } from "./Utils/BaseComponent";
 import { VMenuUIProps } from "./VMenu";
+export declare function ShowVMenu(menuProps: Omit<VMenuUIProps, "menuID"> & Partial<Pick<VMenuUIProps, "menuID">>, children: React.ReactChild, menuID?: number): void;
 export declare class VMenuStub extends BaseComponent<{
     onBody?: boolean;
     for?: () => Component<any, any>;
