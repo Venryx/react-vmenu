@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from "react";
 import { BaseComponent } from "./Utils/BaseComponent.js";
 import { Vector2 } from "./Utils/FromJSVE.js";
 export declare class VMenu {

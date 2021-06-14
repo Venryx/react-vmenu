@@ -6,7 +6,7 @@ import { VMenuUI } from "./VMenu.js";
 import { store } from "./Store.js";
 import { runInAction } from "mobx";
 import { E, Vector2 } from "./Utils/FromJSVE.js";
-var React = require("react");
+import React from "react";
 //let setImmediate = window["setImmediate"] || window.setTimeout;
 export function ShowVMenu(menuProps, children, menuID) {
     var _a;

@@ -1,5 +1,5 @@
 //import Radium from "radium";
-//import * as React from "react";
+import React from "react";
 import classNames from "classnames";
 import {runInAction} from "mobx";
 import {MouseEventHandler} from "react";
@@ -7,10 +7,6 @@ import {store} from "./Store.js";
 import {BaseComponent} from "./Utils/BaseComponent.js";
 import {Vector2, E} from "./Utils/FromJSVE.js";
 import {AddGlobalStyle} from "./Utils/General.js";
-
-// we have to use Require for React, otherwise the interop call iterates React.PropTypes, causing warning
-declare var require;
-var React = require("react");
 
 let styles = {
 	root: {

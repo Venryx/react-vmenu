@@ -10,14 +10,13 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 //import Radium from "radium";
-//import * as React from "react";
+import React from "react";
 import classNames from "classnames";
 import { runInAction } from "mobx";
 import { store } from "./Store.js";
 import { BaseComponent } from "./Utils/BaseComponent.js";
 import { E } from "./Utils/FromJSVE.js";
 import { AddGlobalStyle } from "./Utils/General.js";
-var React = require("react");
 let styles = {
     root: {
         position: "absolute",

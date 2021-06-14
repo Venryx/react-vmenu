@@ -4,9 +4,7 @@ import {VMenu, VMenuUIProps} from "./VMenu.js";
 import {VMenuUI} from "./VMenu.js";
 import {observer} from "mobx-react";
 import {store} from "./Store.js";
-
-declare var require;
-var React = require("react");
+import React from "react";
 
 export class ACTOpenVMenuSet extends Action<VMenuUIProps> {}
 
