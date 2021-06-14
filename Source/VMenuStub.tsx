@@ -1,12 +1,12 @@
 import {Component} from "react";
-import {BaseComponent} from "./Utils/BaseComponent";
-import {VMenu, VMenuUIProps} from "./VMenu";
+import {BaseComponent} from "./Utils/BaseComponent.js";
+import {VMenu, VMenuUIProps} from "./VMenu.js";
 import * as ReactDOM from "react-dom";
-import {GetSelfAndParents, GetOffset, GetScroll, GetContentOffset} from "./Utils/General";
-import {VMenuUI} from "./VMenu";
-import {store} from "./Store";
+import {GetSelfAndParents, GetOffset, GetScroll, GetContentOffset} from "./Utils/General.js";
+import {VMenuUI} from "./VMenu.js";
+import {store} from "./Store.js";
 import {runInAction} from "mobx";
-import {E, Vector2} from "./Utils/FromJSVE";
+import {E, Vector2} from "./Utils/FromJSVE.js";
 
 declare var require;
 var React = require("react");

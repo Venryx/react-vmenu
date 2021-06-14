@@ -1,4 +1,4 @@
-export * from "./VMenu";
-export {ACTOpenVMenuSet, VMenuLayer} from "./VMenuLayer";
-export {ShowVMenu, VMenuStub} from "./VMenuStub";;
-export {store as VMenu_store} from "./Store";
+export * from "./VMenu.js";
+export {ACTOpenVMenuSet, VMenuLayer} from "./VMenuLayer.js";
+export {ShowVMenu, VMenuStub} from "./VMenuStub.js";
+export {store as VMenu_store} from "./Store.js";

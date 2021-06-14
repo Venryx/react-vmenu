@@ -1,4 +1,4 @@
-import {Vector2} from "./FromJSVE";
+import {Vector2} from "./FromJSVE.js";
 
 export function GetParents(dom: HTMLElement, topDown = false) {
 	let result = [] as HTMLElement[];
