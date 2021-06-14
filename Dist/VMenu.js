@@ -24,6 +24,7 @@ let styles = {
         //position: "fixed",
         zIndex: 20, backgroundColor: "rgb(35,35,35)", border: "1px outset #555",
         fontStyle: "initial", whiteSpace: "nowrap",
+        //":hover": {backgroundColor: "rgb(25,25,25)"},
     },
 };
 export class VMenu {
@@ -89,6 +90,7 @@ export class VMenuItem extends BaseComponent {
 VMenuItem.styles = {
     root: {
         zIndex: 21, padding: "2 5", backgroundColor: "rgb(35,35,35)", cursor: "pointer",
+        //":hover": {backgroundColor: "rgb(25,25,25)"}
     },
     disabled: {
         opacity: .5,

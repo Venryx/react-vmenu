@@ -10,7 +10,7 @@ var React = require("react");
 //let setImmediate = window["setImmediate"] || window.setTimeout;
 export function ShowVMenu(menuProps, children, menuID) {
     var _a;
-    const menuProps_final = E(menuProps, { menuID: (_a = menuProps.menuID, (_a !== null && _a !== void 0 ? _a : ++VMenu.lastID)) });
+    const menuProps_final = E(menuProps, { menuID: (_a = menuProps.menuID) !== null && _a !== void 0 ? _a : ++VMenu.lastID });
     VMenu.menuChildren[menuProps_final.menuID] = children; // store ui/children on static, since breaks in store
     //store.dispatch(new ACTOpenVMenuSet(uiProps_final));
     // wait a tiny bit, so OnGlobalMouseDown runs first
