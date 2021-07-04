@@ -7,6 +7,7 @@ import {store} from "./Store.js";
 import {BaseComponent} from "./Utils/BaseComponent.js";
 import {Vector2, E} from "./Utils/FromJSVE.js";
 import {AddGlobalStyle} from "./Utils/General.js";
+import {FixHTMLProps, HTMLProps_Fixed} from "./Utils/@Types.js";
 
 let styles = {
 	root: {
@@ -24,17 +25,17 @@ export class VMenu {
 }
 
 //onOpen?: (posInPosHoistElement: Vector2i, pagePos: Vector2i)=>void, onClose?: ()=>void, onOK?: ()=>boolean | voidy, onCancel?: ()=>boolean | voidy
-export type VMenuUIProps = {pos: Vector2, style?, menuID: number} & React.HTMLProps<HTMLDivElement>;
-/*export interface VMenuUIProps extends React.HTMLProps<HTMLDivElement> {
+export type VMenuUIProps = {pos: Vector2, style?, menuID: number} & HTMLProps_Fixed<"div">;
+/*export interface VMenuUIProps extends HTMLProps_Fixed<"div"> {
 	pos: Vector2i, style?, menuID: number;
 }*/
 export class VMenuUI extends BaseComponent<VMenuUIProps, {}> {
 	render() {
-		var {pos, className, style, menuID, children, ...rest} = this.props;
+		var {pos, className, style, menuID, children, title, ...rest} = this.props;
 		if (children == null) return <div className="VMenu" style={E({display: "none"}, style)}/>;
 
 	    return (
-			<div {...rest} className={classNames("VMenu", className)} style={E(styles.root, {left: pos.x, top: pos.y}, style)}>
+			<div {...rest} title={title ?? undefined} className={classNames("VMenu", className)} style={E(styles.root, {left: pos.x, top: pos.y}, style)}>
 				{children}
 			</div>
 		);
@@ -65,7 +66,7 @@ AddGlobalStyle(`
 }
 `);
 
-export class VMenuItem extends BaseComponent<{text: string, enabled?: boolean, style?} & React.HTMLProps<HTMLDivElement>, {}> {
+export class VMenuItem extends BaseComponent<{text: string, enabled?: boolean, style?} & HTMLProps_Fixed<"div">, {}> {
 	static styles = {
 	    root: {
 			zIndex: 21, padding: "2 5", backgroundColor: "rgb(35,35,35)", cursor: "pointer",
@@ -83,9 +84,9 @@ export class VMenuItem extends BaseComponent<{text: string, enabled?: boolean, s
 	}
 	
 	render() {
-		let {text, enabled, className, style, onClick, ...rest} = this.props;
+		let {text, enabled, className, style, onClick, title, ...rest} = this.props;
 		return (
-			<div {...rest} className={classNames("VMenuItem", className, !enabled && "disabled")}
+			<div {...rest} title={title ?? undefined} className={classNames("VMenuItem", className, !enabled && "disabled")}
 					style={E(VMenuItem.styles.root, !enabled && VMenuItem.styles.disabled, style)} onMouseDown={this.OnMouseDown}>
 				{this.props.text}
 			</div>

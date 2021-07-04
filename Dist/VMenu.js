@@ -30,15 +30,15 @@ export class VMenu {
 }
 VMenu.lastID = -1;
 VMenu.menuChildren = {};
-/*export interface VMenuUIProps extends React.HTMLProps<HTMLDivElement> {
+/*export interface VMenuUIProps extends HTMLProps_Fixed<"div"> {
     pos: Vector2i, style?, menuID: number;
 }*/
 export class VMenuUI extends BaseComponent {
     render() {
-        var _a = this.props, { pos, className, style, menuID, children } = _a, rest = __rest(_a, ["pos", "className", "style", "menuID", "children"]);
+        var _a = this.props, { pos, className, style, menuID, children, title } = _a, rest = __rest(_a, ["pos", "className", "style", "menuID", "children", "title"]);
         if (children == null)
             return React.createElement("div", { className: "VMenu", style: E({ display: "none" }, style) });
-        return (React.createElement("div", Object.assign({}, rest, { className: classNames("VMenu", className), style: E(styles.root, { left: pos.x, top: pos.y }, style) }), children));
+        return (React.createElement("div", Object.assign({}, rest, { title: title !== null && title !== void 0 ? title : undefined, className: classNames("VMenu", className), style: E(styles.root, { left: pos.x, top: pos.y }, style) }), children));
     }
 }
 // add this menu-closing behavior globally (and persistently), since user may display vmenu manually with ShowVMenu()
@@ -82,8 +82,8 @@ export class VMenuItem extends BaseComponent {
         EnsureGlobalListenersAdded();
     }
     render() {
-        let _a = this.props, { text, enabled, className, style, onClick } = _a, rest = __rest(_a, ["text", "enabled", "className", "style", "onClick"]);
-        return (React.createElement("div", Object.assign({}, rest, { className: classNames("VMenuItem", className, !enabled && "disabled"), style: E(VMenuItem.styles.root, !enabled && VMenuItem.styles.disabled, style), onMouseDown: this.OnMouseDown }), this.props.text));
+        let _a = this.props, { text, enabled, className, style, onClick, title } = _a, rest = __rest(_a, ["text", "enabled", "className", "style", "onClick", "title"]);
+        return (React.createElement("div", Object.assign({}, rest, { title: title !== null && title !== void 0 ? title : undefined, className: classNames("VMenuItem", className, !enabled && "disabled"), style: E(VMenuItem.styles.root, !enabled && VMenuItem.styles.disabled, style), onMouseDown: this.OnMouseDown }), this.props.text));
     }
 }
 VMenuItem.styles = {
