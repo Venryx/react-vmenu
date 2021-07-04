@@ -23,7 +23,7 @@ export function ShowVMenu(menuProps: Omit<VMenuUIProps, "menuID"> & Partial<Pick
 
 export class VMenuStub extends BaseComponent<
 	{onBody?: boolean, for?: ()=>Component<any, any>, preOpen?: (e)=>boolean, preventDefault?: boolean, delayEventHandler?: boolean, uiProps?: VMenuUIProps},
-	{localOpenUIProps?: VMenuUIProps}
+	{localOpenUIProps?: VMenuUIProps|n}
 > {
 	static defaultProps = {onBody: true, preventDefault: true};
 
@@ -77,10 +77,9 @@ export class VMenuStub extends BaseComponent<
 			e.preventDefault();
 		}
 		
-		var posHoistElement = GetSelfAndParents(this.forDom).find(a=>a.style.position != "static");
+		/*var posHoistElement = GetSelfAndParents(this.forDom).find(a=>a.style.position != "static");
 		//var posFromPosHoistElement = pos.Minus(posHoistElement.position_Vector2i()).Plus(posHoistElement.contentOffset());
-		var posInPosHoistElement = pagePos.Minus(GetOffset(posHoistElement))
-			.Minus(GetContentOffset(posHoistElement, true)).Plus(GetScroll(posHoistElement));
+		var posInPosHoistElement = pagePos.Minus(GetOffset(posHoistElement)).Minus(GetContentOffset(posHoistElement, true)).Plus(GetScroll(posHoistElement));
 		/*if (this.props.posOffset)
 			posFromPosHoistElement = posFromPosHoistElement.Plus(this.props.posOffset);*/
 

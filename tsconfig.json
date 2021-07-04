@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		// general
 		"rootDir": "Source",
 		"sourceMap": true,
 		"watch": true,
@@ -8,10 +9,15 @@
 		"target": "ES2015",
 		"jsx": "react",
 		"noImplicitAny": false,
+		
+		// compilation
 		"experimentalDecorators": true,
 		"allowSyntheticDefaultImports": true, // doesn't modify output, *or* own import code (it's just for type-checking)
 		//"esModuleInterop": true, // doesn't modify output, only code for the stuff we import
 		"alwaysStrict": true,
+		"strictNullChecks": true,
+
+		// modules/paths
 		"outDir": "Dist",
 		"declaration": true,
 		"declarationDir": "Dist"

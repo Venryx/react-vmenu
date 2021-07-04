@@ -53,7 +53,7 @@ export function AddGlobalElement(html: string) {
 		let nodeType = html.trim().substring(1, IndexOfAny.call(html.trim(), " ", ">"));
 		let element = document.createElement(nodeType);
 		if (document.querySelector("#hidden_early"))
-			document.querySelector("#hidden_early").appendChild(element);
+			document.querySelector("#hidden_early")!.appendChild(element);
 		else
 			document.body.appendChild(element);
 		element.outerHTML = html;

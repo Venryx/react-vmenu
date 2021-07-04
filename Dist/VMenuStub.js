@@ -1,7 +1,6 @@
 import { BaseComponent } from "./Utils/BaseComponent.js";
 import { VMenu } from "./VMenu.js";
 import * as ReactDOM from "react-dom";
-import { GetSelfAndParents, GetOffset, GetScroll, GetContentOffset } from "./Utils/General.js";
 import { VMenuUI } from "./VMenu.js";
 import { store } from "./Store.js";
 import { runInAction } from "mobx";
@@ -43,10 +42,9 @@ export class VMenuStub extends BaseComponent {
             if (preventDefault) {
                 e.preventDefault();
             }
-            var posHoistElement = GetSelfAndParents(this.forDom).find(a => a.style.position != "static");
+            /*var posHoistElement = GetSelfAndParents(this.forDom).find(a=>a.style.position != "static");
             //var posFromPosHoistElement = pos.Minus(posHoistElement.position_Vector2i()).Plus(posHoistElement.contentOffset());
-            var posInPosHoistElement = pagePos.Minus(GetOffset(posHoistElement))
-                .Minus(GetContentOffset(posHoistElement, true)).Plus(GetScroll(posHoistElement));
+            var posInPosHoistElement = pagePos.Minus(GetOffset(posHoistElement)).Minus(GetContentOffset(posHoistElement, true)).Plus(GetScroll(posHoistElement));
             /*if (this.props.posOffset)
                 posFromPosHoistElement = posFromPosHoistElement.Plus(this.props.posOffset);*/
             //this.setState({open: true, pos: posFromPosHoistElement});

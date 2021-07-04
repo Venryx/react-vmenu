@@ -2,6 +2,6 @@ import {observable} from "mobx";
 import {VMenuUIProps} from "./VMenu.js";
 
 export class Store {
-	@observable openMenuProps: VMenuUIProps;
+	@observable openMenuProps: VMenuUIProps|n;
 }
 export const store = new Store();

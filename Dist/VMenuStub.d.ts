@@ -11,7 +11,7 @@ export declare class VMenuStub extends BaseComponent<{
     delayEventHandler?: boolean;
     uiProps?: VMenuUIProps;
 }, {
-    localOpenUIProps?: VMenuUIProps;
+    localOpenUIProps?: VMenuUIProps | n;
 }> {
     static defaultProps: {
         onBody: boolean;
