@@ -6,7 +6,7 @@ import {MouseEventHandler} from "react";
 import {store} from "./Store.js";
 import {BaseComponent} from "./Utils/BaseComponent.js";
 import {Vector2, E} from "./Utils/FromJSVE.js";
-import {AddGlobalStyle} from "./Utils/General.js";
+import {AddGlobalStyle, RunInAction} from "./Utils/General.js";
 import {FixHTMLProps, HTMLProps_Fixed} from "./Utils/@Types.js";
 
 let styles = {
@@ -49,7 +49,7 @@ function EnsureGlobalListenersAdded() {
 	globalListener_onMouseDown = e=> {
 		if (e["ignore"]) return;
 		if (store.openMenuProps) {
-			runInAction("VMenu.globalListener_onMouseDown", ()=>store.openMenuProps = null);
+			RunInAction("VMenu.globalListener_onMouseDown", ()=>store.openMenuProps = null);
 		}
 	};
 	document.addEventListener("mousedown", globalListener_onMouseDown);

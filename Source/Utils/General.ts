@@ -1,4 +1,5 @@
 import {Vector2} from "./FromJSVE.js";
+import {runInAction} from "mobx";
 
 export function GetParents(dom: HTMLElement, topDown = false) {
 	let result = [] as HTMLElement[];
@@ -70,3 +71,8 @@ ${str}
 </style>
 	`);
 };
+
+export function RunInAction(name: string, action: ()=>any) {
+	Object.defineProperty(action, "name", {value: name});
+	return runInAction(action);
+}

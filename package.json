@@ -3,14 +3,10 @@
   "description": "ReactJS context-menu solution built using ReactJS and MobX.",
   "version": "1.0.7",
   "main": "Dist/index.js",
-  "type": "module",
   "typings": "Dist/index.d.ts",
+  "type": "module",
   "license": "MIT",
-  "author": {
-    "name": "Venryx",
-    "email": "venryx@gmail.com",
-    "url": "https://venryx.com"
-  },
+  "author": "Venryx (https://venryx.com)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Venryx/react-vmenu.git"
@@ -23,6 +19,8 @@
     "dist": "tsc"
   },
   "peerDependencies": {
+    "mobx": "^6.3.2",
+    "mobx-react": "^7.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
@@ -33,14 +31,14 @@
     "@types/react": "^17.0.9",
     "babel-cli": "^6.4.5",
     "babel-loader": "^8.0.6",
+    "mobx": "^6.3.2",
+    "mobx-react": "^7.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "ts-loader": "^9.2.3",
     "typescript": "^4.3.2"
   },
   "dependencies": {
-    "classnames": "^2.2.5",
-    "mobx": "^5.15.0",
-    "mobx-react": "^6.1.4"
+    "classnames": "^2.2.5"
   }
 }

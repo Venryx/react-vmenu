@@ -9,7 +9,12 @@ import { Component } from "react";
 let BaseComponent = BaseComponent_1 = class BaseComponent extends Component {
     constructor(props) {
         super(props);
-        this.mounted = false;
+        Object.defineProperty(this, "mounted", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: false
+        });
         //autoBind(this);
         this.state = this.state || {};
         // if using PreRender, wrap render func

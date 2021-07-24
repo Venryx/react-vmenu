@@ -1,5 +1,17 @@
 export class Action {
     constructor(payload) {
+        Object.defineProperty(this, "type", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        Object.defineProperty(this, "payload", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        }); // needed for Is() method's type-inference to work, for some reason
         this.type = this.constructor.name;
         this.payload = payload;
         //this.Extend(payload);

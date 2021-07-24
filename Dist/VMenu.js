@@ -12,11 +12,10 @@ var __rest = (this && this.__rest) || function (s, e) {
 //import Radium from "radium";
 import React from "react";
 import classNames from "classnames";
-import { runInAction } from "mobx";
 import { store } from "./Store.js";
 import { BaseComponent } from "./Utils/BaseComponent.js";
 import { E } from "./Utils/FromJSVE.js";
-import { AddGlobalStyle } from "./Utils/General.js";
+import { AddGlobalStyle, RunInAction } from "./Utils/General.js";
 let styles = {
     root: {
         position: "absolute",
@@ -28,8 +27,18 @@ let styles = {
 };
 export class VMenu {
 }
-VMenu.lastID = -1;
-VMenu.menuChildren = {};
+Object.defineProperty(VMenu, "lastID", {
+    enumerable: true,
+    configurable: true,
+    writable: true,
+    value: -1
+});
+Object.defineProperty(VMenu, "menuChildren", {
+    enumerable: true,
+    configurable: true,
+    writable: true,
+    value: {}
+});
 /*export interface VMenuUIProps extends HTMLProps_Fixed<"div"> {
     pos: Vector2i, style?, menuID: number;
 }*/
@@ -50,7 +59,7 @@ function EnsureGlobalListenersAdded() {
         if (e["ignore"])
             return;
         if (store.openMenuProps) {
-            runInAction("VMenu.globalListener_onMouseDown", () => store.openMenuProps = null);
+            RunInAction("VMenu.globalListener_onMouseDown", () => store.openMenuProps = null);
         }
     };
     document.addEventListener("mousedown", globalListener_onMouseDown);
@@ -68,17 +77,22 @@ AddGlobalStyle(`
 export class VMenuItem extends BaseComponent {
     constructor(props) {
         super(props);
-        this.OnMouseDown = e => {
-            let { onClick } = this.props;
-            e.stopPropagation();
-            if (this.props.enabled) {
-                if (onClick)
-                    onClick(e);
+        Object.defineProperty(this, "OnMouseDown", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: e => {
+                let { onClick } = this.props;
+                e.stopPropagation();
+                if (this.props.enabled) {
+                    if (onClick)
+                        onClick(e);
+                }
+                else {
+                    e.nativeEvent.ignore = true;
+                }
             }
-            else {
-                e.nativeEvent.ignore = true;
-            }
-        };
+        });
         EnsureGlobalListenersAdded();
     }
     render() {
@@ -86,15 +100,25 @@ export class VMenuItem extends BaseComponent {
         return (React.createElement("div", Object.assign({}, rest, { title: title !== null && title !== void 0 ? title : undefined, className: classNames("VMenuItem", className, !enabled && "disabled"), style: E(VMenuItem.styles.root, !enabled && VMenuItem.styles.disabled, style), onMouseDown: this.OnMouseDown }), this.props.text));
     }
 }
-VMenuItem.styles = {
-    root: {
-        zIndex: 21, padding: "2 5", backgroundColor: "rgb(35,35,35)", cursor: "pointer",
-        //":hover": {backgroundColor: "rgb(25,25,25)"}
-    },
-    disabled: {
-        opacity: .5,
-        cursor: "default",
-    },
-};
-VMenuItem.defaultProps = { enabled: true };
+Object.defineProperty(VMenuItem, "styles", {
+    enumerable: true,
+    configurable: true,
+    writable: true,
+    value: {
+        root: {
+            zIndex: 21, padding: "2 5", backgroundColor: "rgb(35,35,35)", cursor: "pointer",
+            //":hover": {backgroundColor: "rgb(25,25,25)"}
+        },
+        disabled: {
+            opacity: .5,
+            cursor: "default",
+        },
+    }
+});
+Object.defineProperty(VMenuItem, "defaultProps", {
+    enumerable: true,
+    configurable: true,
+    writable: true,
+    value: { enabled: true }
+});
 //# sourceMappingURL=VMenu.js.map

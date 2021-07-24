@@ -1,9 +1,9 @@
 import { BaseComponent } from "./Utils/BaseComponent.js";
 import { VMenu } from "./VMenu.js";
 import * as ReactDOM from "react-dom";
+import { RunInAction } from "./Utils/General.js";
 import { VMenuUI } from "./VMenu.js";
 import { store } from "./Store.js";
-import { runInAction } from "mobx";
 import { E, Vector2 } from "./Utils/FromJSVE.js";
 import React from "react";
 //let setImmediate = window["setImmediate"] || window.setTimeout;
@@ -14,12 +14,24 @@ export function ShowVMenu(menuProps, children, menuID) {
     //store.dispatch(new ACTOpenVMenuSet(uiProps_final));
     // wait a tiny bit, so OnGlobalMouseDown runs first
     setTimeout(() => {
-        runInAction("ShowVMenu", () => store.openMenuProps = menuProps_final);
+        RunInAction("ShowVMenu", () => store.openMenuProps = menuProps_final);
     });
 }
 export class VMenuStub extends BaseComponent {
     constructor(props) {
         super(props);
+        Object.defineProperty(this, "menuID", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        Object.defineProperty(this, "forDom", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
         /*OnContextMenu(e) {
             //if (e.button != 2) return;
             //this.Open(new Vector2i(e.pageX, e.pageY));
@@ -30,51 +42,61 @@ export class VMenuStub extends BaseComponent {
         }
         OnMouseDown(e) {
             if (e.button != 2) return;*/
-        this.OnContextMenu = e => {
-            var pagePos = new Vector2(e.pageX, e.pageY);
-            var { onBody, uiProps, preOpen, preventDefault, children } = this.props;
-            //e.persist();
-            if (e.handledByVMenu)
-                return; // already handled by deeper menu-stub
-            // if user's preOpen returns "false" for "do not continue", return true (pass event on without action)
-            if (preOpen && preOpen(e) == false)
-                return; //true;
-            if (preventDefault) {
-                e.preventDefault();
+        Object.defineProperty(this, "OnContextMenu", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: e => {
+                var pagePos = new Vector2(e.pageX, e.pageY);
+                var { onBody, uiProps, preOpen, preventDefault, children } = this.props;
+                //e.persist();
+                if (e.handledByVMenu)
+                    return; // already handled by deeper menu-stub
+                // if user's preOpen returns "false" for "do not continue", return true (pass event on without action)
+                if (preOpen && preOpen(e) == false)
+                    return; //true;
+                if (preventDefault) {
+                    e.preventDefault();
+                }
+                /*var posHoistElement = GetSelfAndParents(this.forDom).find(a=>a.style.position != "static");
+                //var posFromPosHoistElement = pos.Minus(posHoistElement.position_Vector2i()).Plus(posHoistElement.contentOffset());
+                var posInPosHoistElement = pagePos.Minus(GetOffset(posHoistElement)).Minus(GetContentOffset(posHoistElement, true)).Plus(GetScroll(posHoistElement));
+                /*if (this.props.posOffset)
+                    posFromPosHoistElement = posFromPosHoistElement.Plus(this.props.posOffset);*/
+                //this.setState({open: true, pos: posFromPosHoistElement});
+                //let uiProps = {...this.props, pos: pagePos} as VMenuUIProps;
+                let uiProps_final = Object.assign(Object.assign({}, uiProps), { pos: pagePos, menuID: this.menuID });
+                VMenu.menuChildren[this.menuID] = children; // store ui/children on static, since breaks in store
+                if (onBody) {
+                    //store.dispatch(new ACTOpenVMenuSet(uiProps_final));
+                    // wait a tiny bit, so OnGlobalMouseDown runs first
+                    setTimeout(() => {
+                        RunInAction("VMenuStub.OnContextMenu", () => store.openMenuProps = uiProps_final);
+                    });
+                }
+                else {
+                    this.setState({ localOpenUIProps: uiProps_final });
+                }
+                //e.preventDefault();
+                e.handledByVMenu = true;
+                return; //false;
             }
-            /*var posHoistElement = GetSelfAndParents(this.forDom).find(a=>a.style.position != "static");
-            //var posFromPosHoistElement = pos.Minus(posHoistElement.position_Vector2i()).Plus(posHoistElement.contentOffset());
-            var posInPosHoistElement = pagePos.Minus(GetOffset(posHoistElement)).Minus(GetContentOffset(posHoistElement, true)).Plus(GetScroll(posHoistElement));
-            /*if (this.props.posOffset)
-                posFromPosHoistElement = posFromPosHoistElement.Plus(this.props.posOffset);*/
-            //this.setState({open: true, pos: posFromPosHoistElement});
-            //let uiProps = {...this.props, pos: pagePos} as VMenuUIProps;
-            let uiProps_final = Object.assign(Object.assign({}, uiProps), { pos: pagePos, menuID: this.menuID });
-            VMenu.menuChildren[this.menuID] = children; // store ui/children on static, since breaks in store
-            if (onBody) {
-                //store.dispatch(new ACTOpenVMenuSet(uiProps_final));
-                // wait a tiny bit, so OnGlobalMouseDown runs first
-                setTimeout(() => {
-                    runInAction("VMenuStub.OnContextMenu", () => store.openMenuProps = uiProps_final);
-                });
-            }
-            else {
-                this.setState({ localOpenUIProps: uiProps_final });
-            }
-            //e.preventDefault();
-            e.handledByVMenu = true;
-            return; //false;
-        };
-        this.OnGlobalMouseDown = e => {
-            if (e.ignore)
-                return;
-            let { onBody } = this.props;
-            if (!onBody) {
-                if (this.state.localOpenUIProps) {
-                    this.setState({ localOpenUIProps: null });
+        });
+        Object.defineProperty(this, "OnGlobalMouseDown", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: e => {
+                if (e.ignore)
+                    return;
+                let { onBody } = this.props;
+                if (!onBody) {
+                    if (this.state.localOpenUIProps) {
+                        this.setState({ localOpenUIProps: null });
+                    }
                 }
             }
-        };
+        });
         this.menuID = ++VMenu.lastID;
     }
     ComponentDidMount() {
@@ -109,5 +131,10 @@ export class VMenuStub extends BaseComponent {
         return React.createElement("div", null);
     }
 }
-VMenuStub.defaultProps = { onBody: true, preventDefault: true };
+Object.defineProperty(VMenuStub, "defaultProps", {
+    enumerable: true,
+    configurable: true,
+    writable: true,
+    value: { onBody: true, preventDefault: true }
+});
 //# sourceMappingURL=VMenuStub.js.map

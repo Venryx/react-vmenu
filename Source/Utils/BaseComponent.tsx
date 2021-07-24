@@ -20,7 +20,7 @@ export class BaseComponent<P, S> extends Component<P & BaseProps, S> {
 		}
 	}
 
-	refs;
+	declare refs;
 
 	ComponentWillMount(): void {};
 	ComponentWillMountOrReceiveProps(props: any, forMount?: boolean): void {};

@@ -6,3 +6,4 @@ export declare function GetContentOffset(dom: HTMLElement, includePadding?: bool
 export declare function GetScroll(dom: HTMLElement): Vector2;
 export declare function AddGlobalElement(html: string): void;
 export declare function AddGlobalStyle(str: any): void;
+export declare function RunInAction(name: string, action: () => any): any;

@@ -2,7 +2,7 @@ import {Component} from "react";
 import {BaseComponent} from "./Utils/BaseComponent.js";
 import {VMenu, VMenuUIProps} from "./VMenu.js";
 import * as ReactDOM from "react-dom";
-import {GetSelfAndParents, GetOffset, GetScroll, GetContentOffset} from "./Utils/General.js";
+import {GetSelfAndParents, GetOffset, GetScroll, GetContentOffset, RunInAction} from "./Utils/General.js";
 import {VMenuUI} from "./VMenu.js";
 import {store} from "./Store.js";
 import {runInAction} from "mobx";
@@ -18,7 +18,7 @@ export function ShowVMenu(menuProps: Omit<VMenuUIProps, "menuID"> & Partial<Pick
 	//store.dispatch(new ACTOpenVMenuSet(uiProps_final));
 	// wait a tiny bit, so OnGlobalMouseDown runs first
 	setTimeout(()=> {
-		runInAction("ShowVMenu", ()=>store.openMenuProps = menuProps_final);
+		RunInAction("ShowVMenu", ()=>store.openMenuProps = menuProps_final);
 	});
 }
 
@@ -96,7 +96,7 @@ export class VMenuStub extends BaseComponent<
 			//store.dispatch(new ACTOpenVMenuSet(uiProps_final));
 			// wait a tiny bit, so OnGlobalMouseDown runs first
 			setTimeout(()=> {
-				runInAction("VMenuStub.OnContextMenu", ()=>store.openMenuProps = uiProps_final);
+				RunInAction("VMenuStub.OnContextMenu", ()=>store.openMenuProps = uiProps_final);
 			});
 		} else {
 			this.setState({localOpenUIProps: uiProps_final});

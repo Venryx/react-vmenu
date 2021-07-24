@@ -1,4 +1,5 @@
 import { Vector2 } from "./FromJSVE.js";
+import { runInAction } from "mobx";
 export function GetParents(dom, topDown = false) {
     let result = [];
     let currentDom = dom;
@@ -68,4 +69,8 @@ ${str}
 	`);
 }
 ;
+export function RunInAction(name, action) {
+    Object.defineProperty(action, "name", { value: name });
+    return runInAction(action);
+}
 //# sourceMappingURL=General.js.map
