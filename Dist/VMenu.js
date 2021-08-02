@@ -85,6 +85,7 @@ export class VMenuItem extends BaseComponent {
                 let { onClick } = this.props;
                 e.stopPropagation();
                 if (this.props.enabled) {
+                    RunInAction("VMenuItem.onMouseDown", () => store.openMenuProps = null);
                     if (onClick)
                         onClick(e);
                 }
