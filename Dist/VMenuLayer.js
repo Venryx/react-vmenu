@@ -5,14 +5,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Component } from "react";
-import { Action } from "./Utils/Action.js";
 import { VMenu } from "./VMenu.js";
 import { VMenuUI } from "./VMenu.js";
 import { observer } from "mobx-react";
 import { store } from "./Store.js";
 import React from "react";
-export class ACTOpenVMenuSet extends Action {
-}
 /*export class VMenuController {
     constructor(options: VMenuOptions, menuID: number) {
         this.options = options;

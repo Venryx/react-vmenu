@@ -1,12 +1,9 @@
 import {Component} from "react";
-import {Action} from "./Utils/Action.js";
 import {VMenu, VMenuUIProps} from "./VMenu.js";
 import {VMenuUI} from "./VMenu.js";
 import {observer} from "mobx-react";
 import {store} from "./Store.js";
 import React from "react";
-
-export class ACTOpenVMenuSet extends Action<VMenuUIProps> {}
 
 /*export class VMenuController {
 	constructor(options: VMenuOptions, menuID: number) {
