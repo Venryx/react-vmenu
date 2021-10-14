@@ -2,11 +2,12 @@ import { Component } from "react";
 import { BaseComponent } from "./Utils/BaseComponent.js";
 import { VMenuUIProps } from "./VMenu.js";
 import React from "react";
-import { n } from "./Utils/@Types.js";
-export declare function ShowVMenu(menuProps: Omit<VMenuUIProps, "menuID"> & Partial<Pick<VMenuUIProps, "menuID">>, children: React.ReactChild, menuID?: number): void;
+import { n, RequiredBy } from "./Utils/@Types.js";
+export declare function ShowVMenu(menuProps: RequiredBy<VMenuUIProps, "pos">, children: React.ReactChild): void;
 export declare class VMenuStub extends BaseComponent<{
     onBody?: boolean;
     for?: () => Component<any, any>;
+    eventFilter: (e: MouseEvent) => any;
     preOpen?: (e: any) => boolean;
     preventDefault?: boolean;
     delayEventHandler?: boolean;
@@ -14,10 +15,7 @@ export declare class VMenuStub extends BaseComponent<{
 }, {
     localOpenUIProps?: VMenuUIProps | n;
 }> {
-    static defaultProps: {
-        onBody: boolean;
-        preventDefault: boolean;
-    };
+    static defaultProps: Partial<VMenuStub["props"]>;
     constructor(props: any);
     menuID: number;
     forDom: HTMLElement;

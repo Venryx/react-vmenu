@@ -7,7 +7,7 @@ import { store } from "./Store.js";
 import { E, Vector2 } from "./Utils/FromJSVE.js";
 import React from "react";
 //let setImmediate = window["setImmediate"] || window.setTimeout;
-export function ShowVMenu(menuProps, children, menuID) {
+export function ShowVMenu(menuProps, children) {
     var _a;
     const menuProps_final = E(menuProps, { menuID: (_a = menuProps.menuID) !== null && _a !== void 0 ? _a : ++VMenu.lastID });
     VMenu.menuChildren[menuProps_final.menuID] = children; // store ui/children on static, since breaks in store
@@ -32,26 +32,17 @@ export class VMenuStub extends BaseComponent {
             writable: true,
             value: void 0
         });
-        /*OnContextMenu(e) {
-            //if (e.button != 2) return;
-            //this.Open(new Vector2i(e.pageX, e.pageY));
-            //e.preventDefault();
-            //e.stopPropagation();
-            debugger;
-            return false;
-        }
-        OnMouseDown(e) {
-            if (e.button != 2) return;*/
         Object.defineProperty(this, "OnContextMenu", {
             enumerable: true,
             configurable: true,
             writable: true,
             value: e => {
                 var pagePos = new Vector2(e.pageX, e.pageY);
-                var { onBody, uiProps, preOpen, preventDefault, children } = this.props;
+                var { onBody, uiProps, eventFilter, preOpen, preventDefault, children } = this.props;
                 //e.persist();
-                if (e.handledByVMenu)
-                    return; // already handled by deeper menu-stub
+                //if (e.handledByVMenu) return; // already handled by deeper menu-stub
+                if (eventFilter && eventFilter(e) == false)
+                    return;
                 // if user's preOpen returns "false" for "do not continue", return true (pass event on without action)
                 if (preOpen && preOpen(e) == false)
                     return; //true;
@@ -131,10 +122,23 @@ export class VMenuStub extends BaseComponent {
         return React.createElement("div", null);
     }
 }
+//static defaultProps: Partial<React.ComponentProps<typeof VMenuStub>> = {
 Object.defineProperty(VMenuStub, "defaultProps", {
     enumerable: true,
     configurable: true,
     writable: true,
-    value: { onBody: true, preventDefault: true }
+    value: {
+        onBody: true,
+        eventFilter: e => {
+            // if event already handled by deeper menu-stub, ignore
+            if (e["handledByVMenu"])
+                return false;
+            // if click originated within an existing vmenu, don't trigger the creation of a new vmenu on top of it (if behavior unwanted, parent can override this eventFilter func)
+            if (e.target instanceof Element && e.target.closest(".VMenu") != null)
+                return false;
+            return true;
+        },
+        preventDefault: true,
+    }
 });
 //# sourceMappingURL=VMenuStub.js.map

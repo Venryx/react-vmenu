@@ -1,6 +1,6 @@
 import {Component} from "react";
 import {BaseComponent} from "./Utils/BaseComponent.js";
-import {VMenu, VMenuUIProps} from "./VMenu.js";
+import {VMenu, VMenuUIProps, VMenuUIProps_WithPosInfo} from "./VMenu.js";
 import * as ReactDOM from "react-dom";
 import {GetSelfAndParents, GetOffset, GetScroll, GetContentOffset, RunInAction} from "./Utils/General.js";
 import {VMenuUI} from "./VMenu.js";
@@ -8,11 +8,11 @@ import {store} from "./Store.js";
 import {runInAction} from "mobx";
 import {E, Vector2} from "./Utils/FromJSVE.js";
 import React from "react";
-import {n} from "./Utils/@Types.js";
+import {n, RequiredBy} from "./Utils/@Types.js";
 
 //let setImmediate = window["setImmediate"] || window.setTimeout;
 
-export function ShowVMenu(menuProps: Omit<VMenuUIProps, "menuID"> & Partial<Pick<VMenuUIProps, "menuID">>, children: React.ReactChild, menuID?: number) {
+export function ShowVMenu(menuProps: RequiredBy<VMenuUIProps, "pos">, children: React.ReactChild) {
 	const menuProps_final = E(menuProps, {menuID: menuProps.menuID ?? ++VMenu.lastID});
 	VMenu.menuChildren[menuProps_final.menuID] = children; // store ui/children on static, since breaks in store
 	//store.dispatch(new ACTOpenVMenuSet(uiProps_final));
@@ -23,10 +23,25 @@ export function ShowVMenu(menuProps: Omit<VMenuUIProps, "menuID"> & Partial<Pick
 }
 
 export class VMenuStub extends BaseComponent<
-	{onBody?: boolean, for?: ()=>Component<any, any>, preOpen?: (e)=>boolean, preventDefault?: boolean, delayEventHandler?: boolean, uiProps?: VMenuUIProps},
+	{
+		onBody?: boolean, for?: ()=>Component<any, any>,
+		eventFilter: (e: MouseEvent)=>any, preOpen?: (e)=>boolean, preventDefault?: boolean, delayEventHandler?: boolean,
+		uiProps?: VMenuUIProps
+	},
 	{localOpenUIProps?: VMenuUIProps|n}
 > {
-	static defaultProps = {onBody: true, preventDefault: true};
+	//static defaultProps: Partial<React.ComponentProps<typeof VMenuStub>> = {
+	static defaultProps: Partial<VMenuStub["props"]> = {
+		onBody: true,
+		eventFilter: e=>{
+			// if event already handled by deeper menu-stub, ignore
+			if (e["handledByVMenu"]) return false;
+			// if click originated within an existing vmenu, don't trigger the creation of a new vmenu on top of it (if behavior unwanted, parent can override this eventFilter func)
+			if (e.target instanceof Element && e.target.closest(".VMenu") != null) return false;
+			return true;
+		},
+		preventDefault: true,
+	};
 
 	constructor(props) {
 		super(props);
@@ -55,22 +70,13 @@ export class VMenuStub extends BaseComponent<
 
 		//this.PostRender();
 	}
-	/*OnContextMenu(e) {
-		//if (e.button != 2) return;
-		//this.Open(new Vector2i(e.pageX, e.pageY));
-		//e.preventDefault();
-	    //e.stopPropagation();
-		debugger;
-		return false;
-	}
-	OnMouseDown(e) {
-		if (e.button != 2) return;*/
 	OnContextMenu = e=> {
 		var pagePos = new Vector2(e.pageX, e.pageY);
 		
-		var {onBody, uiProps, preOpen, preventDefault, children} = this.props;
+		var {onBody, uiProps, eventFilter, preOpen, preventDefault, children} = this.props;
 		//e.persist();
-		if (e.handledByVMenu) return; // already handled by deeper menu-stub
+		//if (e.handledByVMenu) return; // already handled by deeper menu-stub
+		if (eventFilter && eventFilter(e) == false) return;
 		// if user's preOpen returns "false" for "do not continue", return true (pass event on without action)
 		if (preOpen && preOpen(e) == false) return; //true;
 
@@ -86,7 +92,7 @@ export class VMenuStub extends BaseComponent<
 
 		//this.setState({open: true, pos: posFromPosHoistElement});
 		//let uiProps = {...this.props, pos: pagePos} as VMenuUIProps;
-		let uiProps_final: VMenuUIProps = {
+		let uiProps_final: VMenuUIProps_WithPosInfo = {
 			...uiProps,
 			pos: pagePos,
 			menuID: this.menuID, // add menu id to ui-props (in case user wants to access from react-comp instance)
