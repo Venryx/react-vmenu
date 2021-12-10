@@ -56,7 +56,7 @@ export class BaseComponent<P, S> extends Component<P & BaseProps, S> {
 	}
 	ComponentDidUpdate(...args: any[]): void {};
 	@Sealed componentDidUpdate(...args) {
-	    this.ComponentDidUpdate(...args);
+		this.ComponentDidUpdate(...args);
 		this.ComponentDidMountOrUpdate(false);
 		if (this.PostRender != BaseComponent.prototype.PostRender) {
 			/*setTimeout(()=>window.requestAnimationFrame(()=> {

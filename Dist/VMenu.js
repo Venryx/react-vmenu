@@ -12,15 +12,14 @@ var __rest = (this && this.__rest) || function (s, e) {
 //import Radium from "radium";
 import React, { useEffect, useMemo } from "react";
 import classNames from "classnames";
-import { store } from "./Store.js";
 import { BaseComponent } from "./Utils/BaseComponent.js";
 import { E } from "./Utils/FromJSVE.js";
-import { AddGlobalStyle, RunInAction } from "./Utils/General.js";
+export const VMenu_borderStyle = "1px outset #555";
 let styles = {
     root: {
         position: "absolute",
         //position: "fixed",
-        zIndex: 20, backgroundColor: "rgb(35,35,35)", border: "1px outset #555",
+        zIndex: 20, backgroundColor: "rgb(35,35,35)", border: VMenu_borderStyle,
         fontStyle: "initial", whiteSpace: "nowrap",
         //":hover": {backgroundColor: "rgb(25,25,25)"},
     },
@@ -73,76 +72,4 @@ export class VMenuUI extends BaseComponent {
         return (React.createElement("div", Object.assign({}, rest, { title: title !== null && title !== void 0 ? title : undefined, className: classNames("VMenu", className), style: E(styles.root, pos && { left: pos.x, top: pos.y }, style) }), children));
     }
 }
-// add this menu-closing behavior globally (and persistently), since user may display vmenu manually with ShowVMenu()
-let globalListener_onMouseDown;
-function EnsureGlobalListenersAdded() {
-    if (globalListener_onMouseDown != null)
-        return;
-    globalListener_onMouseDown = e => {
-        if (e["ignore"])
-            return;
-        if (store.openMenuProps) {
-            RunInAction("VMenu.globalListener_onMouseDown", () => store.openMenuProps = null);
-        }
-    };
-    document.addEventListener("mousedown", globalListener_onMouseDown);
-}
-AddGlobalStyle(`
-/*.VMenuItem.disabled {
-	opacity: .5;
-	/#*pointer-events: none;*#/
-	cursor: default;
-}*/
-.VMenuItem:not(.disabled):hover {
-	background-color: rgb(25,25,25) !important;
-}
-`);
-export class VMenuItem extends BaseComponent {
-    constructor(props) {
-        super(props);
-        Object.defineProperty(this, "OnMouseDown", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: e => {
-                let { onClick } = this.props;
-                e.stopPropagation();
-                if (this.props.enabled) {
-                    RunInAction("VMenuItem.onMouseDown", () => store.openMenuProps = null);
-                    if (onClick)
-                        onClick(e);
-                }
-                else {
-                    e.nativeEvent.ignore = true;
-                }
-            }
-        });
-        EnsureGlobalListenersAdded();
-    }
-    render() {
-        let _a = this.props, { text, enabled, className, style, onClick, title } = _a, rest = __rest(_a, ["text", "enabled", "className", "style", "onClick", "title"]);
-        return (React.createElement("div", Object.assign({}, rest, { title: title !== null && title !== void 0 ? title : undefined, className: classNames("VMenuItem", className, !enabled && "disabled"), style: E(VMenuItem.styles.root, !enabled && VMenuItem.styles.disabled, style), onMouseDown: this.OnMouseDown }), this.props.text));
-    }
-}
-Object.defineProperty(VMenuItem, "styles", {
-    enumerable: true,
-    configurable: true,
-    writable: true,
-    value: {
-        root: {
-            zIndex: 21, padding: "2 5", backgroundColor: "rgb(35,35,35)", cursor: "pointer",
-            //":hover": {backgroundColor: "rgb(25,25,25)"}
-        },
-        disabled: {
-            opacity: .5,
-            cursor: "default",
-        },
-    }
-});
-Object.defineProperty(VMenuItem, "defaultProps", {
-    enumerable: true,
-    configurable: true,
-    writable: true,
-    value: { enabled: true }
-});
 //# sourceMappingURL=VMenu.js.map
