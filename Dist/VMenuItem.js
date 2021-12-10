@@ -77,11 +77,21 @@ export class VMenuItem extends BaseComponent {
                     }
                 } }),
                 text,
-                children != null && childLayout == "right" && hovered &&
-                    React.createElement("div", { style: {
-                            position: "absolute", left: "100%", top: -1,
-                            border: VMenu_borderStyle,
-                        } }, children)),
+                children != null && childLayout == "right" &&
+                    React.createElement(React.Fragment, null,
+                        React.createElement("div", { style: {
+                                //position: "absolute", right: 5, top: 0, bottom: 0,
+                                marginLeft: "auto", paddingLeft: 5, boxSizing: "content-box",
+                                backgroundImage: `url('${rightArrowSVGDataURI}')`,
+                                backgroundRepeat: "no-repeat", backgroundPositionX: "right", backgroundPositionY: "center",
+                                width: 15, height: 15,
+                                filter: "invert(1)", opacity: .7,
+                            } }),
+                        hovered &&
+                            React.createElement("div", { style: {
+                                    position: "absolute", left: "100%", top: -1,
+                                    border: VMenu_borderStyle,
+                                } }, children))),
             children != null && childLayout == "below" &&
                 React.createElement("div", { style: { border: "solid rgba(100,100,100,1)", borderWidth: "0 0 0 5px" } }, children)));
     }
@@ -94,6 +104,7 @@ Object.defineProperty(VMenuItem, "styles", {
         root: {
             position: "relative",
             zIndex: 21, padding: "2 5", backgroundColor: "rgb(35,35,35)", cursor: "pointer",
+            display: "flex",
             //":hover": {backgroundColor: "rgb(25,25,25)"}
         },
         disabled: {
@@ -108,4 +119,5 @@ Object.defineProperty(VMenuItem, "defaultProps", {
     writable: true,
     value: { enabled: true, childLayout: "right" }
 });
+const rightArrowSVGDataURI = `data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgdmlld0JveD0iMCAwIDQ0OCA1MTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N${""}2ZyI+PHBhdGggZD0iTTE5MC41IDY2LjlsMjIuMi0yMi4yYzkuNC05LjQgMjQuNi05LjQgMzMuOSAwTDQ0MSAyMzljOS40IDkuNCA5LjQgMjQuNiAwIDMzLjlMMjQ2LjYgNDY3LjNjLTkuNCA5LjQtMjQuNiA5Lj${""}QtMzMuOSAwbC0yMi4yLTIyLjJjLTkuNS05LjUtOS4zLTI1IC40LTM0LjNMMzExLjQgMjk2SDI0Yy0xMy4zIDAtMjQtMTAuNy0yNC0yNHYtMzJjMC0xMy4zIDEwLjctMjQgMjQtMjRoMjg3LjRMMTkwLjkgMTAxL${""}jJjLTkuOC05LjMtMTAtMjQuOC0uNC0zNC4zeiIvPjwvc3ZnPg==`;
 //# sourceMappingURL=VMenuItem.js.map

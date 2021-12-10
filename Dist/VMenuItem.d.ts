@@ -17,6 +17,7 @@ export declare class VMenuItem extends BaseComponent<{
             padding: string;
             backgroundColor: string;
             cursor: string;
+            display: string;
         };
         disabled: {
             opacity: number;
