@@ -16,7 +16,7 @@ import { store } from "./Store.js";
 import { BaseComponent } from "./Utils/BaseComponent.js";
 import { E } from "./Utils/FromJSVE.js";
 import { AddGlobalStyle, RunInAction } from "./Utils/General.js";
-import { VMenu_borderStyle } from "./VMenu.js";
+import { VMenu_backgroundColor, VMenu_borderStyle } from "./VMenu.js";
 // add this menu-closing behavior globally (and persistently), since user may display vmenu manually with ShowVMenu()
 let globalListener_onMouseDown;
 function EnsureGlobalListenersAdded() {
@@ -90,7 +90,7 @@ export class VMenuItem extends BaseComponent {
                         hovered &&
                             React.createElement("div", { style: {
                                     position: "absolute", left: "100%", top: -1,
-                                    border: VMenu_borderStyle,
+                                    backgroundColor: VMenu_backgroundColor, border: VMenu_borderStyle,
                                 } }, children))),
             children != null && childLayout == "below" &&
                 React.createElement("div", { style: { border: "solid rgba(100,100,100,1)", borderWidth: "0 0 0 5px" } }, children)));

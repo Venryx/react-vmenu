@@ -8,7 +8,7 @@ import {BaseComponent} from "./Utils/BaseComponent.js";
 import {Vector2, E} from "./Utils/FromJSVE.js";
 import {AddGlobalStyle, RunInAction} from "./Utils/General.js";
 import {FixHTMLProps, HTMLProps_Fixed, RequiredBy} from "./Utils/@Types.js";
-import {VMenu_borderStyle} from "./VMenu.js";
+import {VMenu_backgroundColor, VMenu_borderStyle} from "./VMenu.js";
 
 // add this menu-closing behavior globally (and persistently), since user may display vmenu manually with ShowVMenu()
 let globalListener_onMouseDown: (event: MouseEvent)=>any;
@@ -91,7 +91,7 @@ export class VMenuItem extends BaseComponent<{text: string, enabled?: boolean, c
 						{hovered &&
 						<div style={{
 							position: "absolute", left: "100%", top: -1,
-							border: VMenu_borderStyle,
+							backgroundColor: VMenu_backgroundColor, border: VMenu_borderStyle,
 						}}>
 							{children}
 						</div>}

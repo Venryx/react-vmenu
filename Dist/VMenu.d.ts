@@ -2,6 +2,7 @@
 import { BaseComponent } from "./Utils/BaseComponent.js";
 import { Vector2 } from "./Utils/FromJSVE.js";
 import { HTMLProps_Fixed, RequiredBy } from "./Utils/@Types.js";
+export declare const VMenu_backgroundColor = "rgb(35,35,35)";
 export declare const VMenu_borderStyle = "1px outset #555";
 export declare type VMenuOpenListener = (menuID: number) => any;
 export declare class VMenu {

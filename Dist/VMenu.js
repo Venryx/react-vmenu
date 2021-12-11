@@ -14,12 +14,13 @@ import React, { useEffect, useMemo } from "react";
 import classNames from "classnames";
 import { BaseComponent } from "./Utils/BaseComponent.js";
 import { E } from "./Utils/FromJSVE.js";
+export const VMenu_backgroundColor = "rgb(35,35,35)";
 export const VMenu_borderStyle = "1px outset #555";
 let styles = {
     root: {
         position: "absolute",
         //position: "fixed",
-        zIndex: 20, backgroundColor: "rgb(35,35,35)", border: VMenu_borderStyle,
+        zIndex: 20, backgroundColor: VMenu_backgroundColor, border: VMenu_borderStyle,
         fontStyle: "initial", whiteSpace: "nowrap",
         //":hover": {backgroundColor: "rgb(25,25,25)"},
     },
