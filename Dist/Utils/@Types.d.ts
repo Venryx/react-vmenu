@@ -1,7 +1,7 @@
-/// <reference types="react" />
-export declare type n = null | undefined;
-export declare type FixHTMLProps<T> = Omit<T, "title"> & {
+import React from "react";
+export type n = null | undefined;
+export type FixHTMLProps<T> = Omit<T, "title"> & {
     title?: string | n;
 };
-export declare type HTMLProps_Fixed<T extends keyof JSX.IntrinsicElements> = FixHTMLProps<JSX.IntrinsicElements[T]>;
-export declare type RequiredBy<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;
+export type HTMLProps_Fixed<T extends keyof React.JSX.IntrinsicElements> = FixHTMLProps<React.JSX.IntrinsicElements[T]>;
+export type RequiredBy<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;

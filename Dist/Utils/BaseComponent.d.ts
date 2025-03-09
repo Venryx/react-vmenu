@@ -1,5 +1,5 @@
 import { Component } from "react";
-export declare type BaseProps = {
+export type BaseProps = {
     ref?: any;
 };
 export declare class BaseComponent<P, S> extends Component<P & BaseProps, S> {

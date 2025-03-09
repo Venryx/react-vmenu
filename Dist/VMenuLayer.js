@@ -63,7 +63,7 @@ let VMenuLayer = class VMenuLayer extends Component {
         //let {overlayStyle, onOK, onCancel} = openMenuProps;
         let children = VMenu.menuChildren[openMenuProps.menuID];
         return (React.createElement("div", null,
-            React.createElement(VMenuUI, Object.assign({}, openMenuProps, { children: children }))));
+            React.createElement(VMenuUI, { ...openMenuProps, children: children })));
     }
 };
 VMenuLayer = __decorate([

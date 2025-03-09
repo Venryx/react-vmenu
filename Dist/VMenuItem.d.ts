@@ -1,7 +1,7 @@
-/// <reference types="react" />
+import React from "react";
 import { BaseComponent } from "./Utils/BaseComponent.js";
 import { HTMLProps_Fixed } from "./Utils/@Types.js";
-export declare type ChildLayout = "below" | "right";
+export type ChildLayout = "below" | "right";
 export declare class VMenuItem extends BaseComponent<{
     text: string;
     enabled?: boolean;
@@ -29,6 +29,6 @@ export declare class VMenuItem extends BaseComponent<{
         childLayout: string;
     };
     constructor(props: any);
-    render(): JSX.Element;
+    render(): React.JSX.Element;
     OnMouseDown: (e: any) => void;
 }

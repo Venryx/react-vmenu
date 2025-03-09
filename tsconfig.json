@@ -3,10 +3,18 @@
 		// general
 		"rootDir": "Source",
 		"sourceMap": true,
-		"watch": true,
 		"module": "ES2015",
 		"moduleResolution": "node",
-		"target": "ES2015",
+		/*"target": "ES2015",
+		"lib": [
+			"ES2015",
+			"DOM",
+			"DOM.Iterable",
+			// needed for eg. ReadonlySetLike that mobx references
+			"ESNext",
+			"ESNext.Collection",
+		],*/
+		"target": "ESNext",
 		"jsx": "react",
 		"noImplicitAny": false,
 		

@@ -1,9 +1,9 @@
-import { Component } from "react";
+import { Component, PropsWithChildren } from "react";
 import { BaseComponent } from "./Utils/BaseComponent.js";
 import { VMenuUIProps } from "./VMenu.js";
 import React from "react";
 import { n, RequiredBy } from "./Utils/@Types.js";
-export declare function ShowVMenu(menuProps: RequiredBy<VMenuUIProps, "pos">, children: React.ReactChild): void;
+export declare function ShowVMenu(menuProps: RequiredBy<VMenuUIProps, "pos">, children: React.ReactNode): void;
 export declare class VMenuStub extends BaseComponent<{
     onBody?: boolean;
     for?: () => Component<any, any>;
@@ -12,7 +12,7 @@ export declare class VMenuStub extends BaseComponent<{
     preventDefault?: boolean;
     delayEventHandler?: boolean;
     uiProps?: VMenuUIProps;
-}, {
+} & PropsWithChildren, {
     localOpenUIProps?: VMenuUIProps | n;
 }> {
     static defaultProps: Partial<VMenuStub["props"]>;
@@ -23,5 +23,5 @@ export declare class VMenuStub extends BaseComponent<{
     OnContextMenu: (e: any) => void;
     OnGlobalMouseDown: (e: any) => void;
     ComponentWillUnmount(): void;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }

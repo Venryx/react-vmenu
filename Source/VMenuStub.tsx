@@ -1,4 +1,4 @@
-import {Component} from "react";
+import {Component, PropsWithChildren} from "react";
 import {BaseComponent} from "./Utils/BaseComponent.js";
 import {VMenu, VMenuUIProps, VMenuUIProps_WithPosInfo} from "./VMenu.js";
 import * as ReactDOM from "react-dom";
@@ -12,7 +12,7 @@ import {n, RequiredBy} from "./Utils/@Types.js";
 
 //let setImmediate = window["setImmediate"] || window.setTimeout;
 
-export function ShowVMenu(menuProps: RequiredBy<VMenuUIProps, "pos">, children: React.ReactChild) {
+export function ShowVMenu(menuProps: RequiredBy<VMenuUIProps, "pos">, children: React.ReactNode) {
 	const menuProps_final = E(menuProps, {menuID: menuProps.menuID ?? ++VMenu.lastID});
 	VMenu.menuChildren[menuProps_final.menuID] = children; // store ui/children on static, since breaks in store
 	//store.dispatch(new ACTOpenVMenuSet(uiProps_final));
@@ -27,7 +27,7 @@ export class VMenuStub extends BaseComponent<
 		onBody?: boolean, for?: ()=>Component<any, any>,
 		eventFilter: (e: MouseEvent)=>any, preOpen?: (e)=>boolean, preventDefault?: boolean, delayEventHandler?: boolean,
 		uiProps?: VMenuUIProps
-	},
+	} & PropsWithChildren,
 	{localOpenUIProps?: VMenuUIProps|n}
 > {
 	//static defaultProps: Partial<React.ComponentProps<typeof VMenuStub>> = {
@@ -58,7 +58,7 @@ export class VMenuStub extends BaseComponent<
 		this.forDom.addEventListener("contextmenu", e=>{
 			if (delayEventHandler) {
 				// wait a tiny bit, so user's onContextMenu can set "e.ignore = true;"
-				(window["setImmediate"] || setTimeout)(()=>this.OnContextMenu(e), 0);
+				(window["setImmediate"] as any || setTimeout)(()=>this.OnContextMenu(e), 0);
 			} else {
 				this.OnContextMenu(e);
 			}

@@ -6,15 +6,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { makeObservable, observable } from "mobx";
 export class Store {
-    constructor() {
-        Object.defineProperty(this, "openMenuProps", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        makeObservable(this);
-    }
+    constructor() { makeObservable(this); }
+    openMenuProps;
 }
 __decorate([
     observable

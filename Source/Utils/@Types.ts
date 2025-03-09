@@ -12,7 +12,7 @@ There are three types of interest, when we want to get an element-type's native 
 
 The last one is the easiest to make a type-helper for, so we use it below.
 */
-export type HTMLProps_Fixed<T extends keyof JSX.IntrinsicElements> = FixHTMLProps<JSX.IntrinsicElements[T]>;
+export type HTMLProps_Fixed<T extends keyof React.JSX.IntrinsicElements> = FixHTMLProps<React.JSX.IntrinsicElements[T]>;
 
 // from: https://stackoverflow.com/a/54178819
 //export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
