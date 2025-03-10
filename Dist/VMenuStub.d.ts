@@ -1,4 +1,4 @@
-import { Component, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { BaseComponent } from "./Utils/BaseComponent.js";
 import { VMenuUIProps } from "./VMenu.js";
 import React from "react";
@@ -6,7 +6,7 @@ import { n, RequiredBy } from "./Utils/@Types.js";
 export declare function ShowVMenu(menuProps: RequiredBy<VMenuUIProps, "pos">, children: React.ReactNode): void;
 export declare class VMenuStub extends BaseComponent<{
     onBody?: boolean;
-    for?: () => Component<any, any>;
+    for?: () => HTMLElement;
     eventFilter: (e: MouseEvent) => any;
     preOpen?: (e: any) => boolean;
     preventDefault?: boolean;
@@ -23,5 +23,6 @@ export declare class VMenuStub extends BaseComponent<{
     OnContextMenu: (e: any) => void;
     OnGlobalMouseDown: (e: any) => void;
     ComponentWillUnmount(): void;
+    root: HTMLDivElement | n;
     render(): React.JSX.Element;
 }

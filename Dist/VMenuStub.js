@@ -1,6 +1,5 @@
 import { BaseComponent } from "./Utils/BaseComponent.js";
 import { VMenu } from "./VMenu.js";
-import * as ReactDOM from "react-dom";
 import { RunInAction } from "./Utils/General.js";
 import { VMenuUI } from "./VMenu.js";
 import { store } from "./Store.js";
@@ -39,7 +38,8 @@ export class VMenuStub extends BaseComponent {
     forDom;
     ComponentDidMount() {
         var { for: forFunc, delayEventHandler } = this.props;
-        this.forDom = forFunc ? ReactDOM.findDOMNode(forFunc()) : ReactDOM.findDOMNode(this).parentElement;
+        //this.forDom = forFunc ? ReactDOM.findDOMNode(forFunc()) : ReactDOM.findDOMNode(this).parentElement;
+        this.forDom = forFunc ? forFunc() : this.root.parentElement;
         //this.forDom.addEventListener("contextmenu", e=>this.OnContextMenu(e));
         this.forDom.addEventListener("contextmenu", e => {
             if (delayEventHandler) {
@@ -110,13 +110,14 @@ export class VMenuStub extends BaseComponent {
         //this.forDom.removeEventListener("mousedown", this.OnMouseDown);
         document.removeEventListener("mousedown", this.OnGlobalMouseDown);
     }
+    root;
     render() {
         let { localOpenUIProps } = this.state;
         // if opening locally (usually not the case)
         if (localOpenUIProps != null) {
             return React.createElement(VMenuUI, { ...localOpenUIProps });
         }
-        return React.createElement("div", null);
+        return React.createElement("div", { ref: a => void (this.root = a) });
     }
 }
 //# sourceMappingURL=VMenuStub.js.map

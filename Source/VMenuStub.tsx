@@ -24,7 +24,7 @@ export function ShowVMenu(menuProps: RequiredBy<VMenuUIProps, "pos">, children: 
 
 export class VMenuStub extends BaseComponent<
 	{
-		onBody?: boolean, for?: ()=>Component<any, any>,
+		onBody?: boolean, for?: ()=>HTMLElement,
 		eventFilter: (e: MouseEvent)=>any, preOpen?: (e)=>boolean, preventDefault?: boolean, delayEventHandler?: boolean,
 		uiProps?: VMenuUIProps
 	} & PropsWithChildren,
@@ -51,9 +51,10 @@ export class VMenuStub extends BaseComponent<
 
 	forDom: HTMLElement;
 	ComponentDidMount() {
-	    var {for: forFunc, delayEventHandler} = this.props;
-	    this.forDom = forFunc ? ReactDOM.findDOMNode(forFunc()) : ReactDOM.findDOMNode(this).parentElement;
-		
+		var {for: forFunc, delayEventHandler} = this.props;
+		//this.forDom = forFunc ? ReactDOM.findDOMNode(forFunc()) : ReactDOM.findDOMNode(this).parentElement;
+		this.forDom = forFunc ? forFunc() : this.root!.parentElement as HTMLElement;
+	
 		//this.forDom.addEventListener("contextmenu", e=>this.OnContextMenu(e));
 		this.forDom.addEventListener("contextmenu", e=>{
 			if (delayEventHandler) {
@@ -128,12 +129,13 @@ export class VMenuStub extends BaseComponent<
 		document.removeEventListener("mousedown", this.OnGlobalMouseDown);
 	}
 
+	root: HTMLDivElement|n;
 	render() {
 		let {localOpenUIProps} = this.state;
 		// if opening locally (usually not the case)
 		if (localOpenUIProps != null) {
 			return <VMenuUI {...localOpenUIProps as any}/>;
 		}
-		return <div/>;
+		return <div ref={a=>void(this.root = a)}/>;
 	}
 }
