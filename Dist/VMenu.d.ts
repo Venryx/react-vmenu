@@ -1,5 +1,4 @@
 import React from "react";
-import { BaseComponent } from "./Utils/BaseComponent.js";
 import { Vector2 } from "./Utils/FromJSVE.js";
 import { HTMLProps_Fixed, RequiredBy } from "./Utils/@Types.js";
 export declare const VMenu_backgroundColor = "rgb(35,35,35)";
@@ -18,6 +17,4 @@ export type VMenuUIProps = {
     style?: any;
 } & HTMLProps_Fixed<"div">;
 export type VMenuUIProps_WithPosInfo = RequiredBy<VMenuUIProps, "pos" | "menuID">;
-export declare class VMenuUI extends BaseComponent<VMenuUIProps, {}> {
-    render(): React.JSX.Element;
-}
+export declare const VMenuUI: (props: VMenuUIProps) => React.JSX.Element;

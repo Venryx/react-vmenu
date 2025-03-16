@@ -41,39 +41,37 @@ export type VMenuUIProps_WithPosInfo = RequiredBy<VMenuUIProps, "pos" | "menuID"
 /*export interface VMenuUIProps extends HTMLProps_Fixed<"div"> {
 	pos: Vector2i, style?, menuID: number;
 }*/
-export class VMenuUI extends BaseComponent<VMenuUIProps, {}> {
-	render() {
-		var {pos, className, onOtherVMenuOpen, style, menuID, children, title, ...rest} = this.props;
-		const menuID_final = useMemo(()=>menuID ?? ++VMenu.lastID, [menuID]);
+export const VMenuUI = ((props: VMenuUIProps)=>{
+	var {pos, className, onOtherVMenuOpen, style, menuID, children, title, ...rest} = props;
+	const menuID_final = useMemo(()=>menuID ?? ++VMenu.lastID, [menuID]);
 
-		// if this is a fresh mounting/render for this menu-id, execute all "on vmenu-open" listeners
-		useEffect(()=>{
-			const listeners = [...VMenu.vmenuOpenListeners.entries()];
-			listeners.sort((a, b)=>a[0] - b[0]); // sort each listener by its key (ie. its source's menu-id)
-			for (const [key, listener] of listeners) {
-				listener(menuID_final);
-			}
-		}, [menuID_final]);
-
-		// add our own "on vmenu-open" listener to the list (if specified)
-		if (onOtherVMenuOpen) {
-			useEffect(()=>{
-				VMenu.vmenuOpenListeners.set(menuID_final, onOtherVMenuOpen!);
-				return ()=>void VMenu.vmenuOpenListeners.delete(menuID_final);
-			}, [menuID_final, onOtherVMenuOpen]);
+	// if this is a fresh mounting/render for this menu-id, execute all "on vmenu-open" listeners
+	useEffect(()=>{
+		const listeners = [...VMenu.vmenuOpenListeners.entries()];
+		listeners.sort((a, b)=>a[0] - b[0]); // sort each listener by its key (ie. its source's menu-id)
+		for (const [key, listener] of listeners) {
+			listener(menuID_final);
 		}
-		
-		if (children == null) return <div className="VMenu" style={E({display: "none"}, style)}/>;
-		return (
-			<div {...rest} title={title ?? undefined} className={classNames("VMenu", className)}
-				style={E(
-					styles.root,
-					pos && {left: pos.x, top: pos.y},
-					style,
-				)}
-			>
-				{children}
-			</div>
-		);
+	}, [menuID_final]);
+
+	// add our own "on vmenu-open" listener to the list (if specified)
+	if (onOtherVMenuOpen) {
+		useEffect(()=>{
+			VMenu.vmenuOpenListeners.set(menuID_final, onOtherVMenuOpen!);
+			return ()=>void VMenu.vmenuOpenListeners.delete(menuID_final);
+		}, [menuID_final, onOtherVMenuOpen]);
 	}
-}
+	
+	if (children == null) return <div className="VMenu" style={E({display: "none"}, style)}/>;
+	return (
+		<div {...rest} title={title ?? undefined} className={classNames("VMenu", className)}
+			style={E(
+				styles.root,
+				pos && {left: pos.x, top: pos.y},
+				style,
+			)}
+		>
+			{children}
+		</div>
+	);
+});
