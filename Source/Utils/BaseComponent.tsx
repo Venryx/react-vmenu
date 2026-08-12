@@ -15,7 +15,7 @@ export class BaseComponent<P, S> extends Component<P & BaseProps, S> {
 			let oldRender = this.render;
 			this.render = function() {
 				this.PreRender();
-				return oldRender.apply(this, arguments);
+				return oldRender.apply(this, arguments as any);
 			};
 		}
 	}
@@ -71,18 +71,19 @@ export class BaseComponent<P, S> extends Component<P & BaseProps, S> {
 	PostRender(initialMount: boolean): void {};
 }
 
-function HasSealedProps(target: Object) {
-	let oldConstructor = target.constructor;
-	target.constructor = function() {
-		for (let key in target["prototype"]) {
-			let method = target["prototype"][key];
-			if (method.sealed) {
-				console.assert(this[key] == method, `Cannot override sealed method "${key}".`);
+function HasSealedProps(value: Function, context: ClassDecoratorContext) {
+	return class extends (value as any) {
+		constructor(...args: any[]) {
+			super(...args);
+			for (let key in value["prototype"]) {
+				let method = value["prototype"][key];
+				if (method.sealed) {
+					console.assert(this[key] == method, `Cannot override sealed method "${key}".`);
+				}
 			}
 		}
-		return oldConstructor.apply(this, arguments);
-	};
+	} as any;
 }
-function Sealed(target: Object, key: string) {
-	target[key].sealed = true;
+function Sealed(value: Function, context: ClassMethodDecoratorContext) {
+	(value as any).sealed = true;
 }

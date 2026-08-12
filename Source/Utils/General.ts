@@ -34,7 +34,7 @@ export function GetScroll(dom: HTMLElement) {
 	return new Vector2(dom.scrollLeft, dom.scrollTop);
 }
 
-function IndexOfAny(...strings) {
+function IndexOfAny(this: string, ...strings) {
     var lowestIndex = -1;
     for (let str of strings) {
         var indexOfChar = this.indexOf(str);

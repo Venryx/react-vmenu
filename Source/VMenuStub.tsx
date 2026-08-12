@@ -49,7 +49,7 @@ export class VMenuStub extends BaseComponent<
 	}
 	menuID: number;
 
-	forDom: HTMLElement;
+	forDom!: HTMLElement;
 	ComponentDidMount() {
 		var {for: forFunc, delayEventHandler} = this.props;
 		//this.forDom = forFunc ? ReactDOM.findDOMNode(forFunc()) : ReactDOM.findDOMNode(this).parentElement;
